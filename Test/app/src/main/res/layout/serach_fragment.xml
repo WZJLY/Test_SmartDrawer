@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/serach_area"
+        android:layout_width="800dp"
+        android:layout_height="87dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/serach_icon" />
+
+    <ImageView
+        android:id="@+id/drawer_area"
+        android:layout_width="wrap_content"
+        android:layout_height="850dp"
+        android:layout_below="@+id/serach_area"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="144dp"
+        android:background="@drawable/add_drawer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/serachText"
+        android:layout_width="432dp"
+        android:layout_height="66dp"
+        android:layout_alignLeft="@+id/drawer_area"
+        android:layout_alignStart="@+id/drawer_area"
+        android:layout_alignTop="@+id/serach_area"
+        android:background="@null"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/serach_area"
+        app:layout_constraintEnd_toEndOf="@+id/serach_area"
+        app:layout_constraintStart_toStartOf="@+id/serach_area"
+        app:layout_constraintTop_toTopOf="@+id/serach_area" />
+
+    <LinearLayout
+        android:id="@+id/add_drawer"
+        android:layout_width="701dp"
+        android:layout_height="833dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/drawer_area"
+        app:layout_constraintEnd_toEndOf="@+id/drawer_area"
+        app:layout_constraintStart_toStartOf="@+id/drawer_area"
+        app:layout_constraintTop_toTopOf="@+id/drawer_area"></LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginEnd="662dp"
+        android:layout_marginStart="50dp"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/serach_area"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginStart="490dp"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/serach_area"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
