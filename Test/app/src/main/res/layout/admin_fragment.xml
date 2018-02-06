@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/u_bg" />
 
     <Button
-        android:id="@+id/reagent_operation"
+        android:id="@+id/reagent_op"
         android:layout_width="580dp"
         android:layout_height="100dp"
         android:layout_alignLeft="@+id/reagent_search"
@@ -48,7 +48,7 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reagent_operation" />
+        app:layout_constraintTop_toBottomOf="@+id/reagent_op" />
 
     <Button
         android:id="@+id/setBox_button"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/reagent_search" />
 
     <Button
-        android:id="@+id/record_query"
+        android:id="@+id/recordquery"
         android:layout_width="260dp"
         android:layout_height="90dp"
         android:layout_alignTop="@+id/setBox_button"
@@ -93,19 +93,19 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="64dp"
         android:layout_marginStart="108dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/qita_button"
         android:text="人员管理"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/Record_query"
+        app:layout_constraintEnd_toStartOf="@+id/edit_flie"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setBox_button" />
 
     <Button
-        android:id="@+id/Record_query"
+        android:id="@+id/editflie"
         android:layout_width="260dp"
-        android:layout_height="88dp"
+        android:layout_height="90dp"
         android:layout_alignLeft="@+id/record_query"
         android:layout_alignStart="@+id/record_query"
         android:layout_alignTop="@+id/personal_management"
@@ -116,7 +116,7 @@
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/record_query" />
+        app:layout_constraintTop_toBottomOf="@+id/recordquery" />
 
     <Button
         android:id="@+id/auto_update"
@@ -142,8 +142,8 @@
         android:layout_height="90dp"
         android:layout_alignBaseline="@+id/auto_update"
         android:layout_alignBottom="@+id/auto_update"
-        android:layout_alignLeft="@+id/Record_query"
-        android:layout_alignStart="@+id/Record_query"
+        android:layout_alignLeft="@+id/edit_flie"
+        android:layout_alignStart="@+id/edit_flie"
         android:layout_marginEnd="108dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/qita_button"
@@ -151,7 +151,7 @@
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Record_query" />
+        app:layout_constraintTop_toBottomOf="@+id/editflie" />
 
     <ImageView
         android:id="@+id/set_icon"
@@ -169,11 +169,11 @@
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:background="@drawable/shijichazhao_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/record_query"
-        app:layout_constraintEnd_toEndOf="@+id/record_query"
+        app:layout_constraintBottom_toBottomOf="@+id/recordquery"
+        app:layout_constraintEnd_toEndOf="@+id/recordquery"
         app:layout_constraintHorizontal_bias="0.12"
-        app:layout_constraintStart_toStartOf="@+id/record_query"
-        app:layout_constraintTop_toTopOf="@+id/record_query" />
+        app:layout_constraintStart_toStartOf="@+id/recordquery"
+        app:layout_constraintTop_toTopOf="@+id/recordquery" />
 
     <ImageView
         android:id="@+id/people_icon"
@@ -191,11 +191,11 @@
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:background="@drawable/jiluchaxun_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/Record_query"
-        app:layout_constraintEnd_toEndOf="@+id/Record_query"
+        app:layout_constraintBottom_toBottomOf="@+id/editflie"
+        app:layout_constraintEnd_toEndOf="@+id/editflie"
         app:layout_constraintHorizontal_bias="0.12"
-        app:layout_constraintStart_toStartOf="@+id/Record_query"
-        app:layout_constraintTop_toTopOf="@+id/Record_query" />
+        app:layout_constraintStart_toStartOf="@+id/editflie"
+        app:layout_constraintTop_toTopOf="@+id/editflie" />
 
     <ImageView
         android:id="@+id/imageView8"

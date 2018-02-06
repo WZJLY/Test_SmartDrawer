@@ -1,17 +1,12 @@
 package com.example.smartcabinet
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
-import kotlinx.android.synthetic.main.admin_fragment.*
+import kotlinx.android.synthetic.main.orinary_fragment.*
 
 /**
  * Created by WZJ on 2018/1/31.
@@ -26,10 +21,21 @@ class OrinaryFragment : Fragment() {
     }
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
 
-        reagent_search?.setOnClickListener {
+        regentsearch?.setOnClickListener {
             val intent  = Intent()
             intent.setClass(context.applicationContext,SerachActivity::class.java)
             startActivity(intent)
+        }
+        edit_flie?.setOnClickListener{
+            val intent1 = Intent()
+            intent1.setClass(context.applicationContext,EditMessageActivity::class.java)
+            startActivity(intent1)
+        }
+        reagent_operation?.setOnClickListener{
+
+        }
+        record_query?.setOnClickListener{
+
         }
     }
 

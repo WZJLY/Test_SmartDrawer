@@ -5,8 +5,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.JavascriptInterface
 import android.widget.Toast
+import com.example.smartcabinet.util.DBManager
+import com.example.smartcabinet.util.SC_Const
+import com.example.smartcabinet.util.UserAccount
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
     private var dbManager: DBManager? = null
@@ -17,9 +19,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         dbManager = DBManager(this)
-        val userAccount =  UserAccount()
+       dbManager?.tableUpgrade()
+        val userAccount = UserAccount()
         userAccount.userId="2"
-        userAccount.userPower=SC_Const.NORMAL
+        userAccount.userPower= SC_Const.NORMAL
         userAccount.userName="zjh"
         userAccount.userPassword="123"
         dbManager?.addAccount(userAccount)
@@ -96,7 +99,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         et_userName.text = null
-        et_userPassword.text = null
+
     }
 
     override fun onDestroy() {

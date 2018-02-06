@@ -19,6 +19,8 @@
         <activity android:name=".AdminActivity"></activity>
         <activity android:name=".SerachActivity"></activity>
         <activity android:name=".OrinaryActivity"></activity>
+        <activity android:name=".EditPersonActivity"></activity>
+        <activity android:name=".EditMessageActivity"></activity>
     </application>
 
 </manifest>
