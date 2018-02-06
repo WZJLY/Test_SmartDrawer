@@ -1,5 +1,6 @@
 package com.example.smartcabinet
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -17,9 +18,13 @@ class EditMessageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
         val adminfrag = EditMessageFragment()
-        replaceFragment(adminfrag, R.id.framelayout)
+        replaceFragment(adminfrag,R.id.framelayout)
 
-
+        back_button.setOnClickListener{
+            val intent = Intent()
+            intent.setClass(this,EditPersonActivity::class.java)
+            startActivity(intent)
+        }
     }
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
         val fragmentTransaction = beginTransaction()

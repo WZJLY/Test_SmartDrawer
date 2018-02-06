@@ -1,6 +1,11 @@
 package com.example.smartcabinet;
 
 import android.app.Application;
+import android.util.DisplayMetrics;
+
+import com.example.smartcabinet.util.CabinetInfo;
+import com.example.smartcabinet.util.DBManager;
+import com.example.smartcabinet.util.UserAccount;
 
 
 /**
@@ -10,6 +15,7 @@ import android.app.Application;
 public class SCApp extends Application {
     private DBManager dbManager;
     private UserAccount userInfo;
+    private CabinetInfo cabinetInfo;
 
     @Override
     public void onCreate() {
@@ -38,7 +44,13 @@ public class SCApp extends Application {
 
     public void clearUserInfo(){ userInfo = null; }
 
+    public CabinetInfo getCabinetInfo() {
+        return cabinetInfo;
+    }
 
+    public void setCabinetInfo(CabinetInfo cabinetInfo) {
+        this.cabinetInfo = cabinetInfo;
+    }
 
 
 }

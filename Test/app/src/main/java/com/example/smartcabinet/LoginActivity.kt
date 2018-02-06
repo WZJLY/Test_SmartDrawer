@@ -17,15 +17,19 @@ class LoginActivity : AppCompatActivity() {
     private val NAME = "name"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_login)
         dbManager = DBManager(this)
-       dbManager?.tableUpgrade()
-        val userAccount = UserAccount()
-        userAccount.userId="2"
-        userAccount.userPower= SC_Const.NORMAL
-        userAccount.userName="zjh"
-        userAccount.userPassword="123"
-        dbManager?.addAccount(userAccount)
+        dbManager?.tableUpgrade()
+        scApp = application as SCApp
+//        scApp = application as SCApp
+//        userAccount.userId="2"
+//        userAccount.userPower= SC_Const.NORMAL
+//        userAccount.userName="zjh"
+//        userAccount.userPassword="123"
+//        dbManager?.addAccount(userAccount)
+        val name = getLastLoginName()
+        et_userName.setText(name)
         button_login.setOnClickListener({
 
             login(et_userName.text.toString(),et_userPassword.text.toString())
@@ -76,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this.applicationContext, "登陆失败", Toast.LENGTH_SHORT).show()
         } else {
             val userInfo = dbManager?.getUserAccount(userName, userPWD)
-            scApp?.setUserInfo(userInfo)
+            scApp?.userInfo = userInfo
 
             //upload user login record to server
 
@@ -84,21 +88,23 @@ class LoginActivity : AppCompatActivity() {
             val iPower = userInfo?.getUserPower()
             if (iPower == SC_Const.ADMIN) {
                 intent.setClass(this, AdminActivity::class.java)
+                intent.putExtra("SC_Const",0)
             } else if (iPower == SC_Const.NORMAL) {
                 intent.setClass(this, OrinaryActivity::class.java!!)
+                intent.putExtra("SC_Const",1)
             } else {
                 Toast.makeText(this.applicationContext, "ERROR USER POWER", Toast.LENGTH_SHORT).show()
             }
             saveUserName(userName)
             startActivity(intent)
-            finish()
+//            finish()
         }
     }
 
 
     override fun onResume() {
         super.onResume()
-        et_userName.text = null
+        et_userPassword.text = null
 
     }
 

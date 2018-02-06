@@ -20,11 +20,13 @@ class AdminActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
         val adminfrag = AdminFragment()
+
         replaceFragment(adminfrag, R.id.framelayout)
         back_button.setOnClickListener(
                 {Toast.makeText(this,"点击了", Toast.LENGTH_SHORT).show()
-                val oryfrag = OrinaryFragment()
-                replaceFragment(oryfrag,R.id.framelayout)
+                val intent = Intent()
+                    intent.setClass(this,LoginActivity::class.java)
+                    startActivity(intent)
 
         })
 
