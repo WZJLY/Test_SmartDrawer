@@ -21,7 +21,7 @@ class SerachActivity : AppCompatActivity() {
 
         scApp = application as SCApp
         val account = scApp?.getUserInfo()
-        supportFragmentManager.inTransaction {
+        supportFragmentManager.inTransaction{
             replace(R.id.framelayout,serachfrag)
         }
         back_button.setOnClickListener{
