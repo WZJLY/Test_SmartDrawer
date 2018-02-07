@@ -29,30 +29,51 @@ class EditPersonFragment : Fragment() {
         return inflater!!.inflate(R.layout.fragment_add_preson, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         dbManager = DBManager(context.applicationContext)
-       val arrayList = dbManager?.getUsers()
-
-
-        val sum = arrayList!!.size.toInt()
-//        Toast.makeText(context.applicationContext,userAccount?.getUserName(),Toast.LENGTH_LONG).show()
-for(i in 1..sum)
-{
-    userAccount = arrayList?.get(i-1)
-    val fragment = childFragmentManager.beginTransaction()
-    val tfrg =PersonLineFragment()
-    val args = Bundle()
-    args.putString("username",userAccount?.getUserName().toString())
-    tfrg.setArguments(args)
-    fragment.add(R.id.Layout_person, tfrg, "TAG")
-    fragment.commit()
-}
+        updateUser()
         iBt_addpetson.setOnClickListener{
             val intent  = Intent()
             intent.setClass(context.applicationContext,EditMessageActivity::class.java)
             startActivity(intent)
 
         }
+    }
 
+
+
+
+
+    fun updateUser()
+    {
+        val arrayList = dbManager?.getUsers()
+        val sum = arrayList!!.size.toInt()
+        for(i in 1..sum)
+        {
+            userAccount = arrayList?.get(i-1)
+            val fragment = childFragmentManager.beginTransaction()
+            val personFragment =PersonLineFragment()
+            val args = Bundle()
+            args.putString("username",userAccount?.getUserName().toString())
+            personFragment.setArguments(args)
+            fragment.add(R.id.Layout_person, personFragment,userAccount?.getUserName())
+            fragment.commit()
+
+        }
+    }
+    fun removeUser()
+    {
+        var removeUsername = String()
+        if(getArguments()!=null)
+        {
+            removeUsername = getArguments().getString("rmUsername")
+
+        }
+        val removepfrg = childFragmentManager.findFragmentByTag(removeUsername)
+        val fragment = childFragmentManager.beginTransaction()
+        fragment.remove(removepfrg)
     }
 }

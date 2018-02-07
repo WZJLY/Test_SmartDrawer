@@ -22,16 +22,10 @@ class LoginActivity : AppCompatActivity() {
         dbManager = DBManager(this)
         dbManager?.tableUpgrade()
         scApp = application as SCApp
-//        scApp = application as SCApp
-//        userAccount.userId="2"
-//        userAccount.userPower= SC_Const.NORMAL
-//        userAccount.userName="zjh"
-//        userAccount.userPassword="123"
-//        dbManager?.addAccount(userAccount)
-        val name = getLastLoginName()
-        et_userName.setText(name)
-        button_login.setOnClickListener({
 
+        val lastname = getLastLoginName()
+        et_userName.setText(lastname)
+        button_login.setOnClickListener({
             login(et_userName.text.toString(),et_userPassword.text.toString())
 
         })

@@ -7,13 +7,16 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import com.example.smartcabinet.util.DBManager
 import kotlinx.android.synthetic.main.activity_admin.*
+import kotlinx.android.synthetic.main.fragment_line_person.*
 
 
 /**
  * Created by WZJ on 2018/2/5.
  */
 class EditPersonActivity : AppCompatActivity() {
+    private var dbManager: DBManager? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
@@ -35,5 +38,6 @@ class EditPersonActivity : AppCompatActivity() {
         fragmentTransaction.func()
         fragmentTransaction.commit()
     }
+
 
 }

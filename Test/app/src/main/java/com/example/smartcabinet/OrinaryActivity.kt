@@ -16,9 +16,7 @@ class OrinaryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_admin)
         val oryfrag = OrinaryFragment()
         replaceFragment(oryfrag,R.id.framelayout)
-        back_button.setOnClickListener(
-                {
-                    Toast.makeText(this,"点击了", Toast.LENGTH_SHORT).show()
+        back_button.setOnClickListener({
                     val intent = Intent()
                     intent.setClass(this,LoginActivity::class.java)
                     startActivity(intent)

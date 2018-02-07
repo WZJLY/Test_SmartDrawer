@@ -22,8 +22,7 @@ class AdminActivity : AppCompatActivity() {
         val adminfrag = AdminFragment()
 
         replaceFragment(adminfrag, R.id.framelayout)
-        back_button.setOnClickListener(
-                {Toast.makeText(this,"点击了", Toast.LENGTH_SHORT).show()
+        back_button.setOnClickListener({
                 val intent = Intent()
                     intent.setClass(this,LoginActivity::class.java)
                     startActivity(intent)
@@ -41,8 +40,7 @@ class AdminActivity : AppCompatActivity() {
     fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
         supportFragmentManager.inTransaction{replace(frameId, fragment)}
     }
-
-    }
+}
 
 
 

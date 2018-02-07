@@ -30,19 +30,33 @@ class EditMessageFragment : Fragment() {
                 userAccount.userId=editText_Num.text.toString()
                 userAccount.userPower= SC_Const.NORMAL
                 userAccount.userName=editText_userName.text.toString()
+                if(editText_Num.length() ==0)
+                {
+                    Toast.makeText(context,"编码信息未填写",Toast.LENGTH_SHORT).show()
+                }
+                if(editText_userName.length() == 0)
+                {
+                    Toast.makeText(context,"姓名未填写",Toast.LENGTH_SHORT).show()
+                }
+                if(editText_Password.length() == 0)
+                {
+                    Toast.makeText(context,"密码为空",Toast.LENGTH_SHORT).show()
+                }
 
-                if(editText_Password.text.toString()==editText_Password2.text.toString())
+
+                if(editText_Password.text.toString()==editText_Password2.text.toString()&&editText_Num.length() != 0&&editText_userName.length()!=0&&editText_Password.length()!=0)
                 {   userAccount.userPassword=editText_Password.text.toString()
                     if(dbManager?.isAccountExist(userAccount.userName)==true) {
                         Toast.makeText(context,"该用户已经存在",Toast.LENGTH_SHORT).show()
                     }
                     else
+                    {
                         dbManager?.addAccount(userAccount)
-                        val intent  = Intent()
-                        intent.setClass(context.applicationContext,EditPersonActivity::class.java)
+                        val intent = Intent()
+                        intent.setClass(context.applicationContext, EditPersonActivity::class.java)
                         startActivity(intent)
-                        Toast.makeText(context,"用户添加成功",Toast.LENGTH_SHORT).show()
-
+                        Toast.makeText(context, "用户添加成功", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 else
                     Toast.makeText(context,"两次密码输入不一样",Toast.LENGTH_SHORT).show()

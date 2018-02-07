@@ -33,7 +33,9 @@ public class DBManager {
     public void DeleteDBUser(String tableName){
 
     }
-
+    public void deleteAccountByUserName(String userName){
+        db.delete("user", "userName == ?", new String[]{ userName });
+    }
     public void addAccount(UserAccount user) {
         if(!isAccountExist(user.userName)){
             db.execSQL("INSERT INTO user VALUES(null, ?, ?, ?, ?)", new Object[]{user.userId, user.userName, user.userPassword, user.userPower});

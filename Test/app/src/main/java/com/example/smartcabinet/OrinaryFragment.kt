@@ -27,9 +27,9 @@ class OrinaryFragment : Fragment() {
             startActivity(intent)
         }
         edit_flie?.setOnClickListener{
-            val intent1 = Intent()
-            intent1.setClass(context.applicationContext,EditMessageActivity::class.java)
-            startActivity(intent1)
+            val intent = Intent()
+            intent.setClass(context.applicationContext,EditMessageActivity::class.java)
+            startActivity(intent)
         }
         reagent_operation?.setOnClickListener{
 
