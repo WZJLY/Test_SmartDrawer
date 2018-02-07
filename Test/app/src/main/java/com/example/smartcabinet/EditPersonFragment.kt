@@ -13,6 +13,7 @@ import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.SC_Const
 import com.example.smartcabinet.util.UserAccount
 import kotlinx.android.synthetic.main.fragment_add_preson.*
+import kotlinx.android.synthetic.main.fragment_cabinet.*
 import kotlinx.android.synthetic.main.fragment_line_person.*
 
 
@@ -31,14 +32,18 @@ class EditPersonFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         dbManager = DBManager(context.applicationContext)
        val arrayList = dbManager?.getUsers()
-        userAccount = arrayList?.get(0)
+
 
         val sum = arrayList!!.size.toInt()
-        Toast.makeText(context.applicationContext,userAccount?.getUserName(),Toast.LENGTH_LONG).show()
+//        Toast.makeText(context.applicationContext,userAccount?.getUserName(),Toast.LENGTH_LONG).show()
 for(i in 1..sum)
 {
+    userAccount = arrayList?.get(i-1)
     val fragment = childFragmentManager.beginTransaction()
-    val tfrg = PersonLineFragment()
+    val tfrg =PersonLineFragment()
+    val args = Bundle()
+    args.putString("username",userAccount?.getUserName().toString())
+    tfrg.setArguments(args)
     fragment.add(R.id.Layout_person, tfrg, "TAG")
     fragment.commit()
 }
@@ -49,8 +54,5 @@ for(i in 1..sum)
 
         }
 
-
-
-
     }
-}// Required empty public constructor
+}
