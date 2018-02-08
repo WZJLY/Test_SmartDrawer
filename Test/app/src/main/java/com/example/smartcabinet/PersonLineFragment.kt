@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_edit_person.*
  * Created by WZJ on 2018/2/7.
  */
 class PersonLineFragment : Fragment() {
+    var activityCallback: PersonLineFragment.deletbuttonlisten? = null
     private var dbManager: DBManager? = null
     private var scApp: SCApp? = null
     var text = String()
@@ -34,7 +35,19 @@ class PersonLineFragment : Fragment() {
         }
         return inflater!!.inflate(R.layout.fragment_line_person, container, false)
     }
+    interface deletbuttonlisten {
+        fun deletButtonClick(text: String)
+    }
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        try {
+            activityCallback = context as deletbuttonlisten
+        } catch (e: ClassCastException) {
+            throw ClassCastException(context?.toString()
+                    + " must implement buttonlisten")
+        }
 
+    }
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         scApp = context.applicationContext as SCApp
         dbManager = DBManager(context.applicationContext)
@@ -54,15 +67,13 @@ class PersonLineFragment : Fragment() {
             builder.setTitle("提示")
             builder.setMessage("是否删除该用户")
             builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
-                val args = Bundle()
-                args.putString("rmUsername",text)
-                val editPerson = EditPersonFragment()
-                editPerson.setArguments(args)
+
                 val usename = tV_userName.text.toString()
                 dbManager?.deleteAccountByUserName(usename)
-          val intent = Intent()
-            intent.setClass(context.applicationContext,EditPersonActivity::class.java)
-            startActivity(intent)
+//          val intent = Intent()
+//            intent.setClass(context.applicationContext,EditPersonActivity::class.java)
+//            startActivity(intent)
+                deletbuttonClicked("delet")
                 Toast.makeText(context.applicationContext, "删除成功", Toast.LENGTH_SHORT).show()
             })
             builder.setNeutralButton("取消",null)
@@ -70,6 +81,9 @@ class PersonLineFragment : Fragment() {
             builder.show()
 
         })
+    }
+    private fun deletbuttonClicked(text: String) {
+        activityCallback?.deletButtonClick(text)
     }
 
 

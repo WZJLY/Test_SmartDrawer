@@ -1,5 +1,6 @@
 package com.example.smartcabinet
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,43 +17,56 @@ import kotlinx.android.synthetic.main.orinary_fragment.*
  */
 
 class AdminFragment : Fragment() {
+    var activityCallback: AdminFragment.buttonlisten? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.admin_fragment, container, false)
 
     }
+    interface buttonlisten {
+        fun onButtonClick(text: String)
+    }
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        try {
+            activityCallback = context as buttonlisten
+        } catch (e: ClassCastException) {
+            throw ClassCastException(context?.toString()
+                    + " must implement buttonlisten")
+        }
+
+    }
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         reagent_search.setOnClickListener {
-            val intent  = Intent()
-            intent.setClass(context.applicationContext,SerachActivity::class.java)
-            startActivity(intent)
+            buttonClicked("reagent_search")
         }
         personal_management.setOnClickListener{
-            val intent = Intent()
-            intent.setClass(context.applicationContext,EditPersonActivity::class.java)
-            startActivity(intent)
+
+            buttonClicked("personal_management")
         }
         editflie.setOnClickListener{
-            val intent = Intent()
-            intent.setClass(context.applicationContext,EditMessageActivity::class.java)
-            startActivity(intent)
+
+            buttonClicked(" editflie")
         }
         reagent_op.setOnClickListener{
-
+            buttonClicked("reagent_op")
         }
         recordquery.setOnClickListener{
-
+            buttonClicked("recordquery")
         }
         setBox_button.setOnClickListener{
-
+            buttonClicked("setBox_button")
         }
         auto_update.setOnClickListener{
-
+            buttonClicked("auto_update")
         }
         reagent_template.setOnClickListener{
-
+            buttonClicked("reagent_templatep")
         }
 
+    }
+    private fun buttonClicked(text: String) {
+        activityCallback?.onButtonClick(text)
     }
 
 }

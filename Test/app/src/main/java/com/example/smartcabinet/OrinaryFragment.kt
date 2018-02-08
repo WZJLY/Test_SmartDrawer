@@ -1,5 +1,6 @@
 package com.example.smartcabinet
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -14,22 +15,30 @@ import kotlinx.android.synthetic.main.orinary_fragment.*
 
 class OrinaryFragment : Fragment() {
 
-
+    var activityCallback: OrinaryFragment.orinarybuttonlisten? = null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-       val view = inflater!!.inflate(R.layout.orinary_fragment, container, false)
-        return view
+        return inflater!!.inflate(R.layout.orinary_fragment, container, false)
+    }
+    interface orinarybuttonlisten {
+        fun orinaryButtonClick(text: String)
+    }
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        try {
+            activityCallback = context as orinarybuttonlisten
+        } catch (e: ClassCastException) {
+            throw ClassCastException(context?.toString()
+                    + " must implement buttonlisten")
+        }
+
     }
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
 
         regentsearch?.setOnClickListener {
-            val intent  = Intent()
-            intent.setClass(context.applicationContext,SerachActivity::class.java)
-            startActivity(intent)
+            orinarybuttonClicked("regentsearch")
         }
         edit_flie?.setOnClickListener{
-            val intent = Intent()
-            intent.setClass(context.applicationContext,EditMessageActivity::class.java)
-            startActivity(intent)
+            orinarybuttonClicked("edit_flie")
         }
         reagent_operation?.setOnClickListener{
 
@@ -37,6 +46,9 @@ class OrinaryFragment : Fragment() {
         record_query?.setOnClickListener{
 
         }
+    }
+    private fun orinarybuttonClicked(text: String) {
+        activityCallback?.orinaryButtonClick(text)
     }
 
 }

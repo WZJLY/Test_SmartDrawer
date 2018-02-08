@@ -78,16 +78,10 @@ class LoginActivity : AppCompatActivity() {
             //upload user login record to server
 
 
-            val iPower = userInfo?.getUserPower()
-            if (iPower == SC_Const.ADMIN) {
+
                 intent.setClass(this, AdminActivity::class.java)
-                intent.putExtra("SC_Const",0)
-            } else if (iPower == SC_Const.NORMAL) {
-                intent.setClass(this, OrinaryActivity::class.java!!)
                 intent.putExtra("SC_Const",1)
-            } else {
-                Toast.makeText(this.applicationContext, "ERROR USER POWER", Toast.LENGTH_SHORT).show()
-            }
+
             saveUserName(userName)
             startActivity(intent)
 //            finish()

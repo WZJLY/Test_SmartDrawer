@@ -1,5 +1,6 @@
 package com.example.smartcabinet
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,43 +17,44 @@ import com.example.smartcabinet.util.UserAccount
 import kotlinx.android.synthetic.main.fragment_edit_person.*
 import kotlinx.android.synthetic.main.serach_fragment.*
 import android.widget.AdapterView.OnItemSelectedListener
-
+import com.example.smartcabinet.R.id.spinner_level
 
 
 /**
  * Created by WZJ on 2018/2/6.
  */
 class EditMessageFragment : Fragment() {
+    var activityCallback: EditMessageFragment.savepersonbuttonlisten? = null
     private var dbManager: DBManager? = null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_edit_person, container, false)
-
     }
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-            button_save.setOnClickListener{
-                dbManager = DBManager(context)
-                dbManager?.tableUpgrade()
-                val userAccount = UserAccount()
-
-                spinner_level.onItemSelectedListener = object : OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                                pos: Int, id: Long) {
-
-                        val power = resources.getStringArray(R.array.power)
-                        if(power[pos]=="管理员")
-                        {
-                            userAccount.userPower=SC_Const.ADMIN
-                        }
-                        if(power[pos]=="普通")
-                        {
-                            userAccount.userPower=SC_Const.NORMAL
-                        }
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>) {
-                        // Another interface callback
-                    }
+        dbManager = DBManager(context.applicationContext)
+        val userAccount = UserAccount()
+        spinner_level.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View,
+                                        pos: Int, id: Long) {
+                val power = resources.getStringArray(R.array.power)
+                Toast.makeText(context, "你点击的是:" + power[pos], Toast.LENGTH_SHORT).show()
+                if(power[pos]=="管理员")
+                {
+                    userAccount.userPower = SC_Const.ADMIN
                 }
+                if(power[pos]=="普通")
+                {
+                    userAccount.userPower = SC_Const.NORMAL
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Another interface callback
+            }
+        }
+
+
+            button_save.setOnClickListener{
+
                 userAccount.userId=editText_Num.text.toString()
                 userAccount.userName=editText_userName.text.toString()
                 if(editText_Num.length() ==0)
@@ -76,9 +78,7 @@ class EditMessageFragment : Fragment() {
                     else
                     {
                         dbManager?.addAccount(userAccount)
-                        val intent = Intent()
-                        intent.setClass(context.applicationContext, EditPersonActivity::class.java)
-                        startActivity(intent)
+                        savebuttonClicked("save")
                         Toast.makeText(context, "用户添加成功", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -87,5 +87,21 @@ class EditMessageFragment : Fragment() {
 
 
             }
+    }
+    interface savepersonbuttonlisten {
+        fun savepersonButtonClick(text: String)
+    }
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        try {
+            activityCallback = context as savepersonbuttonlisten
+        } catch (e: ClassCastException) {
+            throw ClassCastException(context?.toString()
+                    + " must implement buttonlisten")
+        }
+
+    }
+    private fun savebuttonClicked(text: String) {
+        activityCallback?.savepersonButtonClick(text)
     }
 }
