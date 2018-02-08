@@ -13,6 +13,7 @@ import com.example.smartcabinet.util.DBManager
 import kotlinx.android.synthetic.main.fragment_line_person.*
 import android.content.DialogInterface
 import android.widget.Toast
+import kotlinx.android.synthetic.main.fragment_edit_person.*
 
 
 /**
@@ -20,6 +21,7 @@ import android.widget.Toast
  */
 class PersonLineFragment : Fragment() {
     private var dbManager: DBManager? = null
+    private var scApp: SCApp? = null
     var text = String()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -34,8 +36,19 @@ class PersonLineFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        scApp = context.applicationContext as SCApp
         dbManager = DBManager(context.applicationContext)
         tV_userName.text=text
+        val account= scApp?.getUserInfo()
+        if(account?.userName == tV_userName.text.toString())
+        {
+            iBt_deletPerson.setVisibility(View.GONE)
+        }
+        if(tV_userName.text.toString()=="admin")
+        {
+            iBt_deletPerson.setVisibility(View.GONE)
+        }
+
         iBt_deletPerson.setOnClickListener({
             val builder = AlertDialog.Builder(context)
             builder.setTitle("提示")

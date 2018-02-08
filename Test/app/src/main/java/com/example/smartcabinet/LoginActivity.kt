@@ -29,7 +29,6 @@ class LoginActivity : AppCompatActivity() {
             login(et_userName.text.toString(),et_userPassword.text.toString())
 
         })
-
     }
 
     @JavascriptInterface
