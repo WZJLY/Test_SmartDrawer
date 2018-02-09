@@ -80,7 +80,11 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         returnview = "editperson"
         if (text == "addperson")
         {
+
             val editMessageFragment = EditMessageFragment()
+            val args = Bundle()
+            args.putString("editfile","addperson")
+            editMessageFragment.setArguments(args)
             replaceFragment(editMessageFragment, R.id.framelayout)
 
         }
@@ -104,7 +108,11 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
             }
             "edit_flie" ->
             {
+
                 val editMessageFragment = EditMessageFragment()
+                val args = Bundle()
+                args.putString("editfile","editperson")
+                editMessageFragment.setArguments(args)
                 replaceFragment(editMessageFragment, R.id.framelayout)
             }
         }
@@ -130,8 +138,12 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
             }
             " editflie" ->
             {
-                val editMessageFragment = EditMessageFragment()
+                val editMessageFragment =EditMessageFragment()
+                val args = Bundle()
+                args.putString("editfile","editperson")
+                editMessageFragment.setArguments(args)
                 replaceFragment(editMessageFragment, R.id.framelayout)
+
             }
             "reagent_op"->
             {
