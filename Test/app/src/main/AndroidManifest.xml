@@ -21,15 +21,7 @@
         <activity android:name=".AdminActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:launchMode="singleTask"></activity>
-        <activity android:name=".SerachActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
-        <activity android:name=".OrinaryActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:launchMode="singleTask"></activity>
-        <activity android:name=".EditPersonActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
-        <activity android:name=".EditMessageActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+        <activity android:name=".OperationActivity"></activity>
 
     </application>
 

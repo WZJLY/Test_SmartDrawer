@@ -1,6 +1,7 @@
 package com.example.smartcabinet
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -48,7 +49,8 @@ class AdminFragment : Fragment() {
             buttonClicked(" editflie")
         }
         reagent_op.setOnClickListener{
-            buttonClicked("reagent_op")
+          buttonClicked("reagent_op")
+
         }
         recordquery.setOnClickListener{
             buttonClicked("recordquery")

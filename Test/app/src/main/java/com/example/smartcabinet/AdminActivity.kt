@@ -135,7 +135,9 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
             }
             "reagent_op"->
             {
-
+                val intent = Intent()
+                intent.setClass(this,OperationActivity::class.java)
+                startActivity(intent)
             }
             "recordquery" ->
             {
