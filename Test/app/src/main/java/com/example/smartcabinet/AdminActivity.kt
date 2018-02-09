@@ -1,23 +1,19 @@
 package com.example.smartcabinet
 
-import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
-import android.view.View
-import android.widget.Button
-import android.widget.Toast
+import android.util.Log
 import com.example.smartcabinet.util.SC_Const
 import kotlinx.android.synthetic.main.activity_admin.*
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.admin_fragment.*
 
-class AdminActivity : AppCompatActivity(),AdminFragment.buttonlisten,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten,EditPersonFragment.addpersonbuttonlisten,EditMessageFragment.savepersonbuttonlisten {
+class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten,EditPersonFragment.addpersonbuttonlisten,EditMessageFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener{
     private var scApp: SCApp? = null
     private var returnview = "login"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
@@ -63,13 +59,8 @@ class AdminActivity : AppCompatActivity(),AdminFragment.buttonlisten,OrinaryFrag
                     startActivity(intent)
                 }
             }
-
-
         })
-
-
     }
-
     override fun savepersonButtonClick(text: String) {
         if(text == "save")
         {
@@ -116,8 +107,8 @@ class AdminActivity : AppCompatActivity(),AdminFragment.buttonlisten,OrinaryFrag
         when(text) {
             "setBox_button" ->
             {
-                val orinaryFragment = OrinaryFragment()
-                replaceFragment(orinaryFragment, R.id.framelayout)
+                val setCabinet = SetCabinetFragment()
+                replaceFragment(setCabinet, R.id.framelayout)
             }
             "reagent_search"->
             {
@@ -151,10 +142,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.buttonlisten,OrinaryFrag
 
             }
         }
-
-
-
-
     }
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
         val fragmentTransaction = beginTransaction()
@@ -167,8 +154,18 @@ class AdminActivity : AppCompatActivity(),AdminFragment.buttonlisten,OrinaryFrag
         supportFragmentManager.inTransaction{replace(frameId, fragment)}
     }
 
-
-
+    override fun setCabinetClick(fragment: String) {
+        when (fragment){
+            "setDrawer" -> {
+                val setDrawer = SetDrawerFragment()
+                replaceFragment(setDrawer, R.id.framelayout)
+                Log.d("data",fragment)
+            }
+            else -> {
+                Log.d("data","else")
+            }
+        }
+    }
 }
 
 

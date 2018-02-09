@@ -28,7 +28,7 @@ class OrinaryFragment : Fragment() {
             activityCallback = context as orinarybuttonlisten
         } catch (e: ClassCastException) {
             throw ClassCastException(context?.toString()
-                    + " must implement buttonlisten")
+                    + " must implement AdminFragmentListener")
         }
 
     }

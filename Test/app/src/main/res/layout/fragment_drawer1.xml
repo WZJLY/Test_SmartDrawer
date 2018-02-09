@@ -7,7 +7,7 @@
     <!-- TODO: Update blank fragment layout -->
 
     <ImageButton
-        android:id="@+id/imageButton8"
+        android:id="@+id/iBt_drawer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/chouti_icon"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tV_drawer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -26,7 +26,7 @@
         android:text="抽屉1"
         android:textColor="@android:color/background_dark"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton8"
-        app:layout_constraintStart_toStartOf="@+id/imageButton8"
-        app:layout_constraintTop_toTopOf="@+id/imageButton8" />
+        app:layout_constraintBottom_toBottomOf="@+id/iBt_drawer1"
+        app:layout_constraintStart_toStartOf="@+id/iBt_drawer1"
+        app:layout_constraintTop_toTopOf="@+id/iBt_drawer1" />
 </android.support.constraint.ConstraintLayout>

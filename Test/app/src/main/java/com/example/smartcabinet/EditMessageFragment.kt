@@ -1,23 +1,17 @@
 package com.example.smartcabinet
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Spinner
 import android.widget.Toast
-import com.example.smartcabinet.R.id.spinner
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.SC_Const
 import com.example.smartcabinet.util.UserAccount
 import kotlinx.android.synthetic.main.fragment_edit_person.*
-import kotlinx.android.synthetic.main.serach_fragment.*
-import android.widget.AdapterView.OnItemSelectedListener
-import com.example.smartcabinet.R.id.spinner_level
 
 
 /**
@@ -46,47 +40,41 @@ class EditMessageFragment : Fragment() {
                     userAccount.userPower = SC_Const.NORMAL
                 }
             }
-
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // Another interface callback
             }
         }
+        button_save.setOnClickListener {
+            userAccount.userId=editText_Num.text.toString()
+            userAccount.userName=editText_userName.text.toString()
+            if(editText_Num.length() ==0)
+            {
+                Toast.makeText(context,"编码信息未填写",Toast.LENGTH_SHORT).show()
+            }
+            if(editText_userName.length() == 0)
+            {
+                Toast.makeText(context,"姓名未填写",Toast.LENGTH_SHORT).show()
+            }
+            if(editText_Password.length() == 0)
+            {
+                Toast.makeText(context,"密码为空",Toast.LENGTH_SHORT).show()
+            }
 
-
-            button_save.setOnClickListener{
-
-                userAccount.userId=editText_Num.text.toString()
-                userAccount.userName=editText_userName.text.toString()
-                if(editText_Num.length() ==0)
-                {
-                    Toast.makeText(context,"编码信息未填写",Toast.LENGTH_SHORT).show()
-                }
-                if(editText_userName.length() == 0)
-                {
-                    Toast.makeText(context,"姓名未填写",Toast.LENGTH_SHORT).show()
-                }
-                if(editText_Password.length() == 0)
-                {
-                    Toast.makeText(context,"密码为空",Toast.LENGTH_SHORT).show()
-                }
-
-                if(editText_Password.text.toString()==editText_Password2.text.toString()&&editText_Num.length() != 0&&editText_userName.length()!=0&&editText_Password.length()!=0)
-                {   userAccount.userPassword=editText_Password.text.toString()
-                    if(dbManager?.isAccountExist(userAccount.userName)==true) {
-                        Toast.makeText(context,"该用户已经存在",Toast.LENGTH_SHORT).show()
-                    }
-                    else
-                    {
-                        dbManager?.addAccount(userAccount)
-                        savebuttonClicked("save")
-                        Toast.makeText(context, "用户添加成功", Toast.LENGTH_SHORT).show()
-                    }
+            if(editText_Password.text.toString()==editText_Password2.text.toString()&&editText_Num.length() != 0&&editText_userName.length()!=0&&editText_Password.length()!=0)
+            {   userAccount.userPassword=editText_Password.text.toString()
+                if(dbManager?.isAccountExist(userAccount.userName)==true) {
+                    Toast.makeText(context,"该用户已经存在",Toast.LENGTH_SHORT).show()
                 }
                 else
-                    Toast.makeText(context,"两次密码输入不一样",Toast.LENGTH_SHORT).show()
-
-
+                {
+                    dbManager?.addAccount(userAccount)
+                    savebuttonClicked("save")
+                    Toast.makeText(context, "用户添加成功", Toast.LENGTH_SHORT).show()
+                }
             }
+            else
+                Toast.makeText(context,"两次密码输入不一样",Toast.LENGTH_SHORT).show()
+        }
     }
     interface savepersonbuttonlisten {
         fun savepersonButtonClick(text: String)
@@ -97,9 +85,8 @@ class EditMessageFragment : Fragment() {
             activityCallback = context as savepersonbuttonlisten
         } catch (e: ClassCastException) {
             throw ClassCastException(context?.toString()
-                    + " must implement buttonlisten")
+                    + " must implement AdminFragmentListener")
         }
-
     }
     private fun savebuttonClicked(text: String) {
         activityCallback?.savepersonButtonClick(text)

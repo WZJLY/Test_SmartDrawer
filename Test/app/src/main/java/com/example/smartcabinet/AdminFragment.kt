@@ -1,15 +1,13 @@
 package com.example.smartcabinet
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import kotlinx.android.synthetic.main.admin_fragment.*
-import kotlinx.android.synthetic.main.orinary_fragment.*
 
 @Suppress("UNREACHABLE_CODE")
 /**
@@ -17,25 +15,26 @@ import kotlinx.android.synthetic.main.orinary_fragment.*
  */
 
 class AdminFragment : Fragment() {
-    var activityCallback: AdminFragment.buttonlisten? = null
-
+    var activityCallback: AdminFragmentListener?= null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.admin_fragment, container, false)
 
     }
-    interface buttonlisten {
+
+    interface AdminFragmentListener {
         fun onButtonClick(text: String)
     }
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         try {
-            activityCallback = context as buttonlisten
+            activityCallback = context as AdminFragmentListener
         } catch (e: ClassCastException) {
             throw ClassCastException(context?.toString()
-                    + " must implement buttonlisten")
+                    + " must implement AdminFragmentListener")
         }
 
     }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         reagent_search.setOnClickListener {
             buttonClicked("reagent_search")
@@ -68,5 +67,4 @@ class AdminFragment : Fragment() {
     private fun buttonClicked(text: String) {
         activityCallback?.onButtonClick(text)
     }
-
 }

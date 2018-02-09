@@ -44,7 +44,7 @@ class PersonLineFragment : Fragment() {
             activityCallback = context as deletbuttonlisten
         } catch (e: ClassCastException) {
             throw ClassCastException(context?.toString()
-                    + " must implement buttonlisten")
+                    + " must implement AdminFragmentListener")
         }
 
     }
