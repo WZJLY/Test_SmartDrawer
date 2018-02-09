@@ -31,7 +31,6 @@ class PersonLineFragment : Fragment() {
         if(getArguments()!=null)
         {
             text = getArguments().getString("username")
-
         }
         return inflater!!.inflate(R.layout.fragment_line_person, container, false)
     }
