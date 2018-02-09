@@ -91,4 +91,26 @@ class EditMessageFragment : Fragment() {
     private fun savebuttonClicked(text: String) {
         activityCallback?.savepersonButtonClick(text)
     }
+
+    /**
+     *人员设置界面，无法修改编号
+     */
+    fun PersonMessage(){
+        textView_title.text = "人员设置"
+        editText_Num.isEnabled = false
+        editText_Num.isFocusable = false
+        editText_Num.isFocusableInTouchMode = false
+    }
+
+    /**
+     *个人信息设置界面，无法修改编号，无法修改级别
+     */
+    fun UserMessage(){
+        textView_title.text = "个人信息修改"
+        editText_Num.isEnabled = false
+        editText_Num.isFocusable = false
+        editText_Num.isFocusableInTouchMode = false
+        textViewlevel.visibility = View.INVISIBLE
+        spinner_level.visibility = View.INVISIBLE
+    }
 }
