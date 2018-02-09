@@ -10,7 +10,7 @@ import android.util.Log
 import com.example.smartcabinet.util.SC_Const
 import kotlinx.android.synthetic.main.activity_admin.*
 
-class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten,EditPersonFragment.addpersonbuttonlisten,EditMessageFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener{
+class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten,EditPersonFragment.addpersonbuttonlisten,EditMessageFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener{
     private var scApp: SCApp? = null
     private var returnview = "login"
 
@@ -60,6 +60,14 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 }
             }
         })
+    }
+
+    override fun saveDrawerButtonClick(text: String) {
+        if(text == "saveDrawer")
+        {
+            val setCabinet = SetCabinetFragment()
+            replaceFragment(setCabinet, R.id.framelayout)
+        }
     }
     override fun savepersonButtonClick(text: String) {
         if(text == "save")

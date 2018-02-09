@@ -15,10 +15,14 @@ import kotlinx.android.synthetic.main.fragment_drawer1.*
  */
 class DrawerFragment1 : Fragment() {
 
-    var drawerNum = String()
+    var drawerID  = 0
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+                if(getArguments()!=null)
+                {
+                    drawerID = getArguments().getInt("drawerID")
+                }
         return inflater!!.inflate(R.layout.fragment_drawer1, container, false)
     }
 
@@ -26,10 +30,7 @@ class DrawerFragment1 : Fragment() {
         iBt_drawer1.setOnClickListener {
 
         }
-        tV_drawer1.text = drawerNum
+        tV_drawer1.text =("抽屉"+drawerID)
     }
 
-    fun changeTextProperties(text: String){
-        drawerNum = text
-    }
 }// Required empty public constructor

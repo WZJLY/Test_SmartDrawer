@@ -20,4 +20,7 @@ public class Drawer {
         this.boxId = bId;
         this.drawerSize = dS;
     }
+    public int getId(){
+        return this.drawerId;
+    }
 }

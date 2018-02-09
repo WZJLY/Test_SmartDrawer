@@ -7,11 +7,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.example.smartcabinet.util.DBManager
+import com.example.smartcabinet.util.Drawer
+import com.example.smartcabinet.util.UserAccount
 import kotlinx.android.synthetic.main.fragment_set_cabinet.*
 
 
 class SetCabinetFragment : Fragment() {
     var activityCallback: SetCabinetFragment.SetCabinetListener ?= null
+    private var dbManager: DBManager? = null
+    private var drawer: Drawer? = null
+
     interface SetCabinetListener {
         fun setCabinetClick(fragment: String)
     }
@@ -35,6 +42,15 @@ class SetCabinetFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        dbManager = DBManager(context.applicationContext)
+        updateDrawer()
+        val arrListDrawers = dbManager?.getDrawers()
+        if(arrListDrawers == null)
+        {
+            Toast.makeText(context.applicationContext, "请添加抽屉", Toast.LENGTH_SHORT).show()
+        }
+
+
         iBt_addCabinet.setOnClickListener {
             val cabinetFragment = CabinetFragment()
             val fragmentTransaction = fragmentManager.beginTransaction()
@@ -44,12 +60,36 @@ class SetCabinetFragment : Fragment() {
         }
 
         iBt_addDrawer.setOnClickListener {
-//            val drawerFragment1 = DrawerFragment1()
-//            val fragmentTransient = fragmentManager.beginTransaction()
-//            fragmentTransient.add(R.id.Layout_drawer,drawerFragment1)
-//            fragmentTransient.commit()
-//            drawerFragment1.changeTextProperties("抽屉2")
+
             activityCallback?.setCabinetClick("setDrawer")
+        }
+    }
+    fun updateDrawer()
+    {
+        val arrListDrawers = dbManager?.getDrawers()
+        if(arrListDrawers == null)
+        {
+            Toast.makeText(context.applicationContext, "请添加抽屉", Toast.LENGTH_SHORT).show()
+        }
+
+
+     else
+     {
+         val sum = arrListDrawers!!.size.toInt()
+         Toast.makeText(context.applicationContext, "抽屉"+sum, Toast.LENGTH_SHORT).show()
+         if(sum>0) {
+             for (i in 1..sum) {
+                 drawer = arrListDrawers?.get(i - 1)
+                 val fragment = childFragmentManager.beginTransaction()
+                 val drawerFragment1 = DrawerFragment1()
+                 val args = Bundle()
+                 args.putInt("drawerID", drawer!!.getId().toInt())
+                 drawerFragment1.setArguments(args)
+                 fragment.add(R.id.Layout_drawer, drawerFragment1, "抽屉")
+                 fragment.commit()
+
+             }
+         }
         }
     }
 }// Required empty public constructor
