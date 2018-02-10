@@ -45,8 +45,6 @@ class AdminFragment : Fragment() {
             buttonClicked("personal_management")
         }
         editflie.setOnClickListener{
-
-
             buttonClicked(" editflie")
 
         }

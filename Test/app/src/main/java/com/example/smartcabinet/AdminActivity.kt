@@ -10,7 +10,7 @@ import android.util.Log
 import com.example.smartcabinet.util.SC_Const
 import kotlinx.android.synthetic.main.activity_admin.*
 
-class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten,EditPersonFragment.addpersonbuttonlisten,EditMessageFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener{
+class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten,EditPersonFragment.addpersonbuttonlisten,EditMessageFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener,DrawerFragment1.deletDrawerFragmentListener{
     private var scApp: SCApp? = null
     private var returnview = "login"
 
@@ -56,6 +56,21 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         })
     }
 
+    override  fun deletDrawerButtonClick(text: String) {
+        if(text == "delet")
+        {
+            val setCabinet = SetCabinetFragment()
+            replaceFragment(setCabinet, R.id.framelayout)
+        }
+        if(text == "find_out")
+        {
+            val setDrawerFragment = SetDrawerFragment()
+            val args = Bundle()
+            args.putString("setDrawer","find_out")
+            setDrawerFragment.setArguments(args)
+            replaceFragment(setDrawerFragment, R.id.framelayout)
+        }
+    }
     override fun saveDrawerButtonClick(text: String) {
         if(text == "saveDrawer") {
             val setCabinet = SetCabinetFragment()
