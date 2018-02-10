@@ -46,7 +46,9 @@ class AdminFragment : Fragment() {
         }
         editflie.setOnClickListener{
 
+
             buttonClicked(" editflie")
+
         }
         reagent_op.setOnClickListener{
           buttonClicked("reagent_op")

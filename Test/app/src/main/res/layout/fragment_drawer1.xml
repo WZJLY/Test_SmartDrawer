@@ -1,32 +1,49 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ImageButton
-        android:id="@+id/iBt_drawer1"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/chouti_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/iBt_drawer1"
+            android:layout_width="600sp"
+            android:layout_height="100sp"
+            android:background="@drawable/chouti_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/iBt_delete"
+            android:layout_width="100sp"
+            android:layout_height="101sp"
+            android:background="@drawable/chouti_button" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tV_drawer1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
         android:text="抽屉1"
         android:textColor="@android:color/background_dark"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/iBt_drawer1"
-        app:layout_constraintStart_toStartOf="@+id/iBt_drawer1"
-        app:layout_constraintTop_toTopOf="@+id/iBt_drawer1" />
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.574" />
 </android.support.constraint.ConstraintLayout>

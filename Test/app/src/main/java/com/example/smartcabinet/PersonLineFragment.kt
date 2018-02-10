@@ -23,14 +23,14 @@ class PersonLineFragment : Fragment() {
     var activityCallback: PersonLineFragment.deletbuttonlisten? = null
     private var dbManager: DBManager? = null
     private var scApp: SCApp? = null
-    var text = String()
+    var userid = String()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         if(getArguments()!=null)
         {
-            text = getArguments().getString("username")
+            userid = getArguments().getString("userid")
         }
         return inflater!!.inflate(R.layout.fragment_line_person, container, false)
     }
@@ -50,13 +50,14 @@ class PersonLineFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         scApp = context.applicationContext as SCApp
         dbManager = DBManager(context.applicationContext)
-        tV_userName.text=text
+      val daccout=dbManager?.getUserAccountByUserId(userid)
+        tV_userName.text=daccout?.getUserName()
         val account= scApp?.getUserInfo()
-        if(account?.userName == tV_userName.text.toString())
+        if(account?.userId == userid)
         {
             iBt_deletPerson.setVisibility(View.GONE)
         }
-        if(tV_userName.text.toString()=="admin")
+        if(userid=="00001")
         {
             iBt_deletPerson.setVisibility(View.GONE)
         }
@@ -69,9 +70,6 @@ class PersonLineFragment : Fragment() {
 
                 val usename = tV_userName.text.toString()
                 dbManager?.deleteAccountByUserName(usename)
-//          val intent = Intent()
-//            intent.setClass(context.applicationContext,EditPersonActivity::class.java)
-//            startActivity(intent)
                 deletbuttonClicked("delet")
                 Toast.makeText(context.applicationContext, "删除成功", Toast.LENGTH_SHORT).show()
             })
