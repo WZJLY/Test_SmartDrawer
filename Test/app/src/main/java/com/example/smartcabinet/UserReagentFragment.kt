@@ -20,4 +20,8 @@ class UserReagentFragment : Fragment() {
         return inflater!!.inflate(R.layout.fragment_user_reagent, container, false)
     }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
 }// Required empty public constructor

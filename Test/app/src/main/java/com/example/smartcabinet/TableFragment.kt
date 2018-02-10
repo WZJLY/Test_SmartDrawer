@@ -21,10 +21,6 @@ class TableFragment : Fragment() {
         return inflater!!.inflate(R.layout.fragment_table, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        addNum(3)
-    }
-
     fun addNum(num: Int){
         tableLayout.removeAllViews()
         for(i in 1..num){
@@ -40,11 +36,11 @@ class TableFragment : Fragment() {
                     val row = button.id.toString()
                     Log.d("data","选择了"+row)
                 }
-                button.setBackgroundResource(R.drawable.button_style)
+                button.setBackgroundResource(R.drawable.btn_style)
                 button.text = ""
                 button.setTextColor(Color.BLACK)
-                button.width = 60
-                button.height = 60
+                button.width = 55
+                button.height = 55
                 tableRow.addView(button)
             }
             tableLayout.addView(tableRow)

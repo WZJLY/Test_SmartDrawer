@@ -36,18 +36,14 @@ class SetDrawerFragment : Fragment() {
         fragmentTrasaction.replace(R.id.fL_table,tableFragment)
         fragmentTrasaction.commit()
         dbManager = DBManager(context.applicationContext)
+        spinner_drawer.setSelection(0)
         spinner_drawer.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>, view: View,
                                         pos: Int, id: Long) {
-                if (isSpinnerFirst) {
-                    isSpinnerFirst = false
-                }
-                else{
-                    val boxNum = resources.getStringArray(R.array.drawer)
-                    tableFragment.addNum(boxNum[pos].toInt())
-                    boxnum=boxNum[pos].toInt()
-                    Toast.makeText(context, "你点击的是:" + boxNum[pos], Toast.LENGTH_SHORT).show()
-                }
+                val boxNum = resources.getStringArray(R.array.drawer)
+                tableFragment.addNum(boxNum[pos].toInt())
+                boxnum=boxNum[pos].toInt()
+                Toast.makeText(context, "你点击的是:" + boxNum[pos], Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
