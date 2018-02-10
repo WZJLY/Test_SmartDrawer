@@ -72,6 +72,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         returnview = "editperson"
         if (text == "addperson")
         {
+
             val editMessageFragment = EditMessageFragment()
             val args = Bundle()
             args.putString("editfile","addperson")
@@ -97,6 +98,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
             }
             "edit_flie" ->
             {
+
                 val editMessageFragment = EditMessageFragment()
                 val args = Bundle()
                 args.putString("editfile","editperson")
