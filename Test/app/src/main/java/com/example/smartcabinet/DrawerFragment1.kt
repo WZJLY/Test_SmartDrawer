@@ -31,17 +31,18 @@ class DrawerFragment1 : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         dbManager = DBManager(context.applicationContext)
+        tV_drawer1.text =("抽屉"+drawerID)
         iBt_drawer1.setOnClickListener {
-            deletDrawerbuttonClicked("find_out")
+            deletDrawerbuttonClicked("find_out",drawerID)
         }
         iBt_delete.setOnClickListener{
             dbManager?.deleteDrawer(drawerID,1)
-            deletDrawerbuttonClicked("delet")
+            deletDrawerbuttonClicked("delet",0)
         }
-        tV_drawer1.text =("抽屉"+drawerID)
+
     }
     interface deletDrawerFragmentListener {
-        fun deletDrawerButtonClick(text: String)
+        fun deletDrawerButtonClick(text: String,drawerID: Int)
     }
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -53,8 +54,8 @@ class DrawerFragment1 : Fragment() {
         }
 
     }
-    private fun deletDrawerbuttonClicked(text: String) {
-        activityCallback?.deletDrawerButtonClick(text)
+    private fun deletDrawerbuttonClicked(text: String,drawerID: Int) {
+        activityCallback?.deletDrawerButtonClick(text,drawerID)
     }
 
 }// Required empty public constructor

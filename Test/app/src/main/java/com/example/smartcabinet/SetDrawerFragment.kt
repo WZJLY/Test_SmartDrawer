@@ -22,8 +22,9 @@ class SetDrawerFragment : Fragment() {
     var isSpinnerFirst = true
     private var dbManager: DBManager? = null
     private var drawer: Drawer? = null
-    var boxnum = 0
-    var sum = 0
+    private  var boxnum = 0
+    private  var sum = 0
+    private  var drawerID = 0
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -31,38 +32,62 @@ class SetDrawerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        dbManager = DBManager(context.applicationContext)
         val tableFragment = TableFragment()
         val fragmentTrasaction = fragmentManager.beginTransaction()
         fragmentTrasaction.replace(R.id.fL_table,tableFragment)
         fragmentTrasaction.commit()
-        dbManager = DBManager(context.applicationContext)
-        spinner_drawer.setSelection(0)
-        spinner_drawer.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                        pos: Int, id: Long) {
-                val boxNum = resources.getStringArray(R.array.drawer)
-                tableFragment.addNum(boxNum[pos].toInt())
-                boxnum=boxNum[pos].toInt()
-                Toast.makeText(context, "你点击的是:" + boxNum[pos], Toast.LENGTH_SHORT).show()
-            }
+       if(getArguments().getString("setDrawer")!=null&&getArguments().getString("setDrawer")!="set")
+       {
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-        }
-        btn_save.setOnClickListener{
-            val arrayList = dbManager?.getDrawers()
-            if(arrayList == null)
-            {
-                sum = 0
-                dbManager?.addDrawer(sum+1,1,boxnum)
-            }
-            else
-                sum =arrayList!!.size.toInt()
-                dbManager?.addDrawer(sum+1,1,boxnum)
-            saveDrawerbuttonClicked("saveDrawer")
+           drawerID = getArguments().getString("setDrawer").toInt()
+           val tableFragment = TableFragment()
+           val arg = Bundle()
+           arg.putInt("tablenum",drawerID)
+           tableFragment.setArguments(arg)
+           val fragmentTrasaction = fragmentManager.beginTransaction()
+           fragmentTrasaction.replace(R.id.fL_table,tableFragment)
+           fragmentTrasaction.commit()
+           spinner_drawer.setSelection( (dbManager!!.getDrawerByDrawerId(drawerID).getDrawerSize())-2)
+            spinner_drawer.isEnabled = false
+            btn_save.setVisibility(View.GONE)
 
 
+       }
+
+        if(getArguments().getString("setDrawer")=="set") {
+            spinner_drawer.setSelection(0)
+            spinner_drawer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View,
+                                            pos: Int, id: Long) {
+                    val boxNum = resources.getStringArray(R.array.drawer)
+                    if(getArguments().getString("setDrawer1")=="find") {
+                        tableFragment.addNum(5)
+                    }
+                    else {
+                        tableFragment.addNum(boxNum[pos].toInt())
+                        boxnum = boxNum[pos].toInt()
+                        Toast.makeText(context, "你点击的是:" + boxNum[pos], Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+            }
+            btn_save.setOnClickListener {
+                val arrayList = dbManager?.getDrawers()
+                if (arrayList == null) {
+                    sum = 0
+                    dbManager?.addDrawer(sum + 1, 1, boxnum)
+                } else {
+                    sum = arrayList!!.size.toInt()
+                    dbManager?.addDrawer(sum + 1, 1, boxnum)
+                }
+                saveDrawerbuttonClicked("saveDrawer")
+
+
+            }
         }
     }
     interface SetDrawerFragmentListener {

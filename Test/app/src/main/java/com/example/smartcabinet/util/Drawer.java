@@ -23,4 +23,5 @@ public class Drawer {
     public int getId(){
         return this.drawerId;
     }
+    public int getDrawerSize(){return this.drawerSize;}
 }

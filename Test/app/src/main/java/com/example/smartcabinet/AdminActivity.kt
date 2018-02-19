@@ -56,7 +56,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         })
     }
 
-    override  fun deletDrawerButtonClick(text: String) {
+    override  fun deletDrawerButtonClick(text: String,drawerID:Int) {
         if(text == "delet")
         {
             val setCabinet = SetCabinetFragment()
@@ -64,11 +64,13 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         }
         if(text == "find_out")
         {
-            val setDrawerFragment = SetDrawerFragment()
+            val setDrawer = SetDrawerFragment()
             val args = Bundle()
-            args.putString("setDrawer","find_out")
-            setDrawerFragment.setArguments(args)
-            replaceFragment(setDrawerFragment, R.id.framelayout)
+            args.putString("setDrawer",""+drawerID)
+            setDrawer.setArguments(args)
+            replaceFragment(setDrawer, R.id.framelayout)
+
+
         }
     }
     override fun saveDrawerButtonClick(text: String) {
@@ -184,7 +186,11 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     override fun setCabinetClick(fragment: String) {
         when (fragment){
             "setDrawer" -> {
+
                 val setDrawer = SetDrawerFragment()
+                val args = Bundle()
+                args.putString("setDrawer","set")
+                setDrawer.setArguments(args)
                 replaceFragment(setDrawer, R.id.framelayout)
                 Log.d("data",fragment)
             }
