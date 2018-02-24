@@ -1,0 +1,52 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SubOperationFragment">
+
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="250sp"
+        android:layout_height="80sp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="68dp"
+        android:background="@drawable/denglu_button"
+        android:text="返回"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btn_ok"
+        android:layout_width="250sp"
+        android:layout_height="80sp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="68dp"
+        android:background="@drawable/denglu_button"
+        android:text="确定"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="700sp"
+        android:layout_height="100sp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/chouti_unselect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3">
+
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

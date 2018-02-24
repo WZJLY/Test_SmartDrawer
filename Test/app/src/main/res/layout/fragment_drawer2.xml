@@ -7,49 +7,60 @@
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/iBt_drawer2"
-            android:layout_width="600sp"
-            android:layout_height="100sp"
-            android:layout_weight="1"
-            android:background="@drawable/chouti_icon"
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.195" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/iBt_lock"
-            android:layout_width="100sp"
-            android:layout_height="101sp"
-            android:layout_weight="1"
-            android:background="@drawable/chouti_lock"
-            tools:layout_editor_absoluteX="648dp"
-            tools:layout_editor_absoluteY="241dp" />
+            <ImageButton
+                android:id="@+id/iBt_drawer2"
+                android:layout_width="600sp"
+                android:layout_height="100sp"
+                android:layout_weight="1"
+                android:background="@drawable/chouti_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.195" />
+
+            <ImageButton
+                android:id="@+id/iBt_lock"
+                android:layout_width="100sp"
+                android:layout_height="101sp"
+                android:layout_weight="1"
+                android:background="@drawable/chouti_lock"
+                tools:layout_editor_absoluteX="648dp"
+                tools:layout_editor_absoluteY="241dp" />
+        </LinearLayout>
     </LinearLayout>
 
     <TextView
         android:id="@+id/tV_drawer2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="32dp"
         android:text="抽屉1"
         android:textColor="@android:color/background_dark"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout3" />
+        app:layout_constraintStart_toStartOf="@+id/linearLayout4"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout4" />
+
 </android.support.constraint.ConstraintLayout>

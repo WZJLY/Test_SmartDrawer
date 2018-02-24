@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/btn_admin_back"
         android:layout_width="150sp"
         android:layout_height="80sp"
         android:layout_marginStart="8dp"
@@ -13,11 +13,11 @@
         android:text="返回"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button11"
+        app:layout_constraintStart_toEndOf="@+id/btn_scrap"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_admin_return"
         android:layout_width="150sp"
         android:layout_height="80sp"
         android:background="@drawable/denglu_button"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button13"
+        android:id="@+id/btn_into"
         android:layout_width="150sp"
         android:layout_height="80sp"
         android:layout_marginEnd="8dp"
@@ -37,11 +37,11 @@
         android:text="入柜"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button12"
+        app:layout_constraintEnd_toStartOf="@+id/btn_admin_take"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button12"
+        android:id="@+id/btn_admin_take"
         android:layout_width="150sp"
         android:layout_height="80sp"
         android:layout_marginEnd="8dp"
@@ -49,11 +49,11 @@
         android:text="取用"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintEnd_toStartOf="@+id/btn_admin_return"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button11"
+        android:id="@+id/btn_scrap"
         android:layout_width="150sp"
         android:layout_height="80sp"
         android:layout_marginStart="8dp"
@@ -61,6 +61,6 @@
         android:text="报废"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button3"
+        app:layout_constraintStart_toEndOf="@+id/btn_admin_return"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

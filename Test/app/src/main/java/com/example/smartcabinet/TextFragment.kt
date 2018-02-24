@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.serach_fragment.*
 import kotlinx.android.synthetic.main.text_fragment.*
 
 /**
@@ -19,7 +17,7 @@ class TextFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        button3.setOnClickListener {
+        btn_test.setOnClickListener {
             activity.finish()
         }
     }

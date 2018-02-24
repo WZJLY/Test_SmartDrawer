@@ -10,19 +10,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:launchMode="singleTask">
+        <activity
+            android:name=".LoginActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AdminActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:launchMode="singleTask"></activity>
-        <activity android:name=".OperationActivity"></activity>
-
+        <activity
+            android:name=".AdminActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".OperationActivity" />
+        <activity
+            android:name=".SubOperationActivity"
+            android:label="@string/title_activity_sub_operation"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
