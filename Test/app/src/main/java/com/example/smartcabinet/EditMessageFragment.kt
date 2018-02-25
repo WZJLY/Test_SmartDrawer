@@ -45,7 +45,7 @@ class EditMessageFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>, view: View,
                                         pos: Int, id: Long) {
                 val power = resources.getStringArray(R.array.power)
-                Toast.makeText(context, "你点击的是:" + power[pos], Toast.LENGTH_SHORT).show()
+
                 if(power[pos]=="管理员")
                 {
                     userAccount.userPower = SC_Const.ADMIN

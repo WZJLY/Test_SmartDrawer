@@ -45,12 +45,14 @@ class SetDrawerFragment : Fragment() {
            val arg = Bundle()
            arg.putInt("tablenum",drawerID)
            tableFragment.setArguments(arg)
+
            val fragmentTrasaction = fragmentManager.beginTransaction()
            fragmentTrasaction.replace(R.id.fL_table,tableFragment)
            fragmentTrasaction.commit()
+
            spinner_drawer.setSelection( (dbManager!!.getDrawerByDrawerId(drawerID).getDrawerSize())-2)
-            spinner_drawer.isEnabled = false
-            btn_save.setVisibility(View.GONE)
+           spinner_drawer.isEnabled = false
+           btn_save.setVisibility(View.GONE)
 
 
        }
@@ -67,7 +69,6 @@ class SetDrawerFragment : Fragment() {
                     else {
                         tableFragment.addNum(boxNum[pos].toInt())
                         boxnum = boxNum[pos].toInt()
-                        Toast.makeText(context, "你点击的是:" + boxNum[pos], Toast.LENGTH_SHORT).show()
                     }
                 }
 

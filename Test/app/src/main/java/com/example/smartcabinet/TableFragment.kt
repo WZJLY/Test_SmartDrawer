@@ -33,7 +33,6 @@ class TableFragment : Fragment() {
         {
             dbManager = DBManager(context.applicationContext)
             drawerID = getArguments().getInt("tablenum")
-            Toast.makeText(context.applicationContext,"大小"+ drawerID,Toast.LENGTH_SHORT).show()
             drawer=dbManager?.getDrawerByDrawerId(drawerID)
 
         if(drawer != null)

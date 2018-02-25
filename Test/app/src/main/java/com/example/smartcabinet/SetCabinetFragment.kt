@@ -76,7 +76,6 @@ class SetCabinetFragment : Fragment() {
      else
      {
          val sum = arrListDrawers!!.size.toInt()
-         Toast.makeText(context.applicationContext, "抽屉"+sum, Toast.LENGTH_SHORT).show()
          if(sum>0) {
              for (i in 1..sum) {
                  drawer = arrListDrawers?.get(i - 1)

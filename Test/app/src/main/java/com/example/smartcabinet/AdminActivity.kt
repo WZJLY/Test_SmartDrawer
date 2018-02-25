@@ -52,6 +52,11 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                     intent.setClass(this,LoginActivity::class.java)
                     startActivity(intent)
                 }
+                "find_out"->{
+                    val setCabinetFragment = SetCabinetFragment()
+                    replaceFragment(setCabinetFragment,R.id.framelayout)
+                    returnview = "admin"
+                }
             }
         })
     }
@@ -59,11 +64,13 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     override  fun deletDrawerButtonClick(text: String,drawerID:Int) {
         if(text == "delet")
         {
+
             val setCabinet = SetCabinetFragment()
             replaceFragment(setCabinet, R.id.framelayout)
         }
         if(text == "find_out")
         {
+            returnview = "find_out"
             val setDrawer = SetDrawerFragment()
             val args = Bundle()
             args.putString("setDrawer",""+drawerID)
