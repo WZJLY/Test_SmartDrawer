@@ -62,7 +62,7 @@ class AdminFragment : Fragment() {
             buttonClicked("auto_update")
         }
         reagent_template.setOnClickListener{
-            buttonClicked("reagent_templatep")
+            buttonClicked("reagent_template")
         }
 
     }

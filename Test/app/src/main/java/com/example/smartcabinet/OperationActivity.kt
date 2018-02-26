@@ -6,20 +6,22 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
+import com.example.smartcabinet.util.DBManager
+import com.example.smartcabinet.util.Drawer
 import com.example.smartcabinet.util.SC_Const
 
 
 class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentListen,AdminReagentFragment.adminReagentListen {
     private var scApp: SCApp? = null
+    private var dbManager:DBManager?=null
+    private var drawer: Drawer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_operation)
-
+        dbManager = DBManager(applicationContext)
         val cabinetFragment = CabinetFragment()
         addFragment(R.id.Layout_cabinet,cabinetFragment)
-
-        val drawerFragment2 = DrawerFragment2()
-        addFragment(R.id.Layout_drawer,drawerFragment2)
 
         scApp = application as SCApp
         val userAccount =  scApp?.getUserInfo()
@@ -35,6 +37,8 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
                 replaceFragment(R.id.frameLayout_button, userReagentFragment)
             }
         }
+        updateDrawer()
+
     }
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
         val fragmentTransaction = beginTransaction()
@@ -92,5 +96,31 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
 
     fun AppCompatActivity.addFragment(frameId: Int, fragment: Fragment) {
         supportFragmentManager.inTransaction{add(frameId, fragment)}
+    }
+    fun updateDrawer()
+    {
+        val arrListDrawers = dbManager?.getDrawers()
+        if(arrListDrawers == null)
+        {
+            Toast.makeText(this, "请添加抽屉", Toast.LENGTH_SHORT).show()
+        }
+
+
+        else
+        {
+            val sum = arrListDrawers!!.size.toInt()
+            if(sum>0) {
+                for (i in 1..sum) {
+                    drawer = arrListDrawers?.get(i - 1)
+                    val fragment =fragmentManager.beginTransaction()
+                    val drawerFragment2 = DrawerFragment2()
+                    val args = Bundle()
+                    args.putInt("drawerID", drawer!!.getId().toInt())
+                    drawerFragment2.setArguments(args)
+                    addFragment(R.id.Layout_drawer,drawerFragment2)
+
+                }
+            }
+        }
     }
 }
