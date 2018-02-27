@@ -11,6 +11,7 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.os.StrictMode
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
@@ -37,6 +38,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
+
         dbManager = DBManager(applicationContext)
         scApp = application as SCApp
         val userAccount =  scApp?.getUserInfo()
@@ -200,8 +202,50 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 builder.setMessage("请输入试剂模板编号")
                 builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
                     val templateid = edit.text.toString()
-//                    importAgentiaTemplate(templateid)
-                    Toast.makeText(this, "导入模板成功"+templateid, Toast.LENGTH_SHORT).show()
+
+                    Thread(
+                            Runnable {
+                                val path = "SmartCabinet/ReagentTemplate"
+                                val fileName = "1422440131" + ".csv"
+                                val urlStr = SC_Const.REAGENTTEMPLATEADDRESS + fileName
+                                var output: OutputStream? = null
+                                val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
+                                val pathName = "$SDCard/$path/$fileName"
+                                val url = URL(urlStr)
+                                val conn = url.openConnection() as HttpURLConnection
+                                //取得inputStream，并将流中的信息写入SDCard
+
+                                /*
+                                     * 写前准备
+                                     * 1.在AndroidMainfest.xml中进行权限配置
+                                     * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+                                     * 取得写入SDCard的权限
+                                     * 2.取得SDCard的路径： Environment.getExternalStorageDirectory()
+                                     * 3.检查要保存的文件上是否已经存在
+                                     * 4.不存在，新建文件夹，新建文件
+                                     * 5.将input流中的信息写入SDCard
+                                     * 6.关闭流
+                                     */
+
+                                val file = File(pathName)
+                                val dir = SDCard + "/" + path
+                                File(dir).mkdir()//新建文件夹
+                                val input = conn.inputStream
+                                    file.createNewFile()//新建文件
+                                if (file.exists())
+                                    Log.d("file already exists:", pathName)
+                                else
+                                    Log.d("file already noexists:", pathName)
+                                    output = FileOutputStream(file)
+                                    //读取大文件
+                                    val buffer = ByteArray(4 * 1024)
+                                    while (input.read(buffer) != -1) {
+                                        output!!.write(buffer)
+                                    }
+                                    output!!.flush()
+
+                            }
+                    ).start()
                 })
                 builder.setNeutralButton("取消",null)
                 builder.create()
@@ -245,7 +289,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         val fileName = id + ".csv"
         val urlStr = SC_Const.REAGENTTEMPLATEADDRESS + fileName
         var output: OutputStream? = null
-        val SDCard = Environment.getExternalStorageDirectory().toString() + ""
+        val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
         val pathName = "$SDCard/$path/$fileName"//文件存储路径
         try {
             /*
@@ -461,6 +505,27 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     fun isMediaDocument(uri: Uri): Boolean {
         return "com.android.providers.media.documents" == uri.authority
     }
+
+    @Throws(Exception::class)
+    fun downLoad(path: String, context: Context) {
+        val url = URL(path)
+        val `is` = url.openStream()
+        //截取最后的文件名
+        val end = path.substring(path.lastIndexOf("."))
+        //打开手机对应的输出流,输出到文件中
+        val os = context.openFileOutput("Cache_" + System.currentTimeMillis() + end, Context.MODE_PRIVATE)
+        val buffer = ByteArray(1024)
+
+        //从输入六中读取数据,读到缓冲区中
+        while ((`is`.read(buffer)) > 0) {
+            os.write(buffer, 0, `is`.read(buffer))
+        }
+        //关闭输入输出流
+        `is`.close()
+        os.close()
+    }
+
+
 }
 
 

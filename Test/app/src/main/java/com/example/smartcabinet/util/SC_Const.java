@@ -21,7 +21,7 @@ public final class SC_Const {
     public static String DRAWERID = "drawerId";
     public static String REAGENTID = "reagentId";
 
-    public static String SERVERADDRESS = "http://www.anchu365.com/";
+    public static String SERVERADDRESS = "http://www.anchu365.com/admin";
     public static String REAGENTTEMPLATEADDRESS = SERVERADDRESS+"Temp/";
     public static String APKADDRESS = SERVERADDRESS+"APK/";
 }
