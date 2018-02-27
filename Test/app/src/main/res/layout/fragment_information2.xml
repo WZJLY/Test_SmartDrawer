@@ -1,0 +1,165 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".InformationFragment2">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/tV_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_weight="1"
+        android:text="失效日期："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tV_residue" />
+
+    <TextView
+        android:id="@+id/tV_ml"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="ml"
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/eT_residue"
+        app:layout_constraintStart_toEndOf="@+id/eT_residue"
+        app:layout_constraintTop_toTopOf="@+id/eT_residue" />
+
+    <TextView
+        android:id="@+id/tV_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_weight="1"
+        android:text="称重重量："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tV_type" />
+
+    <EditText
+        android:id="@+id/eT_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bg_edit"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_code"
+        app:layout_constraintStart_toEndOf="@+id/tV_code"
+        app:layout_constraintTop_toTopOf="@+id/tV_code" />
+
+    <TextView
+        android:id="@+id/tV_residue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_weight="1"
+        android:text="试剂余量："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tV_weight" />
+
+    <EditText
+        android:id="@+id/eT_weight"
+        android:layout_width="218dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_edit"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_weight"
+        app:layout_constraintStart_toEndOf="@+id/tV_weight"
+        app:layout_constraintTop_toTopOf="@+id/tV_weight" />
+
+    <TextView
+        android:id="@+id/tV_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_weight="1"
+        android:text="试剂条码："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/eT_residue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bg_edit"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_residue"
+        app:layout_constraintStart_toEndOf="@+id/tV_residue"
+        app:layout_constraintTop_toTopOf="@+id/tV_residue" />
+
+    <Button
+        android:id="@+id/btn_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="扫码"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/eT_code"
+        app:layout_constraintStart_toEndOf="@+id/eT_code"
+        app:layout_constraintTop_toTopOf="@+id/eT_code" />
+
+    <TextView
+        android:id="@+id/tV_g"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="g"
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/eT_weight"
+        app:layout_constraintStart_toEndOf="@+id/eT_weight"
+        app:layout_constraintTop_toTopOf="@+id/eT_weight" />
+
+    <TextView
+        android:id="@+id/tV_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="试剂类型："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tV_code" />
+
+    <Spinner
+        android:id="@+id/spinner_type"
+        android:layout_width="310dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_type"
+        app:layout_constraintStart_toEndOf="@+id/tV_type"
+        app:layout_constraintTop_toTopOf="@+id/tV_type" />
+
+    <EditText
+        android:id="@+id/eT_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_edit"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_data"
+        app:layout_constraintStart_toEndOf="@+id/tV_data"
+        app:layout_constraintTop_toTopOf="@+id/tV_data" />
+
+</android.support.constraint.ConstraintLayout>
