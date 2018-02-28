@@ -1,11 +1,13 @@
 package com.example.smartcabinet
 
+import android.app.Application
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.preference.PreferenceActivity
 import android.util.Log
+import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.SC_Const
 import java.io.File
 import java.io.FileOutputStream
@@ -19,56 +21,46 @@ import java.net.URL
 
 class DownloadThread(internal var uihandler: Handler) : Thread() {
     var downloadhandler: Handler? = null
+
     override fun run() {
         super.run()
         Looper.prepare()
-        val path = "SmartCabinet/ReagentTemplate"
-        val fileName ="1519701177111" + ".csv"
-        val urlStr = SC_Const.REAGENTTEMPLATEADDRESS + fileName
-        var output: OutputStream? = null
-        val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
-        val pathName = "$SDCard/$path/$fileName"
-        val url = URL(urlStr)
-        val conn = url.openConnection() as HttpURLConnection
-        conn.requestMethod="GET"
-        conn.useCaches=false
-        conn.connectTimeout=10000
-        conn.readTimeout=10000
-        val file = File(pathName)
-        val dir = SDCard + "/" + path
-        File(dir).mkdir()//新建文件夹
-        val input = conn.getInputStream()
-        file.createNewFile()//新建文件
-        if (file.exists())
-            Log.d("file already exists:", pathName)
-        else
-            Log.d("file already noexists:", pathName)
-        output = FileOutputStream(file)
-        //读取大文件
-        val buffer = ByteArray(4 * 1024)
-
-        while (input.read(buffer) != -1) {
-            if(input.read(buffer)==null)
-            {
-                Log.d("file already noexists:", "6666666")
-            }
-            output!!.write(buffer)
-        }
-        output!!.flush()
         downloadhandler = object : Handler() {
             override fun handleMessage(msg: Message) {
                 super.handleMessage(msg)
-                if (msg.what == 4) {
+                if (msg.what == 2) {
                     //使用主线程的handler发送消息到主线程的looper
+                    val path = "SmartCabinet/ReagentTemplate"
+                    val fileName =msg.obj.toString() + ".csv"
+                    val urlStr = SC_Const.REAGENTTEMPLATEADDRESS + fileName
+                    var output: OutputStream? = null
+                    val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
+                    val pathName = "$SDCard/$path/$fileName"
+                    val url = URL(urlStr)
+                    val conn = url.openConnection() as HttpURLConnection
+                    conn.requestMethod="GET"
+                    conn.useCaches=false
+                    conn.connectTimeout=10000
+                    conn.readTimeout=10000
+                    val file = File(pathName)
+                    val dir = SDCard + "/" + path
+                    File(dir).mkdir()//新建文件夹
+                    val input = conn.getInputStream()
+                    file.createNewFile()//新建文件
+                    if (file.exists())
+                        Log.d("file already exists:", pathName)
+                    else
+                        Log.d("file already noexists:", pathName)
+                    output = FileOutputStream(file)
+                    //读取大文件
+                    val buffer = ByteArray(4 * 1024)
 
+                    while (input.read(buffer) != -1) {
+                        output!!.write(buffer)
+                    }
+                    output!!.flush()
                 }
 
-//                if (msg.what == 4) {
-//                    val feedbackmsg = Message.obtain()
-//                    feedbackmsg.what = 5
-//                    feedbackmsg.obj = "好伤心啊"
-//                    uihandler.sendMessage(feedbackmsg)//使用主线程的handler发送消息到主线程的looper
-//                }
 
             }
 

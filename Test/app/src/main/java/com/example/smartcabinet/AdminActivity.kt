@@ -38,21 +38,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
-        handler = object : Handler() {
-            override fun handleMessage(msg: Message) {
-                super.handleMessage(msg)
-                if (msg.what == 3) {
-                    download_handler = msg.obj as Handler
-                    Toast.makeText(applicationContext, "子线程说："+msg.obj, Toast.LENGTH_LONG).show()
-                    val backmsg = Message.obtain()
-                    backmsg.what = 4
-                    download_handler.sendMessage(backmsg)
-                }
-
-
-            }
-
-        }
         dbManager = DBManager(applicationContext)
         scApp = application as SCApp
         val userAccount =  scApp?.getUserInfo()
@@ -217,7 +202,21 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 builder.setMessage("请输入试剂模板编号")
                 builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
                     val templateid = edit.text.toString()
-                    
+                    handler = object : Handler() {
+                        override fun handleMessage(msg: Message) {
+                            super.handleMessage(msg)
+                            if (msg.what == 1) {
+                                download_handler = msg.obj as Handler
+                                val backmsg = Message.obtain()
+                                backmsg.what = 2
+                                backmsg.obj =   templateid
+                                download_handler.sendMessage(backmsg)
+                            }
+
+
+                        }
+
+                    }
                 })
 
                 val thread = DownloadThread(handler)
