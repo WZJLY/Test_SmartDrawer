@@ -7,11 +7,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
+import android.os.*
 import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.os.Environment
-import android.os.StrictMode
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.support.v4.app.Fragment
@@ -30,6 +27,7 @@ import java.io.*
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
+import kotlin.math.log
 
 class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten,EditPersonFragment.addpersonbuttonlisten,EditMessageFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener,DrawerFragment1.deletDrawerFragmentListener{
     private var scApp: SCApp? = null
@@ -206,31 +204,21 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                     Thread(
                             Runnable {
                                 val path = "SmartCabinet/ReagentTemplate"
-                                val fileName = "1422440131" + ".csv"
+                                val fileName = "1519704145828" + ".csv"
                                 val urlStr = SC_Const.REAGENTTEMPLATEADDRESS + fileName
                                 var output: OutputStream? = null
                                 val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
                                 val pathName = "$SDCard/$path/$fileName"
                                 val url = URL(urlStr)
                                 val conn = url.openConnection() as HttpURLConnection
-                                //取得inputStream，并将流中的信息写入SDCard
-
-                                /*
-                                     * 写前准备
-                                     * 1.在AndroidMainfest.xml中进行权限配置
-                                     * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-                                     * 取得写入SDCard的权限
-                                     * 2.取得SDCard的路径： Environment.getExternalStorageDirectory()
-                                     * 3.检查要保存的文件上是否已经存在
-                                     * 4.不存在，新建文件夹，新建文件
-                                     * 5.将input流中的信息写入SDCard
-                                     * 6.关闭流
-                                     */
-
+                                conn.requestMethod="GET"
+                                conn.useCaches=false
+                                conn.connectTimeout=10000
+                                conn.readTimeout=10000
                                 val file = File(pathName)
                                 val dir = SDCard + "/" + path
                                 File(dir).mkdir()//新建文件夹
-                                val input = conn.inputStream
+                                val input = conn.getInputStream()
                                     file.createNewFile()//新建文件
                                 if (file.exists())
                                     Log.d("file already exists:", pathName)
@@ -238,11 +226,21 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                                     Log.d("file already noexists:", pathName)
                                     output = FileOutputStream(file)
                                     //读取大文件
-                                    val buffer = ByteArray(4 * 1024)
-                                    while (input.read(buffer) != -1) {
-                                        output!!.write(buffer)
+                                val buffer = ByteArray(4 * 1024)
+
+                                while (input.read(buffer) != -1) {
+                                    if(input.read(buffer)==null)
+                                    {
+                                        Log.d("file already noexists:", "6666666")
                                     }
-                                    output!!.flush()
+                                    output!!.write(buffer)
+                                }
+                                output!!.flush()
+//                                val msg = Message.obtain()
+
+//                                msg.what=1
+//                                handler.sendMessage(msg)
+                                templateToDB(pathName)
 
                             }
                     ).start()
@@ -250,6 +248,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 builder.setNeutralButton("取消",null)
                 builder.create()
                 builder.show()
+
             }
         }
     }
@@ -282,7 +281,19 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
             }
         }
     }
-
+//  private  val handler = object : Handler() {
+//        fun handieMessage(msg: Message) {
+//            if(msg.what==1){
+//                val path = "SmartCabinet/ReagentTemplate"
+//                val fileName = "1519704145828" + ".csv"
+//                val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
+//                val pathName = "$SDCard/$path/$fileName"
+//                templateToDB(pathName)
+//                Log.d("data","else")
+//
+//            }
+//        }
+//    }
     @JavascriptInterface
     fun importAgentiaTemplate(id: String) {
         val path = "SmartCabinet/ReagentTemplate"
@@ -506,24 +517,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         return "com.android.providers.media.documents" == uri.authority
     }
 
-    @Throws(Exception::class)
-    fun downLoad(path: String, context: Context) {
-        val url = URL(path)
-        val `is` = url.openStream()
-        //截取最后的文件名
-        val end = path.substring(path.lastIndexOf("."))
-        //打开手机对应的输出流,输出到文件中
-        val os = context.openFileOutput("Cache_" + System.currentTimeMillis() + end, Context.MODE_PRIVATE)
-        val buffer = ByteArray(1024)
-
-        //从输入六中读取数据,读到缓冲区中
-        while ((`is`.read(buffer)) > 0) {
-            os.write(buffer, 0, `is`.read(buffer))
-        }
-        //关闭输入输出流
-        `is`.close()
-        os.close()
-    }
 
 
 }
