@@ -33,10 +33,26 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     private var scApp: SCApp? = null
     private var returnview = "login"
     private var dbManager: DBManager? = null
+    var handler =Handler()
+    var download_handler=Handler()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
+        handler = object : Handler() {
+            override fun handleMessage(msg: Message) {
+                super.handleMessage(msg)
+                if (msg.what == 3) {
+                    download_handler = msg.obj as Handler
+                    Toast.makeText(applicationContext, "子线程说："+msg.obj, Toast.LENGTH_LONG).show()
+                    val backmsg = Message.obtain()
+                    backmsg.what = 4
+                    download_handler.sendMessage(backmsg)
+                }
 
+
+            }
+
+        }
         dbManager = DBManager(applicationContext)
         scApp = application as SCApp
         val userAccount =  scApp?.getUserInfo()
@@ -193,6 +209,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
 
             }
             "reagent_template" -> {
+
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("提示")
                 var edit :EditText= EditText(this)
@@ -200,51 +217,11 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 builder.setMessage("请输入试剂模板编号")
                 builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
                     val templateid = edit.text.toString()
-
-                    Thread(
-                            Runnable {
-                                val path = "SmartCabinet/ReagentTemplate"
-                                val fileName = "1519704145828" + ".csv"
-                                val urlStr = SC_Const.REAGENTTEMPLATEADDRESS + fileName
-                                var output: OutputStream? = null
-                                val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
-                                val pathName = "$SDCard/$path/$fileName"
-                                val url = URL(urlStr)
-                                val conn = url.openConnection() as HttpURLConnection
-                                conn.requestMethod="GET"
-                                conn.useCaches=false
-                                conn.connectTimeout=10000
-                                conn.readTimeout=10000
-                                val file = File(pathName)
-                                val dir = SDCard + "/" + path
-                                File(dir).mkdir()//新建文件夹
-                                val input = conn.getInputStream()
-                                    file.createNewFile()//新建文件
-                                if (file.exists())
-                                    Log.d("file already exists:", pathName)
-                                else
-                                    Log.d("file already noexists:", pathName)
-                                    output = FileOutputStream(file)
-                                    //读取大文件
-                                val buffer = ByteArray(4 * 1024)
-
-                                while (input.read(buffer) != -1) {
-                                    if(input.read(buffer)==null)
-                                    {
-                                        Log.d("file already noexists:", "6666666")
-                                    }
-                                    output!!.write(buffer)
-                                }
-                                output!!.flush()
-//                                val msg = Message.obtain()
-
-//                                msg.what=1
-//                                handler.sendMessage(msg)
-                                templateToDB(pathName)
-
-                            }
-                    ).start()
+                    
                 })
+
+                val thread = DownloadThread(handler)
+                thread.start()
                 builder.setNeutralButton("取消",null)
                 builder.create()
                 builder.show()
