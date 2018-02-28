@@ -40,20 +40,22 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
         updateDrawer()
 
     }
-    inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
-        val fragmentTransaction = beginTransaction()
-        fragmentTransaction.func()
-        fragmentTransaction.commit()
-    }
+
 
     override fun userReagentButtonClick(text: String) {
         when(text) {
             "userTake" -> {
-
+                val intent = Intent()
+                intent.setClass(this,SubOperationActivity::class.java)
+                intent.putExtra("subOperation","Take")
+                startActivity(intent)
             }
 
             "userReturn" -> {
-
+                val intent = Intent()
+                intent.setClass(this,SubOperationActivity::class.java)
+                intent.putExtra("subOperation","Return")
+                startActivity(intent)
             }
 
             "userBack" -> {
@@ -67,19 +69,31 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
     override fun adminReagentButtonClick(text: String) {
         when(text) {
             "Into" -> {
-
+                val intent = Intent()
+                intent.setClass(this,SubOperationActivity::class.java)
+                intent.putExtra("subOperation","Into")
+                startActivity(intent)
             }
 
             "adminTake" -> {
-
+                val intent = Intent()
+                intent.setClass(this,SubOperationActivity::class.java)
+                intent.putExtra("subOperation","Take")
+                startActivity(intent)
             }
 
             "adminReturn" -> {
-
+                val intent = Intent()
+                intent.setClass(this,SubOperationActivity::class.java)
+                intent.putExtra("subOperation","Return")
+                startActivity(intent)
             }
 
             "Scrap" -> {
-
+                val intent = Intent()
+                intent.setClass(this,SubOperationActivity::class.java)
+                intent.putExtra("subOperation","Scrap")
+                startActivity(intent)
             }
 
             "adminBack" -> {
@@ -90,6 +104,12 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
         }
     }
 
+    inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
+        val fragmentTransaction = beginTransaction()
+        fragmentTransaction.func()
+        fragmentTransaction.commit()
+    }
+
     fun AppCompatActivity.replaceFragment(frameId: Int, fragment: Fragment) {
         supportFragmentManager.inTransaction{replace(frameId, fragment)}
     }
@@ -97,6 +117,7 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
     fun AppCompatActivity.addFragment(frameId: Int, fragment: Fragment) {
         supportFragmentManager.inTransaction{add(frameId, fragment)}
     }
+
     fun updateDrawer()
     {
         val arrListDrawers = dbManager?.getDrawers()
