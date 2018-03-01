@@ -44,7 +44,10 @@ class SetDrawerFragment : Fragment() {
            val tableFragment = TableFragment()
            val arg = Bundle()
            arg.putInt("tablenum",drawerID)
+
+            arg.putString("touch","false")
            tableFragment.setArguments(arg)
+           tableFragment.arguments = arg
 
            val fragmentTrasaction = fragmentManager.beginTransaction()
            fragmentTrasaction.replace(R.id.fL_table,tableFragment)

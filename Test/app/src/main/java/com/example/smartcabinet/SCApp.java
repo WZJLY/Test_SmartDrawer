@@ -16,7 +16,8 @@ public class SCApp extends Application {
     private DBManager dbManager;
     private UserAccount userInfo;
     private CabinetInfo cabinetInfo;
-
+    private int Touchdrawer;
+    private int Touchtable;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -52,5 +53,21 @@ public class SCApp extends Application {
         this.cabinetInfo = cabinetInfo;
     }
 
+    public void setTouchdrawer(int pos)
+    {
+        this.Touchdrawer=pos;
+    }
+    public int getTouchdrawer()
+    {
+        return Touchdrawer;
+    }
+    public void setTouchtable(int pos)
+    {
+        this.Touchtable=pos;
+    }
+    public int getTouchtable()
+    {
+        return Touchtable;
+    }
 
 }

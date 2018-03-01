@@ -58,7 +58,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         scApp = application as SCApp
         val userAccount =  scApp?.getUserInfo()
         val path = "SmartCabinet/ReagentTemplate"
-        val fileName ="1519701177111"+ ".csv"
+        val fileName ="1519877450290"+ ".csv"
         val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
         val pathName = "$SDCard/$path/$fileName"
         val urlStr = SC_Const.REAGENTTEMPLATEADDRESS + fileName
@@ -378,7 +378,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                     var lineArray: Array<String>? = null
                     dbManager?.deleteAllReagentTemplate()   //删除原有数据
                     while (line != null) {
-                        if (lineNumber > 1) {     //insert to DB
+                        if (lineNumber > 3) {     //insert to DB
                             lineArray = line.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                             if (lineArray[0] != null && lineArray[0] !== "") {
                                 if (lineArray[5] == "") lineArray[5] = "1"

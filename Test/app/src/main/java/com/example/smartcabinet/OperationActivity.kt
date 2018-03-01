@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.Drawer
@@ -13,14 +14,16 @@ import com.example.smartcabinet.util.ReagentTemplate
 import com.example.smartcabinet.util.SC_Const
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.admin_fragment.*
+import kotlin.math.log
 
 
-class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentListen,AdminReagentFragment.adminReagentListen {
+class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentListen,AdminReagentFragment.adminReagentListen{
     private var scApp: SCApp? = null
     private var dbManager:DBManager?=null
     private var drawer: Drawer? = null
     private var reagentTemplate:ReagentTemplate? = null
     private var statue:String?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_operation)
@@ -60,10 +63,12 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
     override fun userReagentButtonClick(text: String) {
         when(text) {
             "userTake" -> {
-                val intent = Intent()
-                intent.setClass(this,SubOperationActivity::class.java)
-                intent.putExtra("subOperation","Take")
-                startActivity(intent)
+                    val intent = Intent()
+                    intent.setClass(this, SubOperationActivity::class.java)
+                    intent.putExtra("subOperation", "Take")
+
+                    startActivity(intent)
+
 
 
 
@@ -84,20 +89,21 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
         }
     }
 
+
     override fun adminReagentButtonClick(text: String) {
         when(text) {
             "Into" -> {
-                statue = "Into"
-                try {
-                    val integrator = IntentIntegrator(this)
-                    integrator.setOrientationLocked(false)
-                    integrator.captureActivity = SmallCaptureActivity::class.java
-                    integrator.setTimeout(10000)
-                    integrator.initiateScan()
-                }
-                catch (e: Exception){
-                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                }
+                    statue = "Into"
+                    try {
+                        val integrator = IntentIntegrator(this)
+                        integrator.setOrientationLocked(false)
+                        integrator.captureActivity = SmallCaptureActivity::class.java
+                        integrator.setTimeout(10000)
+                        integrator.initiateScan()
+                    } catch (e: Exception) {
+                        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                    }
+
             }
 
             "adminTake" -> {
@@ -183,7 +189,9 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
                 val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
                 val intent = Intent()
                 intent.setClass(this, SubOperationActivity::class.java)
-                if(statue=="Into") intent.putExtra("subOperation", "Into")
+                if(statue=="Into") {
+                    intent.putExtra("subOperation", "Into")
+                }
                 if(statue=="Return") intent.putExtra("subOperation","Return")
                 intent.putExtra("scan_value",result.contents)
                 startActivity(intent)

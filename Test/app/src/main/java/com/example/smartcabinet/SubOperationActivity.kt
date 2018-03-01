@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import android.util.Log
 import android.widget.Toast
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_sub_operation.*
@@ -14,19 +15,28 @@ import kotlinx.android.synthetic.main.fragment_information2.*
 
 class SubOperationActivity : AppCompatActivity(),InformationFragment2.scanbuttonlisten,InformationFragment1.return_scanbuttonlisten{
 private var statue:String?=null
+    private var scApp: SCApp? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_operation)
-
+        scApp = application as SCApp
         val subOperation: String = intent.getStringExtra("subOperation")
         val scan_value = intent.getStringExtra("scan_value")
         when(subOperation) {
             "Into" -> {
+                val tableFragment = TableFragment()
+                val arg = Bundle()
+                arg.putInt("tablenum", scApp!!.getTouchdrawer())
+                arg.putString("touch","false")
+                tableFragment.arguments=arg
+                replaceFragment(R.id.FL_table,tableFragment)
+
                 val informationFragment = InformationFragment2()
                 val args = Bundle()
                 args.putString("scan_value", scan_value)
                 informationFragment.setArguments(args)
                 replaceFragment(R.id.frameLayout_information,informationFragment)
+
             }
 
             "Take" -> {
