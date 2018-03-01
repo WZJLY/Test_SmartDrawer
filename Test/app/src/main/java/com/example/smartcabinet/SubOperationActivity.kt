@@ -26,7 +26,8 @@ private var statue:String?=null
             "Into" -> {
                 val tableFragment = TableFragment()
                 val arg = Bundle()
-                arg.putInt("tablenum", scApp!!.getTouchdrawer())
+                arg.putString("statue","op")
+                arg.putInt("tablenum_op", scApp!!.getTouchdrawer())
                 arg.putString("touch","false")
                 tableFragment.arguments=arg
                 replaceFragment(R.id.FL_table,tableFragment)

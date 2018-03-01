@@ -57,14 +57,18 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         dbManager = DBManager(applicationContext)
         scApp = application as SCApp
         val userAccount =  scApp?.getUserInfo()
-        val path = "SmartCabinet/ReagentTemplate"
-        val fileName ="1519877450290"+ ".csv"
-        val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
-        val pathName = "$SDCard/$path/$fileName"
-        val urlStr = SC_Const.REAGENTTEMPLATEADDRESS + fileName
-        val url = URL(urlStr)
-        templateToDB(pathName)
-
+if(dbManager!!.reagentTemplate.size<1) {
+    dbManager?.addReagentTemplate("10001", "酒精", ""
+            , "", "", 1, "90%", "100",
+            "宁波化工", "123460", "ml", "1")
+    dbManager?.addReagentTemplate("10002", "丙酮", ""
+            , "", "", 1, "95%", "200",
+            "宁波化工", "123461", "ml", "1")
+    dbManager?.addReagentTemplate("10003", "盐酸", ""
+            , "", "", 1, "50%", "300",
+            "宁波昌远", "123462", "ml", "1")
+    Toast.makeText(this, "试剂模板添加成功", Toast.LENGTH_SHORT).show()
+}
         when(userAccount?.getUserPower()){
             SC_Const.ADMIN -> {
                 val adminfrag = AdminFragment()
@@ -226,29 +230,29 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 builder.setMessage("请输入试剂模板编号")
                 builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
                     val templated = edit.text.toString()
-                    handler = object : Handler() {
-                        override fun handleMessage(msg: Message) {
-                            super.handleMessage(msg)
-                            if (msg.what == 1) {
-                                download_handler = msg.obj as Handler
-                                val backmsg = Message.obtain()
-                                backmsg.what = 2
-                                backmsg.obj =  templated
-                                download_handler.sendMessage(backmsg)
-                            }
-                            if(msg.what==3)
-                            {
-
-                            }
-
-
-                        }
-
-                    }
+//                    handler = object : Handler() {
+//                    override fun handleMessage(msg: Message) {
+//                        super.handleMessage(msg)
+//                        if (msg.what == 1) {
+//                            download_handler = msg.obj as Handler
+//                            val backmsg = Message.obtain()
+//                            backmsg.what = 2
+//                            backmsg.obj =  templated
+//                            download_handler.sendMessage(backmsg)
+//                        }
+//                        if(msg.what==3)
+//                        {
+//
+//                        }
+//
+//
+//                    }
+//
+//                }
                 })
 
-                val thread = DownloadThread(handler)
-                thread.start()
+//                val thread = DownloadThread(handler)
+//                thread.start()
                 builder.setNeutralButton("取消",null)
                 builder.create()
                 builder.show()

@@ -77,12 +77,12 @@ class EditMessageFragment : Fragment() {
                 if (editText_Password.length() == 0) {
                     Toast.makeText(context, "密码为空", Toast.LENGTH_SHORT).show()
                 }
-
                 if (editText_Password.text.toString() == editText_Password2.text.toString() && editText_Num.length() != 0 && editText_userName.length() != 0 && editText_Password.length() != 0) {
                     userAccount.userPassword = editText_Password.text.toString()
                     if (dbManager?.isAccountExist(userAccount.userName) == true) {
                         Toast.makeText(context, "该用户已经存在", Toast.LENGTH_SHORT).show()
-                    } else {
+                    }
+                    else {
                         dbManager?.addAccount(userAccount)
                         savebuttonClicked("save")
                         Toast.makeText(context, "用户添加成功", Toast.LENGTH_SHORT).show()

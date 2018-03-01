@@ -35,7 +35,10 @@ class TableFragment : Fragment() {
         if(getArguments()!=null)
         {
             dbManager = DBManager(context.applicationContext)
+            if(getArguments().getString("statue")=="drawer")
             drawerID = getArguments().getInt("tablenum")
+            if(getArguments().getString("statue")=="op")
+                drawerID = getArguments().getInt("tablenum_op")
             drawer=dbManager?.getDrawerByDrawerId(drawerID)
 
         if(drawer != null)
@@ -52,11 +55,10 @@ class TableFragment : Fragment() {
                 val button = Button(context)
                 button.isFocusable = false
                 button.id = (i-1)*3+j
-                if(getArguments().getString("touch")=="false") {
-                    button.isClickable = false
-                   button.setBackgroundColor(Color.rgb(213, 0, 0))
-                }
-                else {
+//                if(getArguments().getString("touch")=="false") {
+//                    button.isClickable = false
+//                }
+//                else {
                     button.setOnClickListener { view->
                         view.isFocusable = true
                         view.requestFocus()
@@ -64,8 +66,8 @@ class TableFragment : Fragment() {
                         val row = button.id.toString()
                         Log.d("data","选择了"+row)
                         scApp?.setTouchdrawer(drawerID)
-                        scApp?.setTouchtable(button.id)
-                    }
+//                        scApp?.setTouchtable(button.id)
+//                    }
                 }
                 button.setBackgroundResource(R.drawable.btn_style)
                 button.text = ""
