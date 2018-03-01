@@ -34,7 +34,7 @@
         android:layout_width="300sp"
         android:layout_height="80sp"
         android:layout_marginBottom="32dp"
-        android:background="@drawable/denglu_button"
+        android:background="@drawable/btn_style_denglu"
         android:text="保存"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
