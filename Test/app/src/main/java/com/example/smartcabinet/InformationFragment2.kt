@@ -9,15 +9,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_information2.*
+import android.widget.Spinner
+import android.widget.ArrayAdapter
+import android.widget.TextView
+import com.example.smartcabinet.util.DBManager
 
 
 /**
  * A simple [Fragment] subclass.
  */
 class InformationFragment2 : Fragment() {
-
-
     var activityCallback:InformationFragment2.scanbuttonlisten? = null
+    private var dbManager: DBManager? = null
+
+    private var arr_adapter: ArrayAdapter<String>? = null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -25,6 +30,13 @@ class InformationFragment2 : Fragment() {
 
     }
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        dbManager = DBManager(context.applicationContext)
+        var data_list = ArrayList<String>()
+        data_list.add("上海")
+        data_list.add("北京")
+
+        arr_adapter = ArrayAdapter<String>(context.applicationContext, android.R.layout.simple_spinner_item, data_list)
+        spinner_type.adapter=arr_adapter
        if(getArguments().getString("scan_value")!==null)
        {
            val value = getArguments().getString("scan_value")

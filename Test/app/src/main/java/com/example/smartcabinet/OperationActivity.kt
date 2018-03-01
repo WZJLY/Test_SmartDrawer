@@ -47,16 +47,6 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
         }
         updateDrawer()
 
-        var arrListReagentTempate = dbManager?.getReagentTemplate()
-        if(arrListReagentTempate!!.size.toInt() > 0)
-        {
-            Toast.makeText(this, "请添加抽屉", Toast.LENGTH_SHORT).show()
-        }
-        else{
-
-//        reagentTemplate=arrListReagentTempate?.get(3)
-        Toast.makeText(this,reagentTemplate?.getReagentName(),Toast.LENGTH_LONG).show()
-        }
     }
 
 
@@ -160,7 +150,8 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
     fun updateDrawer()
     {
         val arrListDrawers = dbManager?.getDrawers()
-        if(arrListDrawers == null)
+        val sum = arrListDrawers!!.size.toInt()
+        if(sum == 0)
         {
             Toast.makeText(this, "请添加抽屉", Toast.LENGTH_SHORT).show()
         }
@@ -168,7 +159,6 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
 
         else
         {
-            val sum = arrListDrawers!!.size.toInt()
             if(sum>0) {
                 for (i in 1..sum) {
                     drawer = arrListDrawers?.get(i - 1)

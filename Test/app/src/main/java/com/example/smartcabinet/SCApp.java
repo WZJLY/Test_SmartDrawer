@@ -22,7 +22,6 @@ public class SCApp extends Application {
     public void onCreate() {
         super.onCreate();
         dbManager = new DBManager(this);
-
         //  init ZXing lib
         // ZXingLibrary.initDisplayOpinion(this);
     }
