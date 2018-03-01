@@ -19,12 +19,13 @@ import java.net.URL
  * Created by WZJ on 2018/2/28.
  */
 
-class DownloadThread(internal var uihandler: Handler) : Thread() {
+class DownloadThread(var uihandler: Handler) : Thread() {
     var downloadhandler: Handler? = null
 
     override fun run() {
         super.run()
         Looper.prepare()
+
         downloadhandler = object : Handler() {
             override fun handleMessage(msg: Message) {
                 super.handleMessage(msg)
@@ -59,6 +60,10 @@ class DownloadThread(internal var uihandler: Handler) : Thread() {
                         output!!.write(buffer)
                     }
                     output!!.flush()
+                    output!!.close()
+                    val sendmsg = Message.obtain()
+                    sendmsg.what = 3
+                    uihandler.sendMessage(sendmsg)
                 }
 
 

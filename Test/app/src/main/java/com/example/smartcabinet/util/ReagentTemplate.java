@@ -44,5 +44,9 @@ public class ReagentTemplate {
 
         this.reagentDensity = strReagentDensity;
     }
+    public String getReagentName()
+    {
+        return reagentName;
+    }
 }
 

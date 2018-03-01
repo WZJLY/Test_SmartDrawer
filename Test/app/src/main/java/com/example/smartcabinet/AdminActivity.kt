@@ -38,9 +38,33 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
+//        handler = object : Handler() {
+//            override fun handleMessage(msg: Message) {
+//                super.handleMessage(msg)
+//                if (msg.what == 1) {
+//                    download_handler = msg.obj as Handler
+//                    val backmsg = Message.obtain()
+//                    backmsg.what = 2
+//                    backmsg.obj ="1519701177111"
+//                    download_handler.sendMessage(backmsg)
+//                }
+//
+//
+//            }
+//
+//        }
+
         dbManager = DBManager(applicationContext)
         scApp = application as SCApp
         val userAccount =  scApp?.getUserInfo()
+        val path = "SmartCabinet/ReagentTemplate"
+        val fileName ="1519701177111"+ ".csv"
+        val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
+        val pathName = "$SDCard/$path/$fileName"
+        val urlStr = SC_Const.REAGENTTEMPLATEADDRESS + fileName
+        val url = URL(urlStr)
+        templateToDB(pathName)
+
         when(userAccount?.getUserPower()){
             SC_Const.ADMIN -> {
                 val adminfrag = AdminFragment()
@@ -198,10 +222,10 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("提示")
                 var edit :EditText= EditText(this)
-                builder.setView(edit)
+                builder?.setView(edit)
                 builder.setMessage("请输入试剂模板编号")
                 builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
-                    val templateid = edit.text.toString()
+                    val templated = edit.text.toString()
                     handler = object : Handler() {
                         override fun handleMessage(msg: Message) {
                             super.handleMessage(msg)
@@ -209,8 +233,12 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                                 download_handler = msg.obj as Handler
                                 val backmsg = Message.obtain()
                                 backmsg.what = 2
-                                backmsg.obj =   templateid
+                                backmsg.obj =  templated
                                 download_handler.sendMessage(backmsg)
+                            }
+                            if(msg.what==3)
+                            {
+
                             }
 
 
@@ -257,19 +285,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
             }
         }
     }
-//  private  val handler = object : Handler() {
-//        fun handieMessage(msg: Message) {
-//            if(msg.what==1){
-//                val path = "SmartCabinet/ReagentTemplate"
-//                val fileName = "1519704145828" + ".csv"
-//                val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
-//                val pathName = "$SDCard/$path/$fileName"
-//                templateToDB(pathName)
-//                Log.d("data","else")
-//
-//            }
-//        }
-//    }
+
     @JavascriptInterface
     fun importAgentiaTemplate(id: String) {
         val path = "SmartCabinet/ReagentTemplate"
@@ -310,8 +326,8 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 File(dir).mkdir()//新建文件夹
                 file.createNewFile()//新建文件
                 output = FileOutputStream(file)
-                //读取大文件
                 val buffer = ByteArray(4 * 1024)
+                //读取大文件
                 while (input.read(buffer) != -1) {
                     output!!.write(buffer)
                 }

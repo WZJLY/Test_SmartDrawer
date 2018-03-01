@@ -9,13 +9,18 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.Drawer
+import com.example.smartcabinet.util.ReagentTemplate
 import com.example.smartcabinet.util.SC_Const
+import com.google.zxing.integration.android.IntentIntegrator
+import kotlinx.android.synthetic.main.admin_fragment.*
 
 
 class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentListen,AdminReagentFragment.adminReagentListen {
     private var scApp: SCApp? = null
     private var dbManager:DBManager?=null
     private var drawer: Drawer? = null
+    private var reagentTemplate:ReagentTemplate? = null
+    private var statue:String?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_operation)
@@ -39,6 +44,16 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
         }
         updateDrawer()
 
+        var arrListReagentTempate = dbManager?.getReagentTemplate()
+        if(arrListReagentTempate!!.size.toInt() > 0)
+        {
+            Toast.makeText(this, "请添加抽屉", Toast.LENGTH_SHORT).show()
+        }
+        else{
+
+//        reagentTemplate=arrListReagentTempate?.get(3)
+        Toast.makeText(this,reagentTemplate?.getReagentName(),Toast.LENGTH_LONG).show()
+        }
     }
 
 
@@ -49,6 +64,9 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
                 intent.setClass(this,SubOperationActivity::class.java)
                 intent.putExtra("subOperation","Take")
                 startActivity(intent)
+
+
+
             }
 
             "userReturn" -> {
@@ -69,10 +87,17 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
     override fun adminReagentButtonClick(text: String) {
         when(text) {
             "Into" -> {
-                val intent = Intent()
-                intent.setClass(this,SubOperationActivity::class.java)
-                intent.putExtra("subOperation","Into")
-                startActivity(intent)
+                statue = "Into"
+                try {
+                    val integrator = IntentIntegrator(this)
+                    integrator.setOrientationLocked(false)
+                    integrator.captureActivity = SmallCaptureActivity::class.java
+                    integrator.setTimeout(10000)
+                    integrator.initiateScan()
+                }
+                catch (e: Exception){
+                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                }
             }
 
             "adminTake" -> {
@@ -83,10 +108,18 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
             }
 
             "adminReturn" -> {
-                val intent = Intent()
-                intent.setClass(this,SubOperationActivity::class.java)
-                intent.putExtra("subOperation","Return")
-                startActivity(intent)
+                statue = "Return"
+                try {
+                    val integrator = IntentIntegrator(this)
+                    integrator.setOrientationLocked(false)
+                    integrator.captureActivity = SmallCaptureActivity::class.java
+                    integrator.setTimeout(10000)
+                    integrator.initiateScan()
+                }
+                catch (e: Exception){
+                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                }
+
             }
 
             "Scrap" -> {
@@ -142,6 +175,35 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
 
                 }
             }
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        try {
+
+                val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+                val intent = Intent()
+                intent.setClass(this, SubOperationActivity::class.java)
+                if(statue=="Into") intent.putExtra("subOperation", "Into")
+                if(statue=="Return") intent.putExtra("subOperation","Return")
+                intent.putExtra("scan_value",result.contents)
+                startActivity(intent)
+
+            if (result != null) {
+                if (result.contents == null) {
+                    //Log.d("MainActivity", "Cancelled scan")
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
+
+                } else {
+                    //Log.d("MainActivity", "Scanned")
+                    Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+                }
+            } else {
+                // This is important, otherwise the result will not be passed to the fragment
+                super.onActivityResult(requestCode, resultCode, data)
+            }
+        }
+        catch (e: Exception){
+            Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
         }
     }
 }
