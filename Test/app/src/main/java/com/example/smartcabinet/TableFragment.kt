@@ -63,7 +63,7 @@ class TableFragment : Fragment() {
             for(j in 1..num){
                 val button = Button(context)
                 button.isFocusable = false
-                button.id = (i-1)*3+j
+                button.id = (i-1)*num+j
                 button.setBackgroundResource(R.drawable.btn_style)
                 button.text = ""
                 if(getArguments().getString("touch")=="false") {

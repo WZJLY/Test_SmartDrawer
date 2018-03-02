@@ -45,8 +45,17 @@ private var statue:String?=null
             }
 
             "Take" -> {
+                val tableFragment = TableFragment()
+                val arg = Bundle()
+                arg.putString("statue","op")
+                arg.putInt("tablenum_op", scApp!!.getTouchdrawer())
+                arg.putString("touch","false")
+                tableFragment.arguments=arg
+                replaceFragment(R.id.FL_table,tableFragment)
+
                 val informationFragment = InformationFragment3()
                 replaceFragment(R.id.frameLayout_information,informationFragment)
+
             }
 
             "Return" -> {
@@ -58,6 +67,14 @@ private var statue:String?=null
             }
 
             "Scrap" -> {
+                val tableFragment = TableFragment()
+                val arg = Bundle()
+                arg.putString("statue","op")
+                arg.putInt("tablenum_op", scApp!!.getTouchdrawer())
+                arg.putString("touch","false")
+                tableFragment.arguments=arg
+                replaceFragment(R.id.FL_table,tableFragment)
+
                 val informationFragment = InformationFragment3()
                 replaceFragment(R.id.frameLayout_information,informationFragment)
             }

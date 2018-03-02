@@ -8,7 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
+import com.example.smartcabinet.util.Reagent
 import kotlinx.android.synthetic.main.fragment_drawer1.*
 
 
@@ -19,6 +21,7 @@ class DrawerFragment1 : Fragment() {
     var activityCallback: DrawerFragment1.deletDrawerFragmentListener?= null
     var drawerID  = 0
     private var dbManager: DBManager? = null
+    private var reagent:Reagent?=null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -36,8 +39,21 @@ class DrawerFragment1 : Fragment() {
             deletDrawerbuttonClicked("find_out",drawerID)
         }
         iBt_delete.setOnClickListener{
-            dbManager?.deleteDrawer(drawerID,1)
-            deletDrawerbuttonClicked("delet",0)
+
+            val arrListReagent = dbManager?.reagents
+            val sum = arrListReagent!!.size.toInt()
+                if(sum>0) {
+                    for (m in 1..sum) {
+                        reagent = arrListReagent?.get(m - 1)
+                        if(reagent!!.drawerId.toInt()!=drawerID&&dbManager!!.drawers.size==drawerID)
+                        {
+                            dbManager?.deleteDrawer(drawerID,1)
+                            deletDrawerbuttonClicked("delet",0)
+                        }
+
+                    }
+                }
+
         }
 
     }
