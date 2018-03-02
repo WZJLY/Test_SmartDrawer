@@ -42,7 +42,6 @@ private var statue:String?=null
 
             "Take" -> {
                 val informationFragment = InformationFragment3()
-
                 replaceFragment(R.id.frameLayout_information,informationFragment)
             }
 
