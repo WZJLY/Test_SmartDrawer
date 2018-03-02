@@ -27,7 +27,6 @@ class SetDrawerFragment : Fragment() {
     private  var drawerID = 0
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater!!.inflate(R.layout.fragment_set_drawer, container, false)
     }
 
@@ -64,13 +63,19 @@ class SetDrawerFragment : Fragment() {
                 override fun onItemSelected(parent: AdapterView<*>, view: View,
                                             pos: Int, id: Long) {
                     val boxNum = resources.getStringArray(R.array.drawer)
-                    if(getArguments().getString("setDrawer1")=="find") {
-                        tableFragment.addNum(5)
-                    }
-                    else {
-                        tableFragment.addNum(boxNum[pos].toInt())
-                        boxnum = boxNum[pos].toInt()
-                    }
+
+                    boxnum = boxNum[pos].toInt()
+
+                    val tableFragment = TableFragment()
+                    val arg = Bundle()
+                    arg.putInt("boxnum",boxnum)
+                    arg.putString("statue","add")
+                    tableFragment.setArguments(arg)
+                    tableFragment.arguments = arg
+                    val fragmentTrasaction = fragmentManager.beginTransaction()
+                    fragmentTrasaction.replace(R.id.fL_table,tableFragment)
+                    fragmentTrasaction.commit()
+
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {

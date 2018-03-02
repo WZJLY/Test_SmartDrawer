@@ -6,8 +6,9 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
-import android.util.Log
 import android.widget.Toast
+import com.example.smartcabinet.util.DBManager
+import com.example.smartcabinet.util.ReagentTemplate
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_sub_operation.*
 import kotlinx.android.synthetic.main.fragment_information1.*
@@ -16,10 +17,13 @@ import kotlinx.android.synthetic.main.fragment_information2.*
 class SubOperationActivity : AppCompatActivity(),InformationFragment2.scanbuttonlisten,InformationFragment1.return_scanbuttonlisten{
 private var statue:String?=null
     private var scApp: SCApp? = null
+    private var dbManager:DBManager?=null
+    private var reagentTemplate:ReagentTemplate?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_operation)
         scApp = application as SCApp
+        dbManager = DBManager(applicationContext)
         val subOperation: String = intent.getStringExtra("subOperation")
         val scan_value = intent.getStringExtra("scan_value")
         when(subOperation) {
@@ -63,6 +67,37 @@ private var statue:String?=null
             val intent = Intent()
             intent.setClass(this,OperationActivity::class.java)
             startActivity(intent)
+        }
+        btn_ok.setOnClickListener{
+            when(subOperation)
+            {
+                "Into" -> {
+                    reagentTemplate =  dbManager!!.reagentTemplate.get(scApp!!.templateNum)
+                    dbManager?.addReagent(eT_code.text.toString(),reagentTemplate?.reagentName,"",""
+                    ,"",1,"",reagentTemplate?.reagentSize, eT_weight2.text.toString()
+                    ,reagentTemplate?.reagentCreater,reagentTemplate?.reagentGoodsID,1,reagentTemplate?.reagentDensity,eT_data.text.toString()
+                    ,"1",scApp?.getTouchdrawer().toString(),scApp?.getTouchtable().toString(),1,scApp!!.userInfo.getUserName())
+                    Toast.makeText(this,scApp?.getTouchdrawer().toString()+scApp?.getTouchtable().toString(),Toast.LENGTH_SHORT).show()
+                    scApp?.setTouchtable(0)
+                    scApp?.setTouchdrawer(0) //新加的
+                    val intent =Intent()
+                    intent.setClass(this,OperationActivity::class.java)
+                    startActivity(intent)
+
+                }
+
+                "Take" -> {
+
+                }
+
+                "Return" -> {
+
+                }
+
+                "Scrap" -> {
+
+                }
+            }
         }
     }
 

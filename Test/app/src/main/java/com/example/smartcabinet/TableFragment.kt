@@ -13,6 +13,7 @@ import android.widget.TableRow
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.Drawer
+import com.example.smartcabinet.util.Reagent
 import kotlinx.android.synthetic.main.fragment_table.*
 
 /**
@@ -24,6 +25,7 @@ class TableFragment : Fragment() {
     var drawerID = 0
     var dbManager: DBManager? = null
     private var drawer:Drawer?=null
+    private var reagent:Reagent?=null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -32,18 +34,25 @@ class TableFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         scApp = context.applicationContext as SCApp
+        dbManager = DBManager(context.applicationContext)
         if(getArguments()!=null)
-        {
-            dbManager = DBManager(context.applicationContext)
-            if(getArguments().getString("statue")=="drawer")
-            drawerID = getArguments().getInt("tablenum")
-            if(getArguments().getString("statue")=="op")
-                drawerID = getArguments().getInt("tablenum_op")
-            drawer=dbManager?.getDrawerByDrawerId(drawerID)
+        {if(getArguments().getString("statue")!="add") {
 
-        if(drawer != null)
-            num = drawer!!.getDrawerSize()
+            if (getArguments().getString("statue") == "drawer")
+                drawerID = getArguments().getInt("tablenum")
+            if (getArguments().getString("statue") == "op")
+                drawerID = getArguments().getInt("tablenum_op")
+            drawer = dbManager?.getDrawerByDrawerId(drawerID)
+
+            if (drawer != null)
+                num = drawer!!.getDrawerSize()
             addNum(num)
+        }
+            if(getArguments().getString("statue")=="add")
+            {
+                num =getArguments().getInt("boxnum")
+                addNum(num)
+            }
         }
     }
 
@@ -55,10 +64,40 @@ class TableFragment : Fragment() {
                 val button = Button(context)
                 button.isFocusable = false
                 button.id = (i-1)*3+j
-//                if(getArguments().getString("touch")=="false") {
-//                    button.isClickable = false
-//                }
-//                else {
+                button.setBackgroundResource(R.drawable.btn_style)
+                button.text = ""
+                if(getArguments().getString("touch")=="false") {
+                    button.isClickable = false
+                    if(scApp?.getTouchtable()==button.id)
+                    {
+                        button.setBackgroundResource(R.drawable.btn_choose)
+                    }
+                    else
+                        button.setBackgroundResource(R.drawable.btn_style)
+                }
+                else {
+                    val arrListReagent = dbManager?.reagents
+                    val sum = arrListReagent!!.size.toInt()
+                    if(sum == 0)
+                    {
+                        Toast.makeText(context.applicationContext, "没有试剂在该抽屉", Toast.LENGTH_SHORT).show()
+                    }
+                    else
+                    {
+
+                        if(sum>0) {
+                            for (m in 1..sum) {
+                                reagent = arrListReagent?.get(m - 1)
+                                if(reagent!!.drawerId.toInt()==drawerID&&reagent!!.reagentPosition.toInt()==button.id)
+                                {
+                                    button.text=reagent?.reagentName
+                                    button.setBackgroundResource(R.drawable.btn_style1)
+
+                                }
+
+                            }
+                        }
+                    }
                     button.setOnClickListener { view->
                         view.isFocusable = true
                         view.requestFocus()
@@ -66,11 +105,10 @@ class TableFragment : Fragment() {
                         val row = button.id.toString()
                         Log.d("data","选择了"+row)
                         scApp?.setTouchdrawer(drawerID)
-//                        scApp?.setTouchtable(button.id)
-//                    }
+                        scApp?.setTouchtable(button.id)
+                    }
                 }
-                button.setBackgroundResource(R.drawable.btn_style)
-                button.text = ""
+
                 button.setTextColor(Color.BLACK)
                 button.width = 55
                 button.height = 55

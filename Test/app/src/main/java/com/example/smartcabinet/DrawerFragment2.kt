@@ -29,7 +29,7 @@ class DrawerFragment2 : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         tV_drawer2.text =("抽屉"+drawerID)
         iBt_drawer2.setOnClickListener {
-    if(childFragmentManager.findFragmentByTag("table")==null) {
+        if(childFragmentManager.findFragmentByTag("table")==null) {
         val tableFragment = TableFragment()
         val args = Bundle()
         args.putString("statue","drawer")

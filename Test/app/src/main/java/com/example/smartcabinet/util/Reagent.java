@@ -37,7 +37,7 @@ public class Reagent {
         * 试剂纯度，试剂净含量，试剂总重量
         * 生成厂商，商品码，试剂单位(1-g，2-ml)
         * 试剂密度(单位为ml时使用)，试剂有效期，试剂柜id
-        * 抽屉id，试剂位置，试剂状态(在位、取走等)、试剂使用者(取走试剂的人)        *
+        * 抽屉id，试剂位置，试剂状态(在位:1、取走:2等)、试剂使用者(取走试剂的人)        *
         * */
         this.reagentId = strReagentId;
         this.reagentName = strReagentName;

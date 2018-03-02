@@ -48,5 +48,26 @@ public class ReagentTemplate {
     {
         return reagentName;
     }
+    public String getReagentPurity()
+    {
+        return reagentPurity;
+    }
+    public String getReagentCreater() {return reagentCreater;}
+    public String getReagentSize()
+    {
+        return reagentSize;
+    }
+    public String getReagentUnit() {return reagentUnit;}
+
+    public int getReagentType()
+    {
+        return reagentType;
+    }
+    public String getReagentGoodsID()
+    {
+        return reagentGoodsID;
+    }
+    public String getReagentDensity() {return reagentDensity;}
+
 }
 

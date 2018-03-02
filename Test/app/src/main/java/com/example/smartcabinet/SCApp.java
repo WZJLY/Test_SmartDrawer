@@ -18,6 +18,7 @@ public class SCApp extends Application {
     private CabinetInfo cabinetInfo;
     private int Touchdrawer;
     private int Touchtable;
+    private int TemplateNum;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -68,5 +69,12 @@ public class SCApp extends Application {
     {
         return Touchtable;
     }
-
+    public void setTemplateNum(int pos)
+    {
+        this.TemplateNum=pos;
+    }
+    public int getTemplateNum()
+    {
+        return TemplateNum;
+    }
 }
