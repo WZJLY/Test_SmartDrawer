@@ -8,10 +8,7 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
-import com.example.smartcabinet.util.DBManager
-import com.example.smartcabinet.util.Drawer
-import com.example.smartcabinet.util.ReagentTemplate
-import com.example.smartcabinet.util.SC_Const
+import com.example.smartcabinet.util.*
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.admin_fragment.*
 import kotlin.math.log
@@ -23,6 +20,7 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
     private var drawer: Drawer? = null
     private var reagentTemplate:ReagentTemplate? = null
     private var statue:String?= null
+    var spi: SerialPortInterface ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +44,8 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
             }
         }
         updateDrawer()
-
+        spi = SerialPortInterface(this.applicationContext)
+        scApp?.setSpi(spi)
     }
 
 

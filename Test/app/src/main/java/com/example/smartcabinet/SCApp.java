@@ -5,6 +5,7 @@ import android.util.DisplayMetrics;
 
 import com.example.smartcabinet.util.CabinetInfo;
 import com.example.smartcabinet.util.DBManager;
+import com.example.smartcabinet.util.SerialPortInterface;
 import com.example.smartcabinet.util.UserAccount;
 
 
@@ -19,6 +20,8 @@ public class SCApp extends Application {
     private int Touchdrawer;
     private int Touchtable;
     private int TemplateNum;
+    SerialPortInterface spi;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -76,5 +79,12 @@ public class SCApp extends Application {
     public int getTemplateNum()
     {
         return TemplateNum;
+    }
+
+    public void setSpi(SerialPortInterface serialPort) {
+        this.spi = serialPort;
+    }
+    public SerialPortInterface getSpi() {
+        return spi;
     }
 }

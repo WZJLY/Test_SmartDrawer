@@ -24,7 +24,7 @@ public class SerialPortInterface extends AppCompatActivity {
     public SerialPortInterface(Context context) {
         this.context = context;
         try {
-            sp = new SerialPort(new File("/dev/ttyS1"), 38400, 0);
+            sp = new SerialPort(new File("/dev/ttyS3"), 38400, 0);
             mOutputStream = (FileOutputStream) sp.getOutputStream();
             mInputStream = (FileInputStream) sp.getInputStream();
         } catch (SecurityException e) {

@@ -26,6 +26,8 @@ private var statue:String?=null
         dbManager = DBManager(applicationContext)
         val subOperation: String = intent.getStringExtra("subOperation")
         val scan_value = intent.getStringExtra("scan_value")
+        val spi =  scApp?.getSpi()
+
         when(subOperation) {
             "Into" -> {
                 val tableFragment = TableFragment()
@@ -95,9 +97,13 @@ private var statue:String?=null
                     ,reagentTemplate?.reagentCreater,reagentTemplate?.reagentGoodsID,1,reagentTemplate?.reagentDensity,eT_data.text.toString()
                     ,"1",scApp?.getTouchdrawer().toString(),scApp?.getTouchtable().toString(),1,scApp!!.userInfo.getUserName())
 //                    Toast.makeText(this,scApp?.getTouchdrawer().toString()+scApp?.getTouchtable().toString(),Toast.LENGTH_SHORT).show()
+
+                    //开锁
+                    spi?.sendOpenLock(1,scApp!!.getTouchdrawer())
+                    val intent =Intent()
+
                     scApp?.setTouchtable(0)
                     scApp?.setTouchdrawer(0) //新加的
-                    val intent =Intent()
                     intent.setClass(this,OperationActivity::class.java)
                     startActivity(intent)
 
@@ -105,6 +111,9 @@ private var statue:String?=null
 
                 "Take" -> {
                     dbManager?.updateReagentStatusByPos(""+scApp?.getTouchdrawer(),""+scApp?.getTouchtable(),scApp!!.getUserInfo().getUserName(),2)
+                    //开锁
+                    spi?.sendOpenLock(1,scApp!!.getTouchdrawer())
+
                     val intent =Intent()
                     intent.setClass(this,OperationActivity::class.java)
                     startActivity(intent)
@@ -119,6 +128,10 @@ private var statue:String?=null
                             if(eT_weight.text!=null) {
                                 dbManager?.updateReagentStatus(eT_code2.text.toString(), 1, scApp!!.userInfo.getUserName())
                                 dbManager?.updateReagentSize(eT_code2.text.toString(), eT_weight.text.toString())
+
+                                //开锁
+                                spi?.sendOpenLock(1,scApp!!.getTouchdrawer())
+
                                 val intent = Intent()
                                 intent.setClass(this, OperationActivity::class.java)
                                 startActivity(intent)
@@ -137,6 +150,9 @@ private var statue:String?=null
 
                 "Scrap" -> {
                     dbManager?.deleteReagentByPos(""+scApp?.getTouchdrawer(),""+scApp?.getTouchtable())
+                    //开锁
+                    spi?.sendOpenLock(1,scApp!!.getTouchdrawer())
+
                     val intent =Intent()
                     intent.setClass(this,OperationActivity::class.java)
                     startActivity(intent)

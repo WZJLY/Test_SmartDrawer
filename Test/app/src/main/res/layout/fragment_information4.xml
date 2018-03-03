@@ -1,0 +1,171 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".InformationFragment4">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/title_person2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="使用者："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_data2"
+        app:layout_constraintStart_toEndOf="@+id/tV_data2"
+        app:layout_constraintTop_toTopOf="@+id/tV_data2" />
+
+    <TextView
+        android:id="@+id/tV_person2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_person2"
+        app:layout_constraintStart_toEndOf="@+id/title_person2"
+        app:layout_constraintTop_toTopOf="@+id/title_person2" />
+
+    <TextView
+        android:id="@+id/title_purity2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="纯度："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_name2"
+        app:layout_constraintStart_toEndOf="@+id/tV_name2"
+        app:layout_constraintTop_toTopOf="@+id/tV_name2" />
+
+    <TextView
+        android:id="@+id/tV_purity2"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_purity2"
+        app:layout_constraintStart_toEndOf="@+id/title_purity2"
+        app:layout_constraintTop_toTopOf="@+id/title_purity2" />
+
+    <TextView
+        android:id="@+id/title_name2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="名称："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_num2"
+        app:layout_constraintStart_toEndOf="@+id/tV_num2"
+        app:layout_constraintTop_toTopOf="@+id/tV_num2" />
+
+    <TextView
+        android:id="@+id/tV_name2"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_name2"
+        app:layout_constraintStart_toEndOf="@+id/title_name2"
+        app:layout_constraintTop_toTopOf="@+id/title_name2" />
+
+    <TextView
+        android:id="@+id/title_num2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_weight="0"
+        android:text="编号："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tV_num2"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_num2"
+        app:layout_constraintStart_toEndOf="@+id/title_num2"
+        app:layout_constraintTop_toTopOf="@+id/title_num2" />
+
+    <TextView
+        android:id="@+id/title_manufactor2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="厂家："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_purity2"
+        app:layout_constraintStart_toEndOf="@+id/tV_purity2"
+        app:layout_constraintTop_toTopOf="@+id/tV_purity2" />
+
+    <TextView
+        android:id="@+id/tV_manufactor2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_manufactor2"
+        app:layout_constraintStart_toEndOf="@+id/title_manufactor2"
+        app:layout_constraintTop_toTopOf="@+id/title_manufactor2" />
+
+    <TextView
+        android:id="@+id/title_residue2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_weight="0"
+        android:text="余量："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_num2" />
+
+    <TextView
+        android:id="@+id/tV_residue2"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_residue2"
+        app:layout_constraintStart_toEndOf="@+id/title_residue2"
+        app:layout_constraintTop_toTopOf="@+id/title_residue2" />
+
+    <TextView
+        android:id="@+id/title_data2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="有效期："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tV_residue2"
+        app:layout_constraintStart_toEndOf="@+id/tV_residue2"
+        app:layout_constraintTop_toTopOf="@+id/tV_residue2" />
+
+    <TextView
+        android:id="@+id/tV_data2"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="2018.02.27"
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/title_data2"
+        app:layout_constraintStart_toEndOf="@+id/title_data2"
+        app:layout_constraintTop_toTopOf="@+id/title_data2" />
+</android.support.constraint.ConstraintLayout>
