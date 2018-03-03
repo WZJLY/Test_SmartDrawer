@@ -62,7 +62,7 @@ class EditPersonFragment : Fragment() {
     fun updateUser()
     {
         val arrayList = dbManager?.getUsers()
-        val sum = arrayList!!.size.toInt()
+        val sum = arrayList!!.size
         for(i in 1..sum)
         {
             userAccount = arrayList?.get(i-1)

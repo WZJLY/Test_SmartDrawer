@@ -122,7 +122,7 @@ class EditMessageFragment : Fragment() {
     /**
      *个人信息设置界面，无法修改编号，无法修改级别
      */
-    fun UserMessage(){
+  private fun UserMessage(){
         textView_title.text ="个人信息修改"
         editText_Num.isEnabled = false
         editText_Num.isFocusable = false
@@ -137,7 +137,7 @@ class EditMessageFragment : Fragment() {
     /**
      *通过用户ID更新用户信息
      */
-    fun updateUserAccountByID(useid:String)
+   private fun updateUserAccountByID(useid:String)
     {
         var usename = editText_userName.text.toString()
         var usepassword = editText_Password.text.toString()
@@ -154,4 +154,6 @@ class EditMessageFragment : Fragment() {
         }
 
     }
+
+
 }

@@ -40,19 +40,7 @@ class DrawerFragment1 : Fragment() {
         }
         iBt_delete.setOnClickListener{
 
-            val arrListReagent = dbManager?.reagents
-            val sum = arrListReagent!!.size.toInt()
-                if(sum>0) {
-                    for (m in 1..sum) {
-                        reagent = arrListReagent?.get(m - 1)
-                        if(reagent!!.drawerId.toInt()!=drawerID&&dbManager!!.drawers.size==drawerID)
-                        {
-                            dbManager?.deleteDrawer(drawerID,1)
-                            deletDrawerbuttonClicked("delet",0)
-                        }
-
-                    }
-                }
+            deletDrawer()
 
         }
 
@@ -73,5 +61,22 @@ class DrawerFragment1 : Fragment() {
     private fun deletDrawerbuttonClicked(text: String,drawerID: Int) {
         activityCallback?.deletDrawerButtonClick(text,drawerID)
     }
+
+    private fun deletDrawer()
+    {
+        val arrListReagent = dbManager?.reagents
+        val sum = arrListReagent!!.size
+        if(sum>0) {
+            for (m in 1..sum) {
+                reagent = arrListReagent?.get(m - 1)
+                if(reagent!!.drawerId.toInt()!=drawerID&&dbManager!!.drawers.size==drawerID)
+                {
+                    dbManager?.deleteDrawer(drawerID,1)
+                    deletDrawerbuttonClicked("delet",0)
+                }
+
+            }
+        }
+    }       //通过判断该抽屉里是否有试剂，是否是最后一个抽屉，否则无法删除
 
 }// Required empty public constructor

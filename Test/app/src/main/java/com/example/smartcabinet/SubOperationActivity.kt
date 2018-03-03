@@ -94,7 +94,7 @@ private var statue:String?=null
                     ,"",1,reagentTemplate?.reagentPurity,reagentTemplate?.reagentSize, eT_weight2.text.toString()
                     ,reagentTemplate?.reagentCreater,reagentTemplate?.reagentGoodsID,1,reagentTemplate?.reagentDensity,eT_data.text.toString()
                     ,"1",scApp?.getTouchdrawer().toString(),scApp?.getTouchtable().toString(),1,scApp!!.userInfo.getUserName())
-                    Toast.makeText(this,scApp?.getTouchdrawer().toString()+scApp?.getTouchtable().toString(),Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this,scApp?.getTouchdrawer().toString()+scApp?.getTouchtable().toString(),Toast.LENGTH_SHORT).show()
                     scApp?.setTouchtable(0)
                     scApp?.setTouchdrawer(0) //新加的
                     val intent =Intent()

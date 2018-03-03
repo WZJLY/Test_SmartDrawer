@@ -21,6 +21,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.SC_Const
+import com.example.smartcabinet.util.SerialPortInterface
 import kotlinx.android.synthetic.main.activity_admin.*
 import kotlinx.android.synthetic.main.fragment_line_person.*
 import java.io.*

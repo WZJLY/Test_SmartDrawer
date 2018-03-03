@@ -113,6 +113,7 @@ class TableFragment : Fragment() {
                         Log.d("data","选择了"+row)
                         scApp?.setTouchdrawer(drawerID)
                         scApp?.setTouchtable(button.id)
+
                     }
                 }
 

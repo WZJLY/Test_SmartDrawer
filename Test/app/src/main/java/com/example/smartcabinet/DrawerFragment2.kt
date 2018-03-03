@@ -30,6 +30,7 @@ class DrawerFragment2 : Fragment() {
         tV_drawer2.text =("抽屉"+drawerID)
         iBt_drawer2.setOnClickListener {
         if(childFragmentManager.findFragmentByTag("table")==null) {
+
         val tableFragment = TableFragment()
         val args = Bundle()
         args.putString("statue","drawer")
@@ -38,19 +39,23 @@ class DrawerFragment2 : Fragment() {
         val fragmentTransaction = childFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.linearLayout_drawer, tableFragment, "table")
         fragmentTransaction.commit()
+
     }
     else
     {
+
         val tableFragment = childFragmentManager.findFragmentByTag("table")
         val fragmentTransaction = childFragmentManager.beginTransaction()
         fragmentTransaction.remove(tableFragment)
         fragmentTransaction.commit()
+
     }
 
 
         }
         iBt_lock.setOnClickListener{
 
+            //发送开锁指令
         }
 
     }

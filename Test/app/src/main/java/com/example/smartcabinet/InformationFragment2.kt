@@ -63,7 +63,6 @@ class InformationFragment2 : Fragment() {
                 scApp?.templateNum= pos
 //                Toast.makeText(context.applicationContext,""+templateNum,Toast.LENGTH_SHORT).show()
 
-
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
