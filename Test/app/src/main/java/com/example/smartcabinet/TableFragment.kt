@@ -78,26 +78,33 @@ class TableFragment : Fragment() {
                 else {
                     val arrListReagent = dbManager?.reagents
                     val sum = arrListReagent!!.size.toInt()
-                    if(sum == 0)
-                    {
-                        Toast.makeText(context.applicationContext, "没有试剂在该抽屉", Toast.LENGTH_SHORT).show()
-                    }
-                    else
-                    {
+//                    if(sum == 0)
+//                    {
+//                        Toast.makeText(context.applicationContext, "没有试剂在该抽屉", Toast.LENGTH_SHORT).show()
+//                    }
+//                    else
+//                    {
 
                         if(sum>0) {
                             for (m in 1..sum) {
                                 reagent = arrListReagent?.get(m - 1)
                                 if(reagent!!.drawerId.toInt()==drawerID&&reagent!!.reagentPosition.toInt()==button.id)
-                                {
-                                    button.text=reagent?.reagentName
-                                    button.setBackgroundResource(R.drawable.btn_style1)
+                                {  button.text = reagent?.reagentName
+                                    if(reagent?.getStatus()==1) {
+                                        Toast.makeText(context.applicationContext,"1",Toast.LENGTH_SHORT).show()
+                                        button.setBackgroundResource(R.drawable.btn_style1)
+                                    }
+                                    if(reagent?.getStatus()==2)
+                                    {
+                                        Toast.makeText(context.applicationContext,"2",Toast.LENGTH_SHORT).show()
+                                        button.setBackgroundResource(R.drawable.btn_style2)
+                                    }
 
                                 }
 
                             }
                         }
-                    }
+//                    }
                     button.setOnClickListener { view->
                         view.isFocusable = true
                         view.requestFocus()

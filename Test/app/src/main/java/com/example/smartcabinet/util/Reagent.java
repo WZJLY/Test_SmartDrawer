@@ -109,8 +109,10 @@ public class Reagent {
     public int getStatus(){
         return this.status;
     }
-
+        public  void setStatus(int state){  this.status=state;}
     public int getReagentType() {
         return this.reagentType;
     }
+
+    public String getReagentTotalSize(){return this.reagentTotalSize;}
 }

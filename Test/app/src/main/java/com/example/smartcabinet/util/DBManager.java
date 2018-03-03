@@ -240,6 +240,14 @@ public class DBManager {
         return arrListReagents;
     }
 
+    public boolean isReagentExist(String strReagentId) {
+        Cursor cursor = db.query("reagent", null, "reagentId=? ", new String[] { strReagentId}, null, null, null);
+        if (cursor.moveToNext()) {
+            return true;
+        }
+        return false;
+    }           //wzj  add
+
     public Reagent getReagentById(String strReagentId) {
         Cursor cursor = db.rawQuery("select * from reagent where reagentId = '" + strReagentId + "'",null);
         Reagent reagent = null;
@@ -259,24 +267,24 @@ public class DBManager {
         return reagent;
     }
 
-//    public Reagent getReagentByPos(String strDrawerId,String strReagentPos) {
-//        Cursor cursor = db.rawQuery("select * from reagent where reagentId = '" + strDrawerId + "'",null);
-//        Reagent reagent = null;
-//        ArrayList<Reagent> arrListReagents = new ArrayList<>();
-//        if (cursor.moveToFirst()) {
-//            if (!cursor.isAfterLast()) {
-//                reagent = new Reagent(cursor.getString(cursor.getColumnIndex("reagentId")), cursor.getString(cursor.getColumnIndex("reagentName")), cursor.getString(cursor.getColumnIndex("reagentAlias")),
-//                        cursor.getString(cursor.getColumnIndex("reagentFormalName")), cursor.getString(cursor.getColumnIndex("reagentChemName")), cursor.getInt(cursor.getColumnIndex("reagentType")),
-//                        cursor.getString(cursor.getColumnIndex("reagentPurity")), cursor.getString(cursor.getColumnIndex("reagentSize")), cursor.getString(cursor.getColumnIndex("reagentTotalSize")),
-//                        cursor.getString(cursor.getColumnIndex("reagentCreater")), cursor.getString(cursor.getColumnIndex("reagentGoodsID")), cursor.getInt(cursor.getColumnIndex("reagentUnit")),
-//                        cursor.getString(cursor.getColumnIndex("reagentDensity")), cursor.getString(cursor.getColumnIndex("reagentInvalidDate")), cursor.getString(cursor.getColumnIndex("cabinetId")),
-//                        cursor.getString(cursor.getColumnIndex("drawerId")), cursor.getString(cursor.getColumnIndex("reagentPosition")),
-//                        cursor.getInt(cursor.getColumnIndex("status")), cursor.getString(cursor.getColumnIndex("reagentUser")));
-//                return reagent;
-//            }
-//        }
-//        return reagent;
-//    }
+    public Reagent getReagentByPos(String strDrawerId,String strReagentPos) {
+        Cursor cursor =  db.query("reagent", null, "drawerId=? and reagentPosition=?", new String[] { strDrawerId,strReagentPos }, null, null, null);
+        Reagent reagent = null;
+        if (cursor.moveToFirst()) {
+            if (!cursor.isAfterLast()) {
+                reagent = new Reagent(cursor.getString(cursor.getColumnIndex("reagentId")), cursor.getString(cursor.getColumnIndex("reagentName")), cursor.getString(cursor.getColumnIndex("reagentAlias")),
+                        cursor.getString(cursor.getColumnIndex("reagentFormalName")), cursor.getString(cursor.getColumnIndex("reagentChemName")), cursor.getInt(cursor.getColumnIndex("reagentType")),
+                        cursor.getString(cursor.getColumnIndex("reagentPurity")), cursor.getString(cursor.getColumnIndex("reagentSize")), cursor.getString(cursor.getColumnIndex("reagentTotalSize")),
+                        cursor.getString(cursor.getColumnIndex("reagentCreater")), cursor.getString(cursor.getColumnIndex("reagentGoodsID")), cursor.getInt(cursor.getColumnIndex("reagentUnit")),
+                        cursor.getString(cursor.getColumnIndex("reagentDensity")), cursor.getString(cursor.getColumnIndex("reagentInvalidDate")), cursor.getString(cursor.getColumnIndex("cabinetId")),
+                        cursor.getString(cursor.getColumnIndex("drawerId")), cursor.getString(cursor.getColumnIndex("reagentPosition")),
+                        cursor.getInt(cursor.getColumnIndex("status")), cursor.getString(cursor.getColumnIndex("reagentUser")));
+                return reagent;
+            }
+        }
+        return reagent;
+    }                                   //wzj  add
+
 
     public void deleteReagentById(String strReagentId){
         db.delete("reagent", "reagentId == ?", new String[]{ strReagentId });
@@ -325,6 +333,17 @@ public class DBManager {
         data.put("status",iStatus);
         data.put("reagentUser",strUserId);
         db.update("reagent", data, "reagentId=?", new String[]{strReagentId + ""});
+    }
+    public void updateReagentSize(String strReagentId, String strReagentSize){
+        ContentValues data=new ContentValues();
+        data.put("reagentSize",strReagentSize);
+        db.update("reagent", data, "reagentId=?", new String[]{strReagentId + ""});
+    }
+    public void updateReagentStatusByPos(String strDrawerId,String strReagentPos,String strReagentUser, int iStatus){
+        ContentValues data=new ContentValues();
+        data.put("status",iStatus);
+        data.put("reagentUser",strReagentUser);
+        db.update("reagent", data, "drawerId == ? and reagentPosition ==?", new String[]{strDrawerId,strReagentPos});
     }
 
     public void addReagentTemplate(String strReagentId, String strReagentName, String strReagentAlias,

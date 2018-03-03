@@ -91,7 +91,7 @@ private var statue:String?=null
                 "Into" -> {
                     reagentTemplate =  dbManager!!.reagentTemplate.get(scApp!!.templateNum)
                     dbManager?.addReagent(eT_code.text.toString(),reagentTemplate?.reagentName,"",""
-                    ,"",1,"",reagentTemplate?.reagentSize, eT_weight2.text.toString()
+                    ,"",1,reagentTemplate?.reagentPurity,reagentTemplate?.reagentSize, eT_weight2.text.toString()
                     ,reagentTemplate?.reagentCreater,reagentTemplate?.reagentGoodsID,1,reagentTemplate?.reagentDensity,eT_data.text.toString()
                     ,"1",scApp?.getTouchdrawer().toString(),scApp?.getTouchtable().toString(),1,scApp!!.userInfo.getUserName())
                     Toast.makeText(this,scApp?.getTouchdrawer().toString()+scApp?.getTouchtable().toString(),Toast.LENGTH_SHORT).show()
@@ -104,14 +104,42 @@ private var statue:String?=null
                 }
 
                 "Take" -> {
-
+                    dbManager?.updateReagentStatusByPos(""+scApp?.getTouchdrawer(),""+scApp?.getTouchtable(),scApp!!.getUserInfo().getUserName(),2)
+                    val intent =Intent()
+                    intent.setClass(this,OperationActivity::class.java)
+                    startActivity(intent)
                 }
 
                 "Return" -> {
 
+                    if(dbManager?.isReagentExist(eT_code2.text.toString())==true)
+                    {
+                        if(dbManager!!.getReagentById(eT_code2.text.toString()).status==2)
+                        {
+                            if(eT_weight.text!=null) {
+                                dbManager?.updateReagentStatus(eT_code2.text.toString(), 1, scApp!!.userInfo.getUserName())
+                                dbManager?.updateReagentSize(eT_code2.text.toString(), eT_weight.text.toString())
+                                val intent = Intent()
+                                intent.setClass(this, OperationActivity::class.java)
+                                startActivity(intent)
+                            }
+                            else
+                                Toast.makeText(this,"称重重量未填写",Toast.LENGTH_SHORT).show()
+
+                        }
+                        else
+                            Toast.makeText(this,"该试剂在位",Toast.LENGTH_SHORT).show()
+                    }
+                    else
+                        Toast.makeText(this,"无该试剂",Toast.LENGTH_SHORT).show()
+
                 }
 
                 "Scrap" -> {
+                    dbManager?.deleteReagentByPos(""+scApp?.getTouchdrawer(),""+scApp?.getTouchtable())
+                    val intent =Intent()
+                    intent.setClass(this,OperationActivity::class.java)
+                    startActivity(intent)
 
                 }
             }
