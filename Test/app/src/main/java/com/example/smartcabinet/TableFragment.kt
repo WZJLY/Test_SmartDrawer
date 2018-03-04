@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.Drawer
 import com.example.smartcabinet.util.Reagent
+import kotlinx.android.synthetic.main.fragment_information4.*
 import kotlinx.android.synthetic.main.fragment_table.*
 
 /**
@@ -121,8 +122,18 @@ class TableFragment : Fragment() {
                         arg.putString("tablenum",drawerID.toString())
                         arg.putString("pos",row)
                         informationFragment4.arguments = arg
-                        fragmentTrasaction.add(R.id.frameLayout, informationFragment4, "Info")
+                        fragmentTrasaction.replace(R.id.frameLayout, informationFragment4, "Info")
                         fragmentTrasaction.commit()
+                    }
+                    else
+                    {
+                        tV_num2.text!=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentId
+                        tV_name2.text=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentName
+                        tV_purity2.text=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentPurity
+                        tV_data2.text=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentInvalidDate
+                        tV_manufactor2.text=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentCreater
+                        tV_residue2.text=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentSize
+                        tV_person2.text=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentUser
                     }
                 }
                 else
