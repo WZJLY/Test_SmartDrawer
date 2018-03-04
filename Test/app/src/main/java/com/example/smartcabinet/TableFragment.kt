@@ -111,6 +111,30 @@ class TableFragment : Fragment() {
                         view.requestFocusFromTouch()
                         val row = button.id.toString()
                         Log.d("data","选择了"+row)
+
+                if(dbManager?.getReagentByPos(drawerID.toString(),row)!=null)
+                {
+                    if(childFragmentManager.findFragmentByTag("Info")==null) {
+                        val informationFragment4 = InformationFragment4()
+                        val fragmentTrasaction = childFragmentManager.beginTransaction()
+                        val arg = Bundle()
+                        arg.putString("tablenum",drawerID.toString())
+                        arg.putString("pos",row)
+                        informationFragment4.arguments = arg
+                        fragmentTrasaction.add(R.id.frameLayout, informationFragment4, "Info")
+                        fragmentTrasaction.commit()
+                    }
+                }
+                else
+                {
+                    if(childFragmentManager.findFragmentByTag("Info")!=null) {
+                    val informationFragment4 = childFragmentManager.findFragmentByTag("Info")
+                    val fragmentTrasaction = fragmentManager.beginTransaction()
+
+                    fragmentTrasaction.remove(informationFragment4)
+                    fragmentTrasaction.commit()
+                    }
+                }
                         scApp?.setTouchdrawer(drawerID)
                         scApp?.setTouchtable(button.id)
 

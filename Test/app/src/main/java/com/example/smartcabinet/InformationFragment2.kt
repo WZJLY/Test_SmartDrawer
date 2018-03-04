@@ -30,6 +30,7 @@ class InformationFragment2 : Fragment() {
         return inflater!!.inflate(R.layout.fragment_information2, container, false)
 
     }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         scApp = context.applicationContext as SCApp
         dbManager = DBManager(context.applicationContext)
