@@ -1,11 +1,13 @@
 package com.example.smartcabinet
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import android.support.v7.app.AlertDialog
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.ReagentTemplate
@@ -13,6 +15,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_sub_operation.*
 import kotlinx.android.synthetic.main.fragment_information1.*
 import kotlinx.android.synthetic.main.fragment_information2.*
+import kotlinx.android.synthetic.main.fragment_line_person.*
 
 class SubOperationActivity : AppCompatActivity(),InformationFragment2.scanbuttonlisten,InformationFragment1.return_scanbuttonlisten{
 private var statue:String?=null
@@ -91,32 +94,50 @@ private var statue:String?=null
             when(subOperation)
             {
                 "Into" -> {
-                    reagentTemplate =  dbManager!!.reagentTemplate.get(scApp!!.templateNum)
-                    dbManager?.addReagent(eT_code.text.toString(),reagentTemplate?.reagentName,"",""
-                    ,"",1,reagentTemplate?.reagentPurity,reagentTemplate?.reagentSize, eT_weight2.text.toString()
-                    ,reagentTemplate?.reagentCreater,reagentTemplate?.reagentGoodsID,1,reagentTemplate?.reagentDensity,eT_data.text.toString()
-                    ,"1",scApp?.getTouchdrawer().toString(),scApp?.getTouchtable().toString(),1,scApp!!.userInfo.getUserName())
-//                    Toast.makeText(this,scApp?.getTouchdrawer().toString()+scApp?.getTouchtable().toString(),Toast.LENGTH_SHORT).show()
+
+
 
                     //开锁
                     spi?.sendOpenLock(1,scApp!!.getTouchdrawer())
-                    val intent =Intent()
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("入柜")
+                    builder.setMessage("请放入试剂后点击确定")
+                    builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
+                        reagentTemplate =  dbManager!!.reagentTemplate.get(scApp!!.templateNum)
+                        dbManager?.addReagent(eT_code.text.toString(),reagentTemplate?.reagentName,"",""
+                                ,"",1,reagentTemplate?.reagentPurity,reagentTemplate?.reagentSize, eT_weight2.text.toString()
+                                ,reagentTemplate?.reagentCreater,reagentTemplate?.reagentGoodsID,1,reagentTemplate?.reagentDensity,eT_data.text.toString()
+                                ,"1",scApp?.getTouchdrawer().toString(),scApp?.getTouchtable().toString(),1,scApp!!.userInfo.getUserName())
 
+                    val intent =Intent()
                     scApp?.setTouchtable(0)
                     scApp?.setTouchdrawer(0) //新加的
                     intent.setClass(this,OperationActivity::class.java)
                     startActivity(intent)
+                    })
+                    builder.setNeutralButton("取消",null)
+                    builder.create()
+                    builder.show()
 
                 }
 
                 "Take" -> {
-                    dbManager?.updateReagentStatusByPos(""+scApp?.getTouchdrawer(),""+scApp?.getTouchtable(),scApp!!.getUserInfo().getUserName(),2)
+
                     //开锁
                     spi?.sendOpenLock(1,scApp!!.getTouchdrawer())
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("取用")
+                    builder.setMessage("请取出试剂后点击确定")
+                    builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
+                        dbManager?.updateReagentStatusByPos(""+scApp?.getTouchdrawer(),""+scApp?.getTouchtable(),scApp!!.getUserInfo().getUserName(),2)
 
-                    val intent =Intent()
-                    intent.setClass(this,OperationActivity::class.java)
-                    startActivity(intent)
+                        val intent =Intent()
+                        intent.setClass(this,OperationActivity::class.java)
+                        startActivity(intent)
+                    })
+                    builder.setNeutralButton("取消",null)
+                    builder.create()
+                    builder.show()
                 }
 
                 "Return" -> {
@@ -126,15 +147,22 @@ private var statue:String?=null
                         if(dbManager!!.getReagentById(eT_code2.text.toString()).status==2)
                         {
                             if(eT_weight.text!=null) {
-                                dbManager?.updateReagentStatus(eT_code2.text.toString(), 1, scApp!!.userInfo.getUserName())
-                                dbManager?.updateReagentSize(eT_code2.text.toString(), eT_weight.text.toString())
-
                                 //开锁
                                 spi?.sendOpenLock(1,scApp!!.getTouchdrawer())
+                                val builder = AlertDialog.Builder(this)
+                                builder.setTitle("归还")
+                                builder.setMessage("请归还试剂后点击确定")
+                                builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
+                                    dbManager?.updateReagentStatus(eT_code2.text.toString(), 1, scApp!!.userInfo.getUserName())
+                                    dbManager?.updateReagentSize(eT_code2.text.toString(), eT_weight.text.toString())
 
-                                val intent = Intent()
-                                intent.setClass(this, OperationActivity::class.java)
-                                startActivity(intent)
+                                    val intent = Intent()
+                                    intent.setClass(this, OperationActivity::class.java)
+                                    startActivity(intent)
+                                })
+                                builder.setNeutralButton("取消",null)
+                                builder.create()
+                                builder.show()
                             }
                             else
                                 Toast.makeText(this,"称重重量未填写",Toast.LENGTH_SHORT).show()
@@ -149,13 +177,24 @@ private var statue:String?=null
                 }
 
                 "Scrap" -> {
-                    dbManager?.deleteReagentByPos(""+scApp?.getTouchdrawer(),""+scApp?.getTouchtable())
+
                     //开锁
                     spi?.sendOpenLock(1,scApp!!.getTouchdrawer())
 
-                    val intent =Intent()
-                    intent.setClass(this,OperationActivity::class.java)
-                    startActivity(intent)
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("报废")
+                    builder.setMessage("请取出试剂后点击确定")
+                    builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
+                        dbManager?.deleteReagentByPos(""+scApp?.getTouchdrawer(),""+scApp?.getTouchtable())
+
+                        val intent =Intent()
+                        intent.setClass(this,OperationActivity::class.java)
+                        startActivity(intent)
+                    })
+                    builder.setNeutralButton("取消",null)
+                    builder.create()
+                    builder.show()
+
 
                 }
             }
@@ -231,7 +270,5 @@ private var statue:String?=null
             Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
         }
     }
-
-
 
 }

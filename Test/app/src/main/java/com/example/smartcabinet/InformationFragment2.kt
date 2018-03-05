@@ -12,7 +12,9 @@ import android.widget.*
 import kotlinx.android.synthetic.main.fragment_information2.*
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.ReagentTemplate
-import kotlinx.android.synthetic.main.fragment_set_drawer.*
+import android.widget.ArrayAdapter
+
+
 
 
 /**
@@ -22,7 +24,6 @@ class InformationFragment2 : Fragment() {
     var activityCallback:InformationFragment2.scanbuttonlisten? = null
     private var dbManager: DBManager? = null
     private var reagentTemplate:ReagentTemplate?=null
-    private var arr_adapter: ArrayAdapter<String>? = null
     private var scApp: SCApp? = null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -34,7 +35,7 @@ class InformationFragment2 : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         scApp = context.applicationContext as SCApp
         dbManager = DBManager(context.applicationContext)
-        var data_list = ArrayList<String>()
+        val data_list = ArrayAdapter<String>(context, R.layout.information_spinner_style)
         val arrListReagentTemplate = dbManager?.reagentTemplate
         val sum = arrListReagentTemplate!!.size.toInt()
         if(sum == 0)
@@ -53,10 +54,8 @@ class InformationFragment2 : Fragment() {
                 }
             }
         }
-
-
-        arr_adapter = ArrayAdapter<String>(context.applicationContext, android.R.layout.simple_spinner_item, data_list)
-        spinner_type.adapter=arr_adapter
+        data_list?.setDropDownViewResource(R.layout.information_dropdown_style)
+        spinner_type.adapter=data_list
         spinner_type.setSelection(0)
         spinner_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View,

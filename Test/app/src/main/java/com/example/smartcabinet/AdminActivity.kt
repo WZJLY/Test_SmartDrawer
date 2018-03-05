@@ -21,14 +21,11 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.SC_Const
-import com.example.smartcabinet.util.SerialPortInterface
 import kotlinx.android.synthetic.main.activity_admin.*
-import kotlinx.android.synthetic.main.fragment_line_person.*
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
-import kotlin.math.log
 
 class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten,EditPersonFragment.addpersonbuttonlisten,EditMessageFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener,DrawerFragment1.deletDrawerFragmentListener{
     private var scApp: SCApp? = null

@@ -11,6 +11,7 @@
         android:id="@+id/title_person2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_weight="0"
         android:text="使用者："
         android:textColor="@android:color/background_light"
@@ -34,6 +35,7 @@
         android:id="@+id/title_purity2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_weight="0"
         android:text="纯度："
         android:textColor="@android:color/background_light"
@@ -44,7 +46,7 @@
 
     <TextView
         android:id="@+id/tV_purity2"
-        android:layout_width="120sp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@android:color/background_light"
@@ -57,6 +59,7 @@
         android:id="@+id/title_name2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_weight="0"
         android:text="名称："
         android:textColor="@android:color/background_light"
@@ -67,7 +70,7 @@
 
     <TextView
         android:id="@+id/tV_name2"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@android:color/background_light"
@@ -90,7 +93,7 @@
 
     <TextView
         android:id="@+id/tV_num2"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@android:color/background_light"
@@ -103,6 +106,7 @@
         android:id="@+id/title_manufactor2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_weight="0"
         android:text="厂家："
         android:textColor="@android:color/background_light"
@@ -136,7 +140,7 @@
 
     <TextView
         android:id="@+id/tV_residue2"
-        android:layout_width="120sp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@android:color/background_light"
@@ -149,6 +153,7 @@
         android:id="@+id/title_data2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_weight="0"
         android:text="有效期："
         android:textColor="@android:color/background_light"
@@ -159,7 +164,7 @@
 
     <TextView
         android:id="@+id/tV_data2"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="2018.02.27"
