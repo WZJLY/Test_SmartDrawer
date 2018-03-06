@@ -51,8 +51,9 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
 //            }
 //
 //        }
-
         dbManager = DBManager(applicationContext)
+
+//        dbManager = DBManager(applicationContext)
         scApp = application as SCApp
         val userAccount =  scApp?.getUserInfo()
 if(dbManager!!.reagentTemplate.size<1) {
@@ -228,6 +229,7 @@ if(dbManager!!.reagentTemplate.size<1) {
                 builder.setMessage("请输入试剂模板编号")
                 builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
                     val templated = edit.text.toString()
+
 //                    handler = object : Handler() {
 //                    override fun handleMessage(msg: Message) {
 //                        super.handleMessage(msg)
@@ -247,6 +249,13 @@ if(dbManager!!.reagentTemplate.size<1) {
 //                    }
 //
 //                }
+//                    yunXing()
+                    val path = "SmartCabinet/ReagentTemplate"
+                    val fileName = "1519701177111" + ".csv"
+                    val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
+                    val pathName = "$SDCard/$path/$fileName"
+                    templateToDB(pathName)
+                    Toast.makeText(this,"666666666",Toast.LENGTH_SHORT).show()
                 })
 
 //                val thread = DownloadThread(handler)
@@ -281,6 +290,7 @@ if(dbManager!!.reagentTemplate.size<1) {
                 setDrawer.setArguments(args)
                 replaceFragment(setDrawer, R.id.framelayout)
                 Log.d("data",fragment)
+
             }
             else -> {
                 Log.d("data","else")
@@ -359,7 +369,7 @@ if(dbManager!!.reagentTemplate.size<1) {
 
     fun templateToDB(filePath: String?): String {
         var ret = ""
-        val content = "" //文件内容字符串
+        var content = "" //文件内容字符串
         //打开文件
         if (filePath == null)
             return "导入模板失败"
@@ -374,23 +384,26 @@ if(dbManager!!.reagentTemplate.size<1) {
                 if (instream != null) {
                     val inputreader = InputStreamReader(instream)
                     val buffreader = BufferedReader(inputreader)
-                    var line:String = buffreader.readLine()
+                    var line =buffreader.readLine()
                     //分行读取
                     var lineNumber = 1
                     var lineArray: Array<String>? = null
                     dbManager?.deleteAllReagentTemplate()   //删除原有数据
-                    while (line != null) {
-                        if (lineNumber > 3) {     //insert to DB
+                    while ( line != null) {
+                        line=buffreader.readLine()
+                        Log.e("wzj",line)
+                        if (lineNumber >= 1) {     //insert to DB
                             lineArray = line.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                             if (lineArray[0] != null && lineArray[0] !== "") {
                                 if (lineArray[5] == "") lineArray[5] = "1"
-                                dbManager?.addReagentTemplate(lineArray[0], lineArray[1], lineArray[2], lineArray[3], lineArray[4], Integer.valueOf(lineArray[5]),
-                                        lineArray[6], lineArray[7], lineArray[8], lineArray[9], lineArray[10], if (lineArray.size > 11) lineArray[11] else "")
+                                dbManager?.addReagentTemplate(lineArray[0], lineArray[1], lineArray[2], lineArray[3], lineArray[4], 1,
+                                        lineArray[6], lineArray[7], lineArray[8], lineArray[9], lineArray[10], lineArray[11])
                             }
                         }
                         lineNumber++
                     }
                     instream.close()
+
                 }
             } catch (e: Exception) {
                 Log.e("TestFile", e.message)
@@ -511,6 +524,17 @@ if(dbManager!!.reagentTemplate.size<1) {
         return "com.android.providers.media.documents" == uri.authority
     }
 
+    fun yunXing() {
+        object : Thread() {
+            override fun run() {
+                val path = "SmartCabinet/ReagentTemplate"
+        val fileName = "1519701177111" + ".csv"
+        val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
+        val pathName = "$SDCard/$path/$fileName"
+        templateToDB(pathName)
+        }
+        }.start()  //开启一个线程
+    }
 
 
 }
