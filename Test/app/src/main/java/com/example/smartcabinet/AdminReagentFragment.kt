@@ -5,6 +5,7 @@ import android.content.Context
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ class AdminReagentFragment : Fragment() {
         } catch (e: ClassCastException) {
             throw ClassCastException(context?.toString() + "must implement adminReagentListen")
         }
+
     }
 
     interface adminReagentListen{
@@ -38,6 +40,11 @@ class AdminReagentFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val buttonStyle = arguments?.getString("buttonStyle")
+        if(buttonStyle != null) {
+            changeAdminButton(buttonStyle)
+            Log.d("AdminReagentFragment",buttonStyle)
+        }
 
         btn_into.setOnClickListener {
             buttonClicked("Into")
@@ -64,4 +71,36 @@ class AdminReagentFragment : Fragment() {
         actionCallback?.adminReagentButtonClick(text)
     }
 
-}
+    fun changeAdminButton(text: String){
+        when(text){
+            "noFocusable" -> {
+                Log.d("data",text)
+                btn_into?.isEnabled = false
+                btn_admin_take.isEnabled = false
+                btn_admin_return.isEnabled = true
+                btn_scrap.isEnabled = false
+            }
+
+            "style_denglu" -> {
+                Log.d("AdminReagentFragment","denglu")
+                btn_into.isEnabled = true
+                btn_admin_take.isEnabled = false
+                btn_admin_return.isEnabled = true
+                btn_scrap.isEnabled = false
+            }
+            "style1" -> {
+                btn_into.isEnabled = false
+                btn_admin_take.isEnabled = true
+                btn_admin_return.isEnabled = false
+                btn_scrap.isEnabled = true
+            }
+
+            "style2" -> {
+                btn_into.isEnabled = false
+                btn_admin_take.isEnabled = false
+                btn_admin_return.isEnabled = true
+                btn_scrap.isEnabled = true
+            }
+        }
+    }
+}// Required empty public constructor

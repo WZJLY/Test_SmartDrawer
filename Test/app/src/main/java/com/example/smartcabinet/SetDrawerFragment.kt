@@ -44,7 +44,6 @@ class SetDrawerFragment : Fragment() {
            val arg = Bundle()
            arg.putInt("tablenum",drawerID)
            arg.putString("statue","drawer")
-           tableFragment.setArguments(arg)
            tableFragment.arguments = arg
            val fragmentTrasaction = fragmentManager.beginTransaction()
            fragmentTrasaction.replace(R.id.fL_table,tableFragment)
@@ -53,8 +52,6 @@ class SetDrawerFragment : Fragment() {
            spinner_drawer.setSelection( (dbManager!!.getDrawerByDrawerId(drawerID).getDrawerSize())-2)
            spinner_drawer.isEnabled = false
            btn_save.setVisibility(View.GONE)
-
-
        }
 
         if(getArguments().getString("setDrawer")=="set") {
@@ -77,7 +74,6 @@ class SetDrawerFragment : Fragment() {
                     fragmentTrasaction.commit()
 
                 }
-
                 override fun onNothingSelected(p0: AdapterView<*>?) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
