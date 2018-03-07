@@ -48,7 +48,7 @@ class InformationFragment2 : Fragment() {
             if(sum>0) {
                 for (i in 1..sum) {
                     reagentTemplate = arrListReagentTemplate?.get(i - 1)
-                    data_list.add(reagentTemplate!!.reagentName+","+"纯度："+reagentTemplate!!.reagentPurity
+                    data_list.add(reagentTemplate!!.reagentName+","+"纯度："+reagentTemplate!!.reagentPurity+"%"
                             +","+reagentTemplate!!.reagentCreater+","+reagentTemplate!!.reagentSize+reagentTemplate!!.reagentUnit)
 
                 }
@@ -61,7 +61,6 @@ class InformationFragment2 : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>, view: View,
                                         pos: Int, id: Long) {
                 scApp?.templateNum= pos
-//                Toast.makeText(context.applicationContext,""+templateNum,Toast.LENGTH_SHORT).show()
 
             }
 

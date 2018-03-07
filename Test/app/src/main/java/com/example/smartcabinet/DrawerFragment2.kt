@@ -41,7 +41,7 @@ class DrawerFragment2 : Fragment() {
 
                 val tableFragment = TableFragment()
                 val args = Bundle()
-                args.putString("statue","drawer")
+                args.putString("statue","drawer1")
                 args.putInt("tablenum", drawerID)
                 tableFragment.setArguments(args)
                 val fragmentTransaction = childFragmentManager.beginTransaction()

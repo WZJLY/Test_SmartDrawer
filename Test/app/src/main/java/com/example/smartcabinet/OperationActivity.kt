@@ -137,10 +137,9 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
             if(sum>0) {
                 for (i in 1..sum) {
                     drawer = arrListDrawers?.get(i - 1)
-                    val fragment =fragmentManager.beginTransaction()
                     val drawerFragment2 = DrawerFragment2()
                     val args = Bundle()
-                    args.putInt("drawerID", drawer!!.getId().toInt())
+                    args.putInt("drawerID", drawer!!.getId())
                     drawerFragment2.setArguments(args)
                     addFragment(R.id.Layout_drawer,drawerFragment2)
 
