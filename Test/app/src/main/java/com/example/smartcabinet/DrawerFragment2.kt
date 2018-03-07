@@ -47,17 +47,16 @@ class DrawerFragment2 : Fragment() {
                 val fragmentTransaction = childFragmentManager.beginTransaction()
                 fragmentTransaction.add(R.id.linearLayout_drawer, tableFragment, "table")
                 fragmentTransaction.commit()
-
             }
             else
             {
-
                 val tableFragment = childFragmentManager.findFragmentByTag("table")
                 val fragmentTransaction = childFragmentManager.beginTransaction()
                 fragmentTransaction.remove(tableFragment)
                 fragmentTransaction.commit()
-
             }
+            val operationActivity = activity as OperationActivity
+            operationActivity.changeMessage("noFocusable")
         }
         iBt_lock.setOnClickListener{
             spi?.sendOpenLock(1,drawerID)

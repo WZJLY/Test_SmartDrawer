@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import com.example.smartcabinet.util.*
 import com.google.zxing.integration.android.IntentIntegrator
+import kotlinx.android.synthetic.main.activity_operation.*
 import kotlinx.android.synthetic.main.admin_fragment.*
 import kotlin.math.log
 
@@ -30,19 +31,7 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
         addFragment(R.id.Layout_cabinet,cabinetFragment)
 
         scApp = application as SCApp
-        val userAccount =  scApp?.getUserInfo()
-        when(userAccount?.getUserPower()){
-            SC_Const.ADMIN ->
-            {
-                val adminReagentFragment = AdminReagentFragment()
-                replaceFragment(R.id.frameLayout_button,adminReagentFragment)
-            }
-            SC_Const.NORMAL ->
-            {
-                val userReagentFragment = UserReagentFragment()
-                replaceFragment(R.id.frameLayout_button, userReagentFragment)
-            }
-        }
+        changeMessage("noFocusable")
         updateDrawer()
         spi = SerialPortInterface(this.applicationContext)
         scApp?.setSpi(spi)
@@ -57,10 +46,6 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
                     intent.putExtra("subOperation", "Take")
 
                     startActivity(intent)
-
-
-
-
             }
 
             "userReturn" -> {
@@ -92,7 +77,6 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
                     } catch (e: Exception) {
                         Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
                     }
-
             }
 
             "adminTake" -> {
@@ -138,13 +122,6 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
         fragmentTransaction.commit()
     }
 
-    fun AppCompatActivity.replaceFragment(frameId: Int, fragment: Fragment) {
-        supportFragmentManager.inTransaction{replace(frameId, fragment)}
-    }
-
-    fun AppCompatActivity.addFragment(frameId: Int, fragment: Fragment) {
-        supportFragmentManager.inTransaction{add(frameId, fragment)}
-    }
 
     fun updateDrawer()
     {
@@ -154,7 +131,6 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
         {
             Toast.makeText(this, "请添加抽屉", Toast.LENGTH_SHORT).show()
         }
-
 
         else
         {
@@ -203,4 +179,31 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
             Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
         }
     }
+    fun changeMessage(text: String){
+        val buttonStyle = Bundle()
+        Log.d("Operation",text)
+        buttonStyle.putString("buttonStyle",text)
+        val userAccount =  scApp?.getUserInfo()
+        when(userAccount?.getUserPower()) {
+            SC_Const.ADMIN -> {
+                val adminReagentFragment = AdminReagentFragment()
+                adminReagentFragment.arguments = buttonStyle
+                replaceFragment(R.id.frameLayout_button, adminReagentFragment)
+            }
+            SC_Const.NORMAL -> {
+                val userReagentFragment = UserReagentFragment()
+                userReagentFragment.arguments = buttonStyle
+                replaceFragment(R.id.frameLayout_button, userReagentFragment)
+            }
+        }
+    }
+
+    fun AppCompatActivity.replaceFragment(frameId: Int, fragment: Fragment) {
+        supportFragmentManager.inTransaction{replace(frameId, fragment)}
+    }
+
+    fun AppCompatActivity.addFragment(frameId: Int, fragment: Fragment) {
+        supportFragmentManager.inTransaction{add(frameId, fragment)}
+    }
+
 }
