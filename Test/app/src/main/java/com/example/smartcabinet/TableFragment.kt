@@ -88,7 +88,9 @@ class TableFragment : Fragment() {
                         for (m in 1..sum) {
                             reagent = arrListReagent?.get(m - 1)
                             if(reagent!!.drawerId.toInt()==drawerID&&reagent!!.reagentPosition.toInt()==button.id)
-                            {  button.text = reagent?.reagentName
+                            {  if(reagent!!.reagentName.length>3)
+                                button.text = reagent!!.reagentName.subSequence(0,3)
+                                else  button.text = reagent!!.reagentName
                                 if(reagent?.status==1) {
                                     Toast.makeText(context.applicationContext,"1",Toast.LENGTH_SHORT).show()
                                     button.setBackgroundResource(R.drawable.btn_style1)

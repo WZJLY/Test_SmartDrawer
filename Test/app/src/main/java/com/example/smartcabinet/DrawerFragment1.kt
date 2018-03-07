@@ -73,9 +73,16 @@ class DrawerFragment1 : Fragment() {
                 {
                     dbManager?.deleteDrawer(drawerID,1)
                     deletDrawerbuttonClicked("delet",0)
-                }
+            }
 
             }
+        }
+        else
+        {
+            if(dbManager!!.drawers.size==drawerID)
+                dbManager?.deleteDrawer(drawerID,1)
+            deletDrawerbuttonClicked("delet",0)
+
         }
     }       //通过判断该抽屉里是否有试剂，是否是最后一个抽屉，否则无法删除
 

@@ -98,7 +98,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     override  fun deletDrawerButtonClick(text: String,drawerID:Int) {
         if(text == "delet")
         {
-
             val setCabinet = SetCabinetFragment()
             replaceFragment(setCabinet, R.id.framelayout)
         }
