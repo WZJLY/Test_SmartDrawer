@@ -1,6 +1,7 @@
 package com.example.smartcabinet;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.DisplayMetrics;
 
 import com.example.smartcabinet.util.CabinetInfo;
@@ -21,13 +22,18 @@ public class SCApp extends Application {
     private int Touchtable;
     private int TemplateNum;
     SerialPortInterface spi;
-
+    private static Context context;
+    private String TemplateID;
     @Override
     public void onCreate() {
         super.onCreate();
         dbManager = new DBManager(this);
+        context = getApplicationContext();
         //  init ZXing lib
         // ZXingLibrary.initDisplayOpinion(this);
+    }
+    public static Context getContext(){
+        return context;
     }
 
     public DBManager getDbManager(){
@@ -86,5 +92,12 @@ public class SCApp extends Application {
     }
     public SerialPortInterface getSpi() {
         return spi;
+    }
+    public void setTemplateID(String id){
+        this.TemplateID=id;
+    }
+    public String getTemplateID()
+    {
+        return TemplateID;
     }
 }

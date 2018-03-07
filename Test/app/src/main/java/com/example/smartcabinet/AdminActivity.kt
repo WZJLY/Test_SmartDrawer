@@ -52,22 +52,8 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
 //
 //        }
         dbManager = DBManager(applicationContext)
-
-//        dbManager = DBManager(applicationContext)
         scApp = application as SCApp
         val userAccount =  scApp?.getUserInfo()
-if(dbManager!!.reagentTemplate.size<1) {
-    dbManager?.addReagentTemplate("10001", "酒精", ""
-            , "", "", 1, "90%", "100",
-            "宁波化工", "123460", "ml", "1")
-    dbManager?.addReagentTemplate("10002", "丙酮", ""
-            , "", "", 1, "95%", "200",
-            "宁波化工", "123461", "ml", "1")
-    dbManager?.addReagentTemplate("10003", "盐酸", ""
-            , "", "", 1, "50%", "300",
-            "宁波昌远", "123462", "ml", "1")
-    Toast.makeText(this, "试剂模板添加成功", Toast.LENGTH_SHORT).show()
-}
         when(userAccount?.getUserPower()){
             SC_Const.ADMIN -> {
                 val adminfrag = AdminFragment()
@@ -228,38 +214,19 @@ if(dbManager!!.reagentTemplate.size<1) {
                 builder?.setView(edit)
                 builder.setMessage("请输入试剂模板编号")
                 builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
-                    val templated = edit.text.toString()
-
-//                    handler = object : Handler() {
-//                    override fun handleMessage(msg: Message) {
-//                        super.handleMessage(msg)
-//                        if (msg.what == 1) {
-//                            download_handler = msg.obj as Handler
-//                            val backmsg = Message.obtain()
-//                            backmsg.what = 2
-//                            backmsg.obj =  templated
-//                            download_handler.sendMessage(backmsg)
-//                        }
-//                        if(msg.what==3)
-//                        {
-//
-//                        }
-//
-//
+                    scApp?.templateID=edit.text.toString()
+                    downLoad()
+//                    val path = "SmartCabinet/ReagentTemplate"
+//                    val fileName = scApp?.templateID + ".csv"
+//                    val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
+//                    val pathName = "$SDCard/$path/$fileName"//文件存储路径
+//                if (templateToDB(pathName) == "") {
+//                        Toast.makeText(this, "试剂模板导入成功", Toast.LENGTH_LONG).show()
 //                    }
-//
-//                }
-//                    yunXing()
-                    val path = "SmartCabinet/ReagentTemplate"
-                    val fileName = "1519701177111" + ".csv"
-                    val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
-                    val pathName = "$SDCard/$path/$fileName"
-                    templateToDB(pathName)
-                    Toast.makeText(this,"666666666",Toast.LENGTH_SHORT).show()
+//                    else {
+//                        Toast.makeText(this, "试剂模板导入失败", Toast.LENGTH_LONG).show()
+//                    }
                 })
-
-//                val thread = DownloadThread(handler)
-//                thread.start()
                 builder.setNeutralButton("取消",null)
                 builder.create()
                 builder.show()
@@ -385,7 +352,6 @@ if(dbManager!!.reagentTemplate.size<1) {
                     val inputreader = InputStreamReader(instream)
                     val buffreader = BufferedReader(inputreader)
                     var line =buffreader.readLine()
-                    //分行读取
                     var lineNumber = 1
                     var lineArray: Array<String>? = null
                     dbManager?.deleteAllReagentTemplate()   //删除原有数据
@@ -396,9 +362,10 @@ if(dbManager!!.reagentTemplate.size<1) {
                             lineArray = line.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                             if (lineArray[0] != null && lineArray[0] !== "") {
                                 if (lineArray[5] == "") lineArray[5] = "1"
-                                dbManager?.addReagentTemplate(lineArray[0], lineArray[1], lineArray[2], lineArray[3], lineArray[4], 1,
+                                dbManager?.addReagentTemplate(lineArray[0], lineArray[1], lineArray[2], lineArray[3], lineArray[4], lineArray[5].toInt(),
                                         lineArray[6], lineArray[7], lineArray[8], lineArray[9], lineArray[10], lineArray[11])
                             }
+
                         }
                         lineNumber++
                     }
@@ -524,18 +491,90 @@ if(dbManager!!.reagentTemplate.size<1) {
         return "com.android.providers.media.documents" == uri.authority
     }
 
-    fun yunXing() {
+    fun downLoad() {
         object : Thread() {
             override fun run() {
                 val path = "SmartCabinet/ReagentTemplate"
-        val fileName = "1519701177111" + ".csv"
-        val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
-        val pathName = "$SDCard/$path/$fileName"
-        templateToDB(pathName)
+                val fileName = scApp?.templateID + ".csv"
+                val urlStr = SC_Const.REAGENTTEMPLATEADDRESS + fileName
+                val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
+                val pathName = "$SDCard/$path/$fileName"//文件存储路径
+                try {
+                         /*
+                         * 通过URL取得HttpURLConnection
+                         * 要网络连接成功，需在AndroidMainfest.xml中进行权限配置
+                         * <uses-permission android:name="android.permission.INTERNET" />
+                         */
+                    val url = URL(urlStr)
+                    //取得inputStream，并将流中的信息写入SDCard
+
+                    /*
+                         * 写前准备
+                         * 1.在AndroidMainfest.xml中进行权限配置
+                         * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+                         * 取得写入SDCard的权限
+                         * 2.取得SDCard的路径： Environment.getExternalStorageDirectory()
+                         * 3.检查要保存的文件上是否已经存在
+                         * 4.不存在，新建文件夹，新建文件
+                         * 5.将input流中的信息写入SDCard
+                         * 6.关闭流
+                         */
+
+                    val file = File(pathName)
+                    Looper.prepare()
+                    if (file.exists()) {
+                        Log.d("file already exists:", pathName)
+                    } else {
+
+                        Toast.makeText(SCApp.getContext(), "开始下载试剂模板", Toast.LENGTH_LONG).show()
+
+                        val dir = SDCard + "/" + path
+                        File(dir).mkdir()//新建文件夹
+
+                        val output = File(pathName)
+                        val requestUrl = URL(urlStr)
+                        output.writeBytes(requestUrl.readBytes())
+                        Toast.makeText(SCApp.getContext(), "模板下载成功", Toast.LENGTH_SHORT).show()
+
+                    }
+
+                    if (templateToDB(pathName) == "") {
+
+                        Toast.makeText(SCApp.getContext(), "试剂模板导入成功", Toast.LENGTH_SHORT).show()
+
+                    }
+                    else {
+
+                        Toast.makeText(SCApp.getContext(), "试剂模板导入成功", Toast.LENGTH_SHORT).show()
+
+                    }
+                } catch (e: MalformedURLException) {
+
+                    e.printStackTrace()
+
+                } catch (e: IOException) {
+
+                    Toast.makeText(SCApp.getContext(), "该试剂模板编码不存在", Toast.LENGTH_LONG).show()
+
+                    e.printStackTrace()
+
+                } finally {
+                    try {
+//                        Looper.prepare()
+//                        output!!.close()
+//                        Looper.loop()
+
+                    } catch (e: IOException) {
+
+                        e.printStackTrace()
+
+                    }
+                    Looper.loop()
+                }
+
         }
         }.start()  //开启一个线程
     }
-
 
 }
 

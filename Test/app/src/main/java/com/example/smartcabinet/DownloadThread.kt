@@ -7,6 +7,7 @@ import android.os.Looper
 import android.os.Message
 import android.preference.PreferenceActivity
 import android.util.Log
+import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.SC_Const
 import java.io.*
