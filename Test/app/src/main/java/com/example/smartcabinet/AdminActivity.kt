@@ -36,21 +36,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
-//        handler = object : Handler() {
-//            override fun handleMessage(msg: Message) {
-//                super.handleMessage(msg)
-//                if (msg.what == 1) {
-//                    download_handler = msg.obj as Handler
-//                    val backmsg = Message.obtain()
-//                    backmsg.what = 2
-//                    backmsg.obj ="1519701177111"
-//                    download_handler.sendMessage(backmsg)
-//                }
-//
-//
-//            }
-//
-//        }
         dbManager = DBManager(applicationContext)
         scApp = application as SCApp
         val userAccount =  scApp?.getUserInfo()

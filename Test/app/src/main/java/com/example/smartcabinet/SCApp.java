@@ -21,6 +21,7 @@ public class SCApp extends Application {  //全局变量
     private int Touchdrawer;
     private int Touchtable;
     private int TemplateNum;
+    private String reagentID;
     SerialPortInterface spi;
     private static Context context;
     private String TemplateID;
@@ -99,5 +100,13 @@ public class SCApp extends Application {  //全局变量
     public String getTemplateID()
     {
         return TemplateID;
+    }
+    public void setReagentID(String id)
+    {
+        reagentID=id;
+    }
+    public String getReagentID()
+    {
+        return this.reagentID;
     }
 }

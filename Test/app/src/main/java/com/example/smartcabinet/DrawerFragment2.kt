@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_drawer2.*
  * A simple [Fragment] subclass.
  */
 class DrawerFragment2 : Fragment() {
+private var dbManager:DBManager?=null
 
     private var scApp: SCApp? = null
 
@@ -32,13 +33,26 @@ class DrawerFragment2 : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        dbManager= DBManager(context.applicationContext)
         tV_drawer2.text =("抽屉"+drawerID)
         scApp = context.applicationContext as SCApp
         var spi =  scApp?.getSpi()
-
+        if(scApp?.reagentID!=null)
+        {
+            if(dbManager!!.getReagentById(scApp?.reagentID).drawerId==drawerID.toString())
+            {
+                val tableFragment = TableFragment()
+                val args = Bundle()
+                args.putString("statue","drawer1")
+                args.putInt("tablenum", drawerID)
+                tableFragment.setArguments(args)
+                val fragmentTransaction = childFragmentManager.beginTransaction()
+                fragmentTransaction.add(R.id.linearLayout_drawer, tableFragment, "table")
+                fragmentTransaction.commit()
+            }
+        }
         iBt_drawer2.setOnClickListener {
             if(childFragmentManager.findFragmentByTag("table")==null) {
-
                 val tableFragment = TableFragment()
                 val args = Bundle()
                 args.putString("statue","drawer1")

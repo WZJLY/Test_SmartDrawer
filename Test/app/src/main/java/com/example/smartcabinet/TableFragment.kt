@@ -70,8 +70,6 @@ class TableFragment : Fragment() {
                 button.id = (i-1)*num+j
                 button.setBackgroundResource(R.drawable.btn_style)
                 button.text = ""
-
-
                 if(arguments.getString("touch")=="false") {
                     button.isClickable = false
                     if(scApp?.touchtable==button.id)
@@ -156,6 +154,18 @@ class TableFragment : Fragment() {
                 if(getArguments().getString("statue")=="add"||getArguments().getString("statue")=="drawer")
                 {
                     button.isClickable = false
+                }
+                if(scApp?.reagentID!=null)
+                {
+                    if(dbManager!!.getReagentById(scApp?.reagentID).drawerId==drawerID.toString()&&dbManager!!.getReagentById(scApp?.reagentID).reagentPosition.toInt()==button.id)
+                    {
+                        scApp?.reagentID=null
+                        button.setFocusable(true)
+                        button.setFocusableInTouchMode(true)
+                        button.requestFocus()
+                        button.requestFocusFromTouch()
+                        button.performClick()
+                    }
                 }
                 button.setTextColor(Color.BLACK)
                 button.width = 55

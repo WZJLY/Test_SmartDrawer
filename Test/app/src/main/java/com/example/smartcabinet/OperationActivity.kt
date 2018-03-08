@@ -35,6 +35,7 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
         updateDrawer()
         spi = SerialPortInterface(this.applicationContext)
         scApp?.setSpi(spi)
+
     }
 
 

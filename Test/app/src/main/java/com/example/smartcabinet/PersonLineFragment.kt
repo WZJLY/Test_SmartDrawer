@@ -59,10 +59,10 @@ class PersonLineFragment : Fragment() {
         }
         if(userid=="00001")
             {
+
             iBt_deletPerson.setVisibility(View.GONE)   //对可删除的用户就行了判断
                                                     // 管理级别为最高，接下去普通管理员，然后是普通用户
                                                     //同级之间无法删除，只能上级删除下级
-
         }
 
         iBt_deletPerson.setOnClickListener({            //用户的删除
