@@ -48,7 +48,7 @@
 
     <LinearLayout
         android:id="@+id/add_drawer"
-        android:layout_width="701dp"
+        android:layout_width="wrap_content"
         android:layout_height="833dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/drawer_area"

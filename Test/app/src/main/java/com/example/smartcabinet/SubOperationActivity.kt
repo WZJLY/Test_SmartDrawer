@@ -96,7 +96,6 @@ private var statue:String?=null
                 "Into" -> {
 
 
-
                     //开锁
                     spi?.sendOpenLock(1,scApp!!.getTouchdrawer())
                     val builder = AlertDialog.Builder(this)
@@ -269,6 +268,10 @@ private var statue:String?=null
         catch (e: Exception){
             Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
         }
+    }
+
+    fun checkLock(drawernum: Int,num: Int){
+
     }
 
 }
