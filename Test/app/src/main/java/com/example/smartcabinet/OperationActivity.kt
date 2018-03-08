@@ -73,7 +73,7 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
                         integrator.setOrientationLocked(false)
                         integrator.captureActivity = SmallCaptureActivity::class.java
                         integrator.setTimeout(10000)
-                        integrator.initiateScan()
+                        integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult
                     } catch (e: Exception) {
                         Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
                     }
@@ -123,7 +123,7 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
     }
 
 
-    fun updateDrawer()
+    fun updateDrawer()          //通过遍历数据库更新抽屉界面
     {
         val arrListDrawers = dbManager?.getDrawers()
         val sum = arrListDrawers!!.size.toInt()
@@ -150,13 +150,13 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         try {
 
-                val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+                val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)    //获取扫码结果
                 val intent = Intent()
                 intent.setClass(this, SubOperationActivity::class.java)
                 if(statue=="Into") {
-                    intent.putExtra("subOperation", "Into")
+                    intent.putExtra("subOperation", "Into")     //跳转到入柜fragment
                 }
-                if(statue=="Return") intent.putExtra("subOperation","Return")
+                if(statue=="Return") intent.putExtra("subOperation","Return")//跳转到归还fragment
                 intent.putExtra("scan_value",result.contents)
                 startActivity(intent)
 
@@ -178,7 +178,7 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
             Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
         }
     }
-    fun changeMessage(text: String){
+    fun changeMessage(text: String){        //根据点击的位置，改变下方的功能栏
         val buttonStyle = Bundle()
         Log.d("Operation",text)
         buttonStyle.putString("buttonStyle",text)

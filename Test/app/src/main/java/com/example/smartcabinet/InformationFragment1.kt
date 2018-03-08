@@ -49,4 +49,4 @@ class InformationFragment1 : Fragment() {
         activityCallback?.return_scanbuttononClick(text)
     }
 
-}// Required empty public constructor
+}

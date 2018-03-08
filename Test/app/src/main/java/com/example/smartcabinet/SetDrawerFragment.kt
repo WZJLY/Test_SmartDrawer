@@ -79,16 +79,15 @@ class SetDrawerFragment : Fragment() {
                 }
             }
             btn_save.setOnClickListener {
-                val arrayList = dbManager?.getDrawers()
+                val arrayList = dbManager?.drawers
                 if (arrayList == null) {
                     sum = 0
                     dbManager?.addDrawer(sum + 1, 1, boxnum)
                 } else {
-                    sum = arrayList!!.size.toInt()
+                    sum = arrayList!!.size
                     dbManager?.addDrawer(sum + 1, 1, boxnum)
                 }
                 saveDrawerbuttonClicked("saveDrawer")
-
 
             }
         }

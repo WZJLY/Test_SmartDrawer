@@ -39,21 +39,21 @@ class TableFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         scApp = context.applicationContext as SCApp
         dbManager = DBManager(context.applicationContext)
-        if(getArguments()!=null)
-        {if(getArguments().getString("statue")!="add") {
-            if (getArguments().getString("statue") == "drawer"||getArguments().getString("statue")=="drawer1")
-                drawerID = getArguments().getInt("tablenum")
-            if (getArguments().getString("statue") == "op")
-                drawerID = getArguments().getInt("tablenum_op")
+        if(arguments!=null)
+        {if(arguments.getString("statue")!="add") {
+            if (arguments.getString("statue") == "drawer"||arguments.getString("statue")=="drawer1")
+                drawerID = arguments.getInt("tablenum")
+            if (arguments.getString("statue") == "op")
+                drawerID = arguments.getInt("tablenum_op")
             drawer = dbManager?.getDrawerByDrawerId(drawerID)
 
             if (drawer != null)
                 num = drawer!!.getDrawerSize()
             addNum(num)
         }
-            if(getArguments().getString("statue")=="add")
+            if(arguments.getString("statue")=="add")
             {
-                num =getArguments().getInt("boxnum")
+                num =arguments.getInt("boxnum")
                 addNum(num)
             }
         }
@@ -72,9 +72,9 @@ class TableFragment : Fragment() {
                 button.text = ""
 
 
-                if(getArguments().getString("touch")=="false") {
+                if(arguments.getString("touch")=="false") {
                     button.isClickable = false
-                    if(scApp?.getTouchtable()==button.id)
+                    if(scApp?.touchtable==button.id)
                     {
                         button.setBackgroundResource(R.drawable.btn_choose)
                     }

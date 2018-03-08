@@ -37,7 +37,7 @@ private var scApp: SCApp? = null
             tV_manufactor.text=reagent?.reagentCreater
             tV_residue.text=reagent?.reagentSize
             tV_num.text = reagent?.reagentId
-            tV_person.text=reagent?.reagentUser
+            tV_person.text=reagent?.reagentUser     //取用时的信息显示
 
     }
 }// Required empty public constructor

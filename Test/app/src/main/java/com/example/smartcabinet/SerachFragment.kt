@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.smartcabinet.R.array.drawer
+import com.example.smartcabinet.util.DBManager
+import com.example.smartcabinet.util.Reagent
 import kotlinx.android.synthetic.main.activity_admin.*
 import kotlinx.android.synthetic.main.admin_fragment.*
 import kotlinx.android.synthetic.main.serach_fragment.*
@@ -18,35 +21,34 @@ import kotlinx.android.synthetic.main.serach_fragment.*
  */
 
 class SerachFragment : Fragment() {
-
+    private var dbManager: DBManager? = null
+    private var reagent:Reagent?=null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         return inflater!!.inflate(R.layout.serach_fragment, container, false)
     }
 
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        Toast.makeText(context.applicationContext,"ffffff",Toast.LENGTH_LONG).show()
-//
-//    }
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-             button?.setOnClickListener{
-                 val fragment = childFragmentManager.beginTransaction()
-                 val tfrg = TextFragment()
-                 fragment.add(R.id.add_drawer, tfrg, "TAG")
-                 fragment.commit()
-                 val fragment1 = childFragmentManager.beginTransaction()
-                 val tfrg1 = TextFragment()
-                 fragment1.add(R.id.add_drawer, tfrg1, "TAG1")
-                 fragment1.commit()
-             }
-        button2?.setOnClickListener{
-            val frag = childFragmentManager.findFragmentByTag("TAG")
-            val fragment = childFragmentManager.beginTransaction()
-            fragment.remove(frag)
-            fragment.commit()
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) { //搜索功能，功能待开发与完善
+        dbManager = DBManager(context.applicationContext)
+         val arrayListReagent =  dbManager?.reagents
+        if(arrayListReagent!=null)
+        {
+            val sum = arrayListReagent.size
+            if(sum>0) {
+                for (i in 1..sum) {
+                    reagent = arrayListReagent?.get(i - 1)
+                    val fragment = childFragmentManager.beginTransaction()
+                    val serachReagentsFragment =  SearchReagentsFragment()
+                    val args = Bundle()
+                    args.putString("reagentID", reagent?.reagentId)
+                    serachReagentsFragment.arguments=args
+                    fragment.add(R.id.add_drawer, serachReagentsFragment)
+                    fragment.commit()
 
+                }
+            }
         }
+
  }
 
 

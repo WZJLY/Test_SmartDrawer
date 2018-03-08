@@ -39,7 +39,7 @@ class InformationFragment4 : Fragment() {
             tV_manufactor2.text=reagent?.reagentCreater
             tV_residue2.text=reagent?.reagentSize
             tV_num2.text = reagent?.reagentId
-            tV_person2.text=reagent?.reagentUser
+            tV_person2.text=reagent?.reagentUser        //点击box弹出的试剂信息显示
         }
 
 

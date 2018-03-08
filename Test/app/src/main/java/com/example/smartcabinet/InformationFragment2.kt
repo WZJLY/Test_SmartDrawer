@@ -37,7 +37,7 @@ class InformationFragment2 : Fragment() {
         dbManager = DBManager(context.applicationContext)
         val data_list = ArrayAdapter<String>(context, R.layout.information_spinner_style)
         val arrListReagentTemplate = dbManager?.reagentTemplate
-        val sum = arrListReagentTemplate!!.size.toInt()
+        val sum = arrListReagentTemplate!!.size
         if(sum == 0)
         {
             Toast.makeText(context.applicationContext, "当前没有试剂模板", Toast.LENGTH_SHORT).show()
@@ -54,7 +54,7 @@ class InformationFragment2 : Fragment() {
                 }
             }
         }
-        data_list?.setDropDownViewResource(R.layout.information_dropdown_style)
+        data_list?.setDropDownViewResource(R.layout.information_dropdown_style)  //下拉框通过遍历试剂模板试剂库添加源
         spinner_type.adapter=data_list
         spinner_type.setSelection(0)
         spinner_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -68,9 +68,9 @@ class InformationFragment2 : Fragment() {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         }
-       if(getArguments().getString("scan_value")!==null)
+       if(arguments.getString("scan_value")!==null)
        {
-           val value = getArguments().getString("scan_value")
+           val value = arguments.getString("scan_value")
            eT_code.setText(value)
        }
         btn_code.setOnClickListener{

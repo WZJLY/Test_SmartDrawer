@@ -34,13 +34,13 @@ class TableFragment2 : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         scApp = context.applicationContext as SCApp
-        if(getArguments()!=null)
+        if(arguments!=null)
         {
             dbManager = DBManager(context.applicationContext)
-            if(getArguments().getString("statue")=="drawer")
-                drawerID = getArguments().getInt("tablenum")
-            if(getArguments().getString("statue")=="op")
-                drawerID = getArguments().getInt("tablenum_op")
+            if(arguments.getString("statue")=="drawer")
+                drawerID = arguments.getInt("tablenum")
+            if(arguments.getString("statue")=="op")
+                drawerID = arguments.getInt("tablenum_op")
             drawer=dbManager?.getDrawerByDrawerId(drawerID)
 
             if(drawer != null)

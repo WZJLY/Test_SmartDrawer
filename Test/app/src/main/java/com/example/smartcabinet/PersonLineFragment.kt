@@ -58,16 +58,18 @@ class PersonLineFragment : Fragment() {
             iBt_deletPerson.setVisibility(View.GONE)
         }
         if(userid=="00001")
-        {
-            iBt_deletPerson.setVisibility(View.GONE)
+            {
+            iBt_deletPerson.setVisibility(View.GONE)   //对可删除的用户就行了判断
+                                                    // 管理级别为最高，接下去普通管理员，然后是普通用户
+                                                    //同级之间无法删除，只能上级删除下级
+
         }
 
-        iBt_deletPerson.setOnClickListener({
+        iBt_deletPerson.setOnClickListener({            //用户的删除
             val builder = AlertDialog.Builder(context)
             builder.setTitle("提示")
             builder.setMessage("是否删除该用户")
             builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
-
                 val usename = tV_userName.text.toString()
                 dbManager?.deleteAccountByUserName(usename)
                 deletbuttonClicked("delet")
@@ -76,7 +78,6 @@ class PersonLineFragment : Fragment() {
             builder.setNeutralButton("取消",null)
             builder.create()
             builder.show()
-
         })
     }
     private fun deletbuttonClicked(text: String) {

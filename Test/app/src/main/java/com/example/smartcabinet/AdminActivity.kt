@@ -214,17 +214,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 builder.setMessage("请输入试剂模板编号")
                 builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
                     scApp?.templateID=edit.text.toString()
-                    downLoad()
-//                    val path = "SmartCabinet/ReagentTemplate"
-//                    val fileName = scApp?.templateID + ".csv"
-//                    val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
-//                    val pathName = "$SDCard/$path/$fileName"//文件存储路径
-//                if (templateToDB(pathName) == "") {
-//                        Toast.makeText(this, "试剂模板导入成功", Toast.LENGTH_LONG).show()
-//                    }
-//                    else {
-//                        Toast.makeText(this, "试剂模板导入失败", Toast.LENGTH_LONG).show()
-//                    }
+                    downLoad() //下载与导入模板的线程开启
                 })
                 builder.setNeutralButton("取消",null)
                 builder.create()
@@ -262,75 +252,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 Log.d("data","else")
             }
         }
-    }
-
-    @JavascriptInterface
-    fun importAgentiaTemplate(id: String) {
-        val path = "SmartCabinet/ReagentTemplate"
-        val fileName = id + ".csv"
-        val urlStr = SC_Const.REAGENTTEMPLATEADDRESS + fileName
-        var output: OutputStream? = null
-        val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
-        val pathName = "$SDCard/$path/$fileName"//文件存储路径
-        try {
-            /*
-                 * 通过URL取得HttpURLConnection
-                 * 要网络连接成功，需在AndroidMainfest.xml中进行权限配置
-                 * <uses-permission android:name="android.permission.INTERNET" />
-                 */
-            val url = URL(urlStr)
-            val conn = url.openConnection() as HttpURLConnection
-            //取得inputStream，并将流中的信息写入SDCard
-
-            /*
-                 * 写前准备
-                 * 1.在AndroidMainfest.xml中进行权限配置
-                 * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-                 * 取得写入SDCard的权限
-                 * 2.取得SDCard的路径： Environment.getExternalStorageDirectory()
-                 * 3.检查要保存的文件上是否已经存在
-                 * 4.不存在，新建文件夹，新建文件
-                 * 5.将input流中的信息写入SDCard
-                 * 6.关闭流
-                 */
-
-            val file = File(pathName)
-            val input = conn.inputStream
-            if (file.exists()) {
-                Log.d("file already exists:", pathName)
-            } else {
-                Toast.makeText(this, "开始下载试剂模板", Toast.LENGTH_LONG).show()
-                val dir = SDCard + "/" + path
-                File(dir).mkdir()//新建文件夹
-                file.createNewFile()//新建文件
-                output = FileOutputStream(file)
-                val buffer = ByteArray(4 * 1024)
-                //读取大文件
-                while (input.read(buffer) != -1) {
-                    output!!.write(buffer)
-                }
-                output!!.flush()
-            }
-
-            if (templateToDB(pathName) == "")
-                Toast.makeText(this, "试剂模板导入成功", Toast.LENGTH_LONG).show()
-            else
-                Toast.makeText(this, "试剂模板导入失败", Toast.LENGTH_LONG).show()
-        } catch (e: MalformedURLException) {
-            e.printStackTrace()
-        } catch (e: IOException) {
-            Toast.makeText(this, "该试剂模板编码不存在", Toast.LENGTH_LONG).show()
-            e.printStackTrace()
-        } finally {
-            try {
-                output!!.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-
-        }
-
-        return
     }
 
     fun templateToDB(filePath: String?): String {
@@ -381,114 +302,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         return ret
     }
 
-    /**
-     * 专为Android4.4设计的从Uri获取文件绝对路径，以前的方法已不好使
-     */
-    @SuppressLint("NewApi")
-    fun getPath(context: Context, uri: Uri): String? {
 
-        val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-
-        // DocumentProvider
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            // ExternalStorageProvider
-            if (isExternalStorageDocument(uri)) {
-                val docId = DocumentsContract.getDocumentId(uri)
-                val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                val type = split[0]
-
-                if ("primary".equals(type, ignoreCase = true)) {
-                    return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
-                }
-            } else if (isDownloadsDocument(uri)) {
-
-                val id = DocumentsContract.getDocumentId(uri)
-                val contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id)!!)
-
-                return getDataColumn(context, contentUri, null, null)
-            } else if (isMediaDocument(uri)) {
-                val docId = DocumentsContract.getDocumentId(uri)
-                val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                val type = split[0]
-
-                var contentUri: Uri? = null
-                if ("image" == type) {
-                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                } else if ("video" == type) {
-                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-                } else if ("audio" == type) {
-                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-                }
-
-                val selection = "_id=?"
-                val selectionArgs = arrayOf(split[1])
-
-                return getDataColumn(context, contentUri, selection, selectionArgs)
-            }// MediaProvider
-            // DownloadsProvider
-        } else if ("content".equals(uri.scheme, ignoreCase = true)) {
-            return getDataColumn(context, uri, null, null)
-        } else if ("file".equals(uri.scheme, ignoreCase = true)) {
-            return uri.path
-        }// File
-        // MediaStore (and general)
-        return null
-    }
-
-    /**
-     * Get the value of the data column for this Uri. This is useful for
-     * MediaStore Uris, and other file-based ContentProviders.
-     *
-     * @param context       The context.
-     * @param uri           The Uri to query.
-     * @param selection     (Optional) Filter used in the query.
-     * @param selectionArgs (Optional) Selection arguments used in the query.
-     * @return The value of the _data column, which is typically a file path.
-     */
-    fun getDataColumn(context: Context, uri: Uri?, selection: String?,
-                      selectionArgs: Array<String>?): String? {
-
-        var cursor: Cursor? = null
-        val column = "_data"
-        val projection = arrayOf(column)
-
-        try {
-            cursor = context.contentResolver.query(uri!!, projection, selection, selectionArgs, null)
-            if (cursor != null && cursor.moveToFirst()) {
-                val column_index = cursor.getColumnIndexOrThrow(column)
-                return cursor.getString(column_index)
-            }
-        } finally {
-            if (cursor != null)
-                cursor.close()
-        }
-        return null
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is ExternalStorageProvider.
-     */
-    fun isExternalStorageDocument(uri: Uri): Boolean {
-        return "com.android.externalstorage.documents" == uri.authority
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is DownloadsProvider.
-     */
-    fun isDownloadsDocument(uri: Uri): Boolean {
-        return "com.android.providers.downloads.documents" == uri.authority
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is MediaProvider.
-     */
-    fun isMediaDocument(uri: Uri): Boolean {
-        return "com.android.providers.media.documents" == uri.authority
-    }
 
     fun downLoad() {
         object : Thread() {
@@ -518,7 +332,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                          * 5.将input流中的信息写入SDCard
                          * 6.关闭流
                          */
-
                     val file = File(pathName)
                     Looper.prepare()
                     if (file.exists()) {

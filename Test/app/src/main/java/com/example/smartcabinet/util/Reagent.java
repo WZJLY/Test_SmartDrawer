@@ -115,4 +115,7 @@ public class Reagent {
     }
 
     public String getReagentTotalSize(){return this.reagentTotalSize;}
+    public int getReagentUnit(){
+        return this.reagentUnit;
+    }
 }

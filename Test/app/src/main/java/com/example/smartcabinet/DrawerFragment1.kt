@@ -81,7 +81,7 @@ class DrawerFragment1 : Fragment() {
         {
             if(dbManager!!.drawers.size==drawerID)
                 dbManager?.deleteDrawer(drawerID,1)
-            deletDrawerbuttonClicked("delet",0)
+            deletDrawerbuttonClicked("delet",0) //如果没有不存在试剂，则也只能从最后一个开始删除抽屉
 
         }
     }       //通过判断该抽屉里是否有试剂，是否是最后一个抽屉，否则无法删除

@@ -28,7 +28,6 @@ class EditPersonFragment : Fragment() {
     private var userAccount: UserAccount? = null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater!!.inflate(R.layout.fragment_add_preson, container, false)
     }
 
@@ -51,6 +50,7 @@ class EditPersonFragment : Fragment() {
         dbManager = DBManager(context.applicationContext)
         updateUser()
         iBt_addpetson.setOnClickListener{
+
             addbuttonClicked("addperson")
 
         }
@@ -74,7 +74,7 @@ class EditPersonFragment : Fragment() {
             fragment.add(R.id.LL_person, personFragment,userAccount?.getUserName())
             fragment.commit()
 
-        }
+        }//通过遍历用户的数据表对片断进行添加
     }
     fun removeUser()
     {
