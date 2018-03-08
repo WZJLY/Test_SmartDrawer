@@ -90,12 +90,12 @@ class TableFragment : Fragment() {
                                 button.text = reagent!!.reagentName.subSequence(0,3)
                                 else  button.text = reagent!!.reagentName
                                 if(reagent?.status==1) {
-                                    Toast.makeText(context.applicationContext,"1",Toast.LENGTH_SHORT).show()
+
                                     button.setBackgroundResource(R.drawable.btn_style1)
                                 }
                                 if(reagent?.status==2)
                                 {
-                                    Toast.makeText(context.applicationContext,"2",Toast.LENGTH_SHORT).show()
+
                                     button.setBackgroundResource(R.drawable.btn_style2)
                                 }
 
@@ -162,7 +162,7 @@ class TableFragment : Fragment() {
                         scApp?.reagentID=null
                         button.setFocusable(true)
                         button.setFocusableInTouchMode(true)
-                        button.requestFocus()
+//                        button.requestFocus()
                         button.requestFocusFromTouch()
                         button.performClick()
                     }

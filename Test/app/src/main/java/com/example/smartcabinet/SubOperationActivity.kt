@@ -33,10 +33,11 @@ private var statue:String?=null
 
         when(subOperation) {
             "Into" -> {
+                num.text="抽屉"+scApp!!.touchdrawer.toString()
                 val tableFragment = TableFragment()
                 val arg = Bundle()
                 arg.putString("statue","op")
-                arg.putInt("tablenum_op", scApp!!.getTouchdrawer())
+                arg.putInt("tablenum_op", scApp!!.touchdrawer)
                 arg.putString("touch","false")
                 tableFragment.arguments=arg
                 replaceFragment(R.id.FL_table,tableFragment)
@@ -50,6 +51,7 @@ private var statue:String?=null
             }
 
             "Take" -> {
+                num.text="抽屉"+scApp!!.touchdrawer.toString()
                 val tableFragment = TableFragment()
                 val arg = Bundle()
                 arg.putString("statue","op")
@@ -72,6 +74,7 @@ private var statue:String?=null
             }
 
             "Scrap" -> {
+                num.text="抽屉"+scApp!!.touchdrawer.toString()
                 val tableFragment = TableFragment()
                 val arg = Bundle()
                 arg.putString("statue","op")
@@ -102,17 +105,21 @@ private var statue:String?=null
                     builder.setTitle("入柜")
                     builder.setMessage("请放入试剂后点击确定")
                     builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
-                        reagentTemplate =  dbManager!!.reagentTemplate.get(scApp!!.templateNum)
-                        dbManager?.addReagent(eT_code.text.toString(),reagentTemplate?.reagentName,"",""
-                                ,"",1,reagentTemplate?.reagentPurity,reagentTemplate?.reagentSize, eT_weight2.text.toString()
-                                ,reagentTemplate?.reagentCreater,reagentTemplate?.reagentGoodsID,1,reagentTemplate?.reagentDensity,eT_data.text.toString()
-                                ,"1",scApp?.getTouchdrawer().toString(),scApp?.getTouchtable().toString(),1,scApp!!.userInfo.getUserName())
+                        if(dbManager!!.getReagentById(eT_code.text.toString())==null) {
+                            reagentTemplate = dbManager!!.reagentTemplate.get(scApp!!.templateNum)
+                            dbManager?.addReagent(eT_code.text.toString(), reagentTemplate?.reagentName, "", ""
+                                    , "", 1, reagentTemplate?.reagentPurity, reagentTemplate?.reagentSize, eT_weight2.text.toString()
+                                    , reagentTemplate?.reagentCreater, reagentTemplate?.reagentGoodsID, 1, reagentTemplate?.reagentDensity, eT_data.text.toString()
+                                    , "1", scApp?.getTouchdrawer().toString(), scApp?.getTouchtable().toString(), 1, scApp!!.userInfo.getUserName())
 
-                    val intent =Intent()
-                    scApp?.setTouchtable(0)
-                    scApp?.setTouchdrawer(0) //新加的
-                    intent.setClass(this,OperationActivity::class.java)
-                    startActivity(intent)
+                            val intent = Intent()
+                            scApp?.setTouchtable(0)
+                            scApp?.setTouchdrawer(0) //新加的
+                            intent.setClass(this, OperationActivity::class.java)
+                            startActivity(intent)
+                        }
+                        else
+                            Toast.makeText(this,"该ID试剂已经存在",Toast.LENGTH_SHORT).show()
                     })
                     builder.setNeutralButton("取消",null)
                     builder.create()
