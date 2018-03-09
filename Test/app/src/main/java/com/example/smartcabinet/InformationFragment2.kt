@@ -61,13 +61,13 @@ class InformationFragment2 : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>, view: View,
                                         pos: Int, id: Long) {
                 scApp?.templateNum= pos
-
+                tV_ml.text = dbManager!!.reagentTemplate.get(pos).reagentUnit
             }
-
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         }
+
        if(arguments.getString("scan_value")!==null)
        {
            val value = arguments.getString("scan_value")
