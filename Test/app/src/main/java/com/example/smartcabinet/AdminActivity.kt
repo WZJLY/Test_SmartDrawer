@@ -1,33 +1,24 @@
 package com.example.smartcabinet
 
-import android.annotation.SuppressLint
-import android.content.ContentUris
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.os.*
 import android.support.v7.app.AppCompatActivity
-import android.provider.DocumentsContract
-import android.provider.MediaStore
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AlertDialog
 import android.util.Log
-import android.webkit.JavascriptInterface
 import android.widget.EditText
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.SC_Const
 import kotlinx.android.synthetic.main.activity_admin.*
 import java.io.*
-import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
 
-class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten,EditPersonFragment.addpersonbuttonlisten,EditMessageFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener,DrawerFragment1.deletDrawerFragmentListener{
+class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten, AddPersonFragment.addpersonbuttonlisten, EditPersonFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener,DrawerFragment1.deletDrawerFragmentListener{
     private var scApp: SCApp? = null
     private var returnview = "login"
     private var dbManager: DBManager? = null
@@ -62,7 +53,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                     returnview ="login"
                 }
                 "editperson"-> {
-                    val editperson = EditPersonFragment()
+                    val editperson = AddPersonFragment()
                     replaceFragment(editperson, R.id.framelayout)
                     returnview ="admin"
                 }
@@ -106,7 +97,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     }
     override fun savepersonButtonClick(text: String) {
         if(text == "save") {
-            val editperson = EditPersonFragment()
+            val editperson = AddPersonFragment()
             replaceFragment(editperson, R.id.framelayout)
         }
     }
@@ -115,7 +106,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         if (text == "addperson")
         {
 
-            val editMessageFragment = EditMessageFragment()
+            val editMessageFragment = EditPersonFragment()
             val args = Bundle()
             args.putString("editfile","addperson")
             editMessageFragment.setArguments(args)
@@ -126,7 +117,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     override fun deletButtonClick(text: String) {
         returnview = "admin"
         if(text == "delet") {
-           val editperson = EditPersonFragment()
+           val editperson = AddPersonFragment()
            replaceFragment(editperson, R.id.framelayout)
         }
     }
@@ -141,7 +132,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
             "edit_flie" ->
             {
 
-                val editMessageFragment = EditMessageFragment()
+                val editMessageFragment = EditPersonFragment()
                 val args = Bundle()
                 args.putString("editfile","editperson")
                 editMessageFragment.setArguments(args)
@@ -167,12 +158,12 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 replaceFragment(serachfrag, R.id.framelayout)
             }
             "personal_management"-> {
-                val editperson = EditPersonFragment()
+                val editperson = AddPersonFragment()
                 replaceFragment(editperson, R.id.framelayout)
             }
             " editflie" ->
             {
-                val editMessageFragment =EditMessageFragment()
+                val editMessageFragment = EditPersonFragment()
                 val args = Bundle()
                 args.putString("editfile","editperson")
                 editMessageFragment.setArguments(args)

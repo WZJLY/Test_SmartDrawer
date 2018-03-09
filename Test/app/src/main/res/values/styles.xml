@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:dropDownListViewStyle">@style/SpinnerStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -15,6 +16,12 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />\
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="SpinnerStyle" parent="android:style/Widget.ListView.DropDown">
+        <item name="android:divider">#9e9e9e</item>
+        <item name="android:dividerHeight">1dp</item>
+
+    </style>
 
 </resources>
