@@ -66,12 +66,15 @@
         android:id="@+id/spinner_drawer"
         android:layout_width="400sp"
         android:layout_height="71sp"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/selectionbox"
+        android:dropDownVerticalOffset="60sp"
+        android:layout_alignLeft="@id/dropdown_style"
+        android:layout_below="@id/spinner_style"
+        android:layout_marginStart="8dp"
         android:entries="@array/drawer"
         app:layout_constraintBottom_toBottomOf="@+id/textView4"
         app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
+        app:layout_constraintTop_toTopOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.47" />
 
     <FrameLayout
         android:id="@+id/fL_table"

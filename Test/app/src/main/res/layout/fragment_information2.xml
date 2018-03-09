@@ -145,7 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/information_dropdown_style"
         android:layout_below="@id/information_spinner_style"
-        android:dropDownVerticalOffset="40sp"
+        android:dropDownVerticalOffset="45sp"
         app:layout_constraintBottom_toBottomOf="@+id/tV_type"
         app:layout_constraintStart_toEndOf="@+id/tV_type"
         app:layout_constraintTop_toTopOf="@+id/tV_type" />

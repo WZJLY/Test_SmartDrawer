@@ -60,7 +60,6 @@ class TableFragment : Fragment() {
     }
 
     fun addNum(num: Int){
-        var buttonStyle:String ?= "noFocusable"
         tableLayout.removeAllViews()
         for(i in 1..num){
             val tableRow = TableRow(context)

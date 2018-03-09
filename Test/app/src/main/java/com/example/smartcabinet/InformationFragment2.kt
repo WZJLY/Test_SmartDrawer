@@ -3,7 +3,6 @@ package com.example.smartcabinet
 
 import android.content.Context
 import android.os.Bundle
-import android.renderscript.Sampler
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View

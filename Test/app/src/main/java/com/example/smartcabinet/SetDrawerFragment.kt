@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Toast
+import android.widget.ArrayAdapter
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.Drawer
 import kotlinx.android.synthetic.main.fragment_set_drawer.*
@@ -36,6 +36,9 @@ class SetDrawerFragment : Fragment() {
         val fragmentTrasaction = fragmentManager.beginTransaction()
         fragmentTrasaction.replace(R.id.fL_table,tableFragment)
         fragmentTrasaction.commit()
+        val Madapter = ArrayAdapter.createFromResource(context, R.array.drawer, R.layout.spinner_style)
+        Madapter?.setDropDownViewResource(R.layout.dropdown_style)
+        spinner_drawer.adapter = Madapter
        if(getArguments().getString("setDrawer")!=null&&getArguments().getString("setDrawer")!="set")
        {
 
