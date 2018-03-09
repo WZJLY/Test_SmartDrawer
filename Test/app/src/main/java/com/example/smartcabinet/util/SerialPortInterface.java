@@ -190,7 +190,9 @@ public class SerialPortInterface extends AppCompatActivity {
                                     readDatas = new String(buffer2);
                                     lrc = new String(buffer3);
                                     if (lrc.equals(Lrc(readDatas))) {
-                                        return readDatas;
+                                        String str = readDatas.substring(4);
+                                        Log.d("serialPort",str);
+                                        return str;
                                     } else {
                                         return Error;
                                     }
