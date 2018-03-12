@@ -32,10 +32,11 @@ private var scApp: SCApp? = null
             Toast.makeText(context.applicationContext,""+scApp?.getTouchtable(),Toast.LENGTH_SHORT).show()
              reagent = dbManager?.getReagentByPos(""+scApp!!.getTouchdrawer(),""+scApp?.getTouchtable())
             tV_name.text=reagent?.reagentName
-            tV_purity.text=reagent?.reagentPurity
+            tV_purity.text=reagent?.reagentPurity+"%"
             tV_data.text=reagent?.reagentInvalidDate
             tV_manufactor.text=reagent?.reagentCreater
-            tV_residue.text=reagent?.reagentSize
+        if(reagent?.reagentUnit==1)tV_residue.text=reagent?.reagentSize+"g"
+        else tV_residue.text=reagent?.reagentSize+"ml"
             tV_num.text = reagent?.reagentId
             tV_person.text=reagent?.reagentUser     //取用时的信息显示
 

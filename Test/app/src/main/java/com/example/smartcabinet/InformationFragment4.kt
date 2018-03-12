@@ -33,11 +33,13 @@ class InformationFragment4 : Fragment() {
             drawerID  =  arguments.getString("tablenum")
            pos =  arguments.getString("pos")
           reagent =  dbManager?.getReagentByPos(drawerID,pos)
+            if(reagent?.reagentUnit==1)tV_residue2.text=reagent?.reagentSize+"g"
+            else tV_residue2.text=reagent?.reagentSize+"ml"
             tV_name2.text=reagent?.reagentName
             tV_purity2.text=reagent?.reagentPurity
             tV_data2.text=reagent?.reagentInvalidDate
             tV_manufactor2.text=reagent?.reagentCreater
-            tV_residue2.text=reagent?.reagentSize
+
             tV_num2.text = reagent?.reagentId
             tV_person2.text=reagent?.reagentUser        //点击box弹出的试剂信息显示
         }

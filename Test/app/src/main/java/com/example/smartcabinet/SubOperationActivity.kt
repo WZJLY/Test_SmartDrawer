@@ -116,9 +116,14 @@ private var statue:String?=null
                             builder.setMessage("请放入试剂后点击确定")
                             builder.setPositiveButton("确定", DialogInterface.OnClickListener { dialogInterface, i ->
                                 reagentTemplate = dbManager!!.reagentTemplate.get(scApp!!.templateNum)
+                                var Unit = 1
+                                if(reagentTemplate?.reagentUnit=="ml")
+                                {
+                                    Unit = 2
+                                }
                                 dbManager?.addReagent(eT_code.text.toString(), reagentTemplate?.reagentName, "", ""
-                                        , "", 1, reagentTemplate?.reagentPurity, reagentTemplate?.reagentSize, eT_weight2.text.toString()
-                                        , reagentTemplate?.reagentCreater, reagentTemplate?.reagentGoodsID, 1, reagentTemplate?.reagentDensity, eT_data.text.toString()
+                                        , "", 1, reagentTemplate?.reagentPurity, eT_residue.text.toString(), eT_weight2.text.toString()
+                                        , reagentTemplate?.reagentCreater, reagentTemplate?.reagentGoodsID, Unit, reagentTemplate?.reagentDensity, eT_data.text.toString()
                                         , "1", drawerID.toString(), scApp?.touchtable.toString(), 1, scApp!!.userInfo.getUserName())
 
                                 val intent = Intent()
@@ -183,8 +188,23 @@ private var statue:String?=null
                                         builder.setMessage("请归还试剂后点击确定")
                                         builder.setPositiveButton("确定", DialogInterface.OnClickListener { dialogInterface, i ->
                                             dbManager?.updateReagentStatus(eT_code2.text.toString(), 1, scApp!!.userInfo.getUserName())
-                                            dbManager?.updateReagentSize(eT_code2.text.toString(), eT_weight.text.toString())
+                                            var weight:Int = Integer.valueOf(eT_weight.text.toString())
+//                                            Toast.makeText(this,""+weight,Toast.LENGTH_SHORT).show()
+                                            Log.e("wzj",""+weight)
+                                            if(weight>dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt())
+                                        {
+                                            weight -=dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt()
+                                            var size =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toInt()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toInt())
+                                            dbManager?.updateReagentSize(eT_code2.text.toString(),size.toString(),eT_weight.text.toString())
+                                        }
+                                        else
+                                        {
+                                            weight =dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt()-weight
 
+                                            var size1 =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble())
+                                            dbManager?.updateReagentSize(eT_code2.text.toString(),size1.toString(),eT_weight.text.toString())
+                                        }
+//                                            dbManager?.updateReagentSize(eT_code2.text.toString(),"",eT_weight.text.toString())
                                             val intent = Intent()
                                             intent.setClass(this, OperationActivity::class.java)
                                             startActivity(intent)

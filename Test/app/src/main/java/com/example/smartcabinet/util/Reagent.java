@@ -118,4 +118,5 @@ public class Reagent {
     public int getReagentUnit(){
         return this.reagentUnit;
     }
+    public String getReagentDensity(){return this.reagentDensity;}
 }

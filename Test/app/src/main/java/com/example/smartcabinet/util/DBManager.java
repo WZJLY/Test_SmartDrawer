@@ -334,9 +334,10 @@ public class DBManager {
         data.put("reagentUser",strUserId);
         db.update("reagent", data, "reagentId=?", new String[]{strReagentId + ""});
     }
-    public void updateReagentSize(String strReagentId, String strReagentSize){
+    public void updateReagentSize(String strReagentId, String strReagentSize,String strReagentTotalSize){
         ContentValues data=new ContentValues();
         data.put("reagentSize",strReagentSize);
+        data.put("reagentTotalSize",strReagentTotalSize);
         db.update("reagent", data, "reagentId=?", new String[]{strReagentId + ""});
     }
     public void updateReagentStatusByPos(String strDrawerId,String strReagentPos,String strReagentUser, int iStatus){
