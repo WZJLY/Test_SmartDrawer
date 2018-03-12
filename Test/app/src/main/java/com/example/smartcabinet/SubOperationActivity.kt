@@ -189,8 +189,6 @@ private var statue:String?=null
                                         builder.setPositiveButton("确定", DialogInterface.OnClickListener { dialogInterface, i ->
                                             dbManager?.updateReagentStatus(eT_code2.text.toString(), 1, scApp!!.userInfo.getUserName())
                                             var weight:Int = Integer.valueOf(eT_weight.text.toString())
-//                                            Toast.makeText(this,""+weight,Toast.LENGTH_SHORT).show()
-                                            Log.e("wzj",""+weight)
                                             if(weight>dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt())
                                         {
                                             weight -=dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt()
@@ -204,7 +202,6 @@ private var statue:String?=null
                                             var size1 =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble())
                                             dbManager?.updateReagentSize(eT_code2.text.toString(),size1.toString(),eT_weight.text.toString())
                                         }
-//                                            dbManager?.updateReagentSize(eT_code2.text.toString(),"",eT_weight.text.toString())
                                             val intent = Intent()
                                             intent.setClass(this, OperationActivity::class.java)
                                             startActivity(intent)
