@@ -194,7 +194,7 @@ private var statue:String?=null
                                             if(weight>dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt())
                                         {
                                             weight -=dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt()
-                                            var size =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toInt()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toInt())
+                                            var size =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble())
                                             dbManager?.updateReagentSize(eT_code2.text.toString(),size.toString(),eT_weight.text.toString())
                                         }
                                         else
