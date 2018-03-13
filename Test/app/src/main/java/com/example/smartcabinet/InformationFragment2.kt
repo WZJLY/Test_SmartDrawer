@@ -1,9 +1,12 @@
 package com.example.smartcabinet
 
 
+import android.app.DatePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +15,8 @@ import kotlinx.android.synthetic.main.fragment_information2.*
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.ReagentTemplate
 import android.widget.ArrayAdapter
-
-
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -37,6 +40,7 @@ class InformationFragment2 : Fragment() {
         val data_list = ArrayAdapter<String>(context, R.layout.information_spinner_style)
         val arrListReagentTemplate = dbManager?.reagentTemplate
         val sum = arrListReagentTemplate!!.size
+        initDatePicker()
         if(sum == 0)
         {
             Toast.makeText(context.applicationContext, "当前没有试剂模板", Toast.LENGTH_SHORT).show()
@@ -75,6 +79,30 @@ class InformationFragment2 : Fragment() {
         btn_code.setOnClickListener{
             scanbuttononClicked("scan")
         }
+
+        eT_data.setOnClickListener {
+            val cal = Calendar.getInstance()
+            val dialog = DatePickerDialog(context, null, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH))
+
+            dialog.setButton(DialogInterface.BUTTON_POSITIVE,"确认", DialogInterface.OnClickListener { dialogInterface, i ->
+                val datePicker = dialog.datePicker
+                val year = datePicker.year
+                val month = datePicker.month+1
+                val day = datePicker.dayOfMonth
+                eT_data.setText(""+year+"年"+month+"月"+day+"日")
+            })
+            dialog.setButton(DialogInterface.BUTTON_NEGATIVE,"取消", DialogInterface.OnClickListener { dialogInterface, i ->
+                Log.d("sone","取消")
+            })
+            dialog.datePicker.calendarViewShown = false
+            dialog.show()
+        }
+    }
+
+    fun initDatePicker() {
+        val sdf = SimpleDateFormat("yyyy年MM月dd日", Locale.CHINA)
+        val now = sdf.format(Date())
+        eT_data.setText(now)
     }
     interface scanbuttonlisten {
         fun scanbuttononClick(text: String)

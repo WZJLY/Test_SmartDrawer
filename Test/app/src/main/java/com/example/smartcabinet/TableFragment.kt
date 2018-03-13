@@ -83,7 +83,7 @@ class TableFragment : Fragment() {
                     val sum = arrListReagent!!.size
                     if(sum>0) {
                         for (m in 1..sum) {
-                            reagent = arrListReagent?.get(m - 1)
+                            reagent = arrListReagent.get(m - 1)
                             if(reagent!!.drawerId.toInt()==drawerID&&reagent!!.reagentPosition.toInt()==button.id)
                             {  if(reagent!!.reagentName.length>3)
                                 button.text = reagent!!.reagentName.subSequence(0,3)
@@ -177,4 +177,5 @@ class TableFragment : Fragment() {
 
 
 
-}// Required empty public constructor
+}// Required empty p、
+// ublic constructor
