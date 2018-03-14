@@ -264,7 +264,7 @@ private var statue:String?=null
                                         val reagentId=dbManager!!.getReagentByPos("" + drawerID,"" + scApp?.touchtable).reagentId
                                         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
                                         val now = sdf.format(Date())
-                                        dbManager?.addReagentUserRecord(reagentId,4,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString(),"","")
+                                        dbManager?.addReagentUserRecord(reagentId,4,now,scApp!!.userInfo.getUserName(),eT_weight?.text.toString(),"","")
                                         dbManager?.updateReagentStatusByPos("" + drawerID,""+ scApp?.touchtable,scApp!!.userInfo.getUserName(),4)
                                         val intent = Intent()
                                         intent.setClass(this, OperationActivity::class.java)

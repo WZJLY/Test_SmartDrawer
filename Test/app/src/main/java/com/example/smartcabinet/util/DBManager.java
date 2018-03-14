@@ -420,7 +420,7 @@ public class DBManager {
         return arrListReagentUserRecords;
     }
     public void addReagentUserRecord(String reagentId, int operationType, String operationTime,String operator,String reagentTotalSize,String reagentSize,String consumption){
-        db.execSQL("INSERT INTO reagentUserRecord VALUES(null, ?, ?, ?)", new Object[]{reagentId, operationType, operationTime,operator,reagentTotalSize,reagentSize,consumption});
+        db.execSQL("INSERT INTO reagentUserRecord VALUES(null, ?, ?, ?, ?, ?, ?, ?)", new Object[]{reagentId, operationType, operationTime,operator,reagentTotalSize,reagentSize,consumption});
     }
 
 
