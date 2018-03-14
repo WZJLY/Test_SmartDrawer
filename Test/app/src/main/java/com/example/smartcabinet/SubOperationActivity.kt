@@ -110,7 +110,7 @@ private var statue:String?=null
                         if(into_drawer != drawerID) {
                             spi?.sendOpenLock(1, drawerID)
                             Toast.makeText(this, " 请拉开" + (drawerID) + "号抽屉", Toast.LENGTH_SHORT).show()
-                            into_drawer = checkLock(1,30)
+                            into_drawer = checkLock(1,190)
                         }
                         if (into_drawer == drawerID) {
                             val builder = AlertDialog.Builder(this)
@@ -156,7 +156,7 @@ private var statue:String?=null
                         if (into_drawer != drawerID) {
                             spi?.sendOpenLock(1, drawerID)
                             Toast.makeText(this, " 请拉开" + (drawerID) + "号抽屉", Toast.LENGTH_SHORT).show()
-                            into_drawer = checkLock(1,30)
+                            into_drawer = checkLock(1,190)
                         }
                         if (into_drawer == drawerID) {
                             val builder = AlertDialog.Builder(this)
@@ -192,7 +192,7 @@ private var statue:String?=null
                                     if(into_drawer != drawerID) {
                                         spi?.sendOpenLock(1, drawerID)
                                         Toast.makeText(this, " 请拉开" + (drawerID) + "号抽屉", Toast.LENGTH_SHORT).show()
-                                        into_drawer = checkLock(1,30)
+                                        into_drawer = checkLock(1,190)
                                     }
                                     if(into_drawer == drawerID) {
                                         val builder = AlertDialog.Builder(this)
@@ -249,7 +249,7 @@ private var statue:String?=null
                         if (into_drawer != drawerID) {
                             spi?.sendOpenLock(1, drawerID)
                             Toast.makeText(this, " 请拉开" + (drawerID) + "号抽屉", Toast.LENGTH_SHORT).show()
-                            into_drawer = checkLock(1,30)
+                            into_drawer = checkLock(1,190)
                         }
                         if (into_drawer == drawerID) {
                             val builder = AlertDialog.Builder(this)
