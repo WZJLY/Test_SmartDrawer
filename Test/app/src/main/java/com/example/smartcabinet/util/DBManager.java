@@ -405,4 +405,24 @@ public class DBManager {
     public void closeDB() {
         db.close();
     }
+
+
+    //----------------------------------drawer manage begin----------------------------//
+    public ArrayList<ReagentUserRecord> getReagentUseRecord(){
+        Cursor cursor = db.rawQuery("select * from reagentUserRecord",null);
+        ArrayList<ReagentUserRecord> arrListReagentUserRecords= new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                arrListReagentUserRecords.add(new ReagentUserRecord(cursor.getString(cursor.getColumnIndex("reagentId")), cursor.getInt(cursor.getColumnIndex("operationType")),cursor.getString(cursor.getColumnIndex("operationTime")),cursor.getString(cursor.getColumnIndex("operator")),cursor.getString(cursor.getColumnIndex("reagentTotalSize")),cursor.getString(cursor.getColumnIndex("reagentSize")),cursor.getString(cursor.getColumnIndex("consumption"))));
+                cursor.moveToNext();
+            }
+        }
+        return arrListReagentUserRecords;
+    }
+    public void addReagentUserRecord(String reagentId, int operationType, String operationTime,String operator,String reagentTotalSize,String reagentSize,String consumption){
+        db.execSQL("INSERT INTO reagentUserRecord VALUES(null, ?, ?, ?)", new Object[]{reagentId, operationType, operationTime,operator,reagentTotalSize,reagentSize,consumption});
+    }
+
+
+    //----------------------------------drawer manage end----------------------------//
 }

@@ -17,6 +17,8 @@ import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_sub_operation.*
 import kotlinx.android.synthetic.main.fragment_information1.*
 import kotlinx.android.synthetic.main.fragment_information2.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SubOperationActivity : AppCompatActivity(),InformationFragment2.scanbuttonlisten,InformationFragment1.return_scanbuttonlisten{
 private var statue:String?=null
@@ -115,22 +117,29 @@ private var statue:String?=null
                             builder.setTitle("入柜")
                             builder.setMessage("请放入试剂后点击确定")
                             builder.setPositiveButton("确定", DialogInterface.OnClickListener { dialogInterface, i ->
-                                reagentTemplate = dbManager!!.reagentTemplate.get(scApp!!.templateNum)
-                                var Unit = 1
-                                if(reagentTemplate?.reagentUnit=="ml")
+                                if(dbManager!!.isReagentExist(eT_code.text.toString()))
                                 {
-                                    Unit = 2
+                                    Toast.makeText(this,"该编号已经使用",Toast.LENGTH_SHORT).show()
                                 }
-                                dbManager?.addReagent(eT_code.text.toString(), reagentTemplate?.reagentName, "", ""
-                                        , "", 1, reagentTemplate?.reagentPurity, eT_residue.text.toString(), eT_weight2.text.toString()
-                                        , reagentTemplate?.reagentCreater, reagentTemplate?.reagentGoodsID, Unit, reagentTemplate?.reagentDensity, eT_data.text.toString()
-                                        , "1", drawerID.toString(), scApp?.touchtable.toString(), 1, scApp!!.userInfo.getUserName())
-
-                                val intent = Intent()
-                                scApp?.touchtable=0
-                                scApp?.touchtable = 0 //新加的
-                                intent.setClass(this, OperationActivity::class.java)
-                                startActivity(intent)
+                                else {
+                                    reagentTemplate = dbManager!!.reagentTemplate.get(scApp!!.templateNum)
+                                    var Unit = 1
+                                    if (reagentTemplate?.reagentUnit == "ml") {
+                                        Unit = 2
+                                    }
+                                    dbManager?.addReagent(eT_code.text.toString(), reagentTemplate?.reagentName, "", ""
+                                            , "", 1, reagentTemplate?.reagentPurity, eT_residue.text.toString(), eT_weight2.text.toString()
+                                            , reagentTemplate?.reagentCreater, reagentTemplate?.reagentGoodsID, Unit, reagentTemplate?.reagentDensity, eT_data.text.toString()
+                                            , "1", drawerID.toString(), scApp?.touchtable.toString(), 1, scApp!!.userInfo.getUserName())
+                                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+                                    val now = sdf.format(Date())
+                                    dbManager?.addReagentUserRecord(eT_code.text.toString(),1,now,scApp!!.userInfo.getUserName(),eT_weight2.text.toString(),eT_residue.text.toString(),"")
+                                    val intent = Intent()
+                                    scApp?.touchtable = 0
+                                    scApp?.touchtable = 0 //新加的
+                                    intent.setClass(this, OperationActivity::class.java)
+                                    startActivity(intent)
+                                }
                             })
                             builder.setNeutralButton("取消", null)
                             builder.create()
@@ -155,7 +164,10 @@ private var statue:String?=null
                             builder.setMessage("请取出试剂后点击确定")
                             builder.setPositiveButton("确定", DialogInterface.OnClickListener { dialogInterface, i ->
                                 dbManager?.updateReagentStatusByPos("" + drawerID, "" + scApp?.touchtable, scApp!!.userInfo.getUserName(), 2)
-
+                                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+                                val now = sdf.format(Date())
+                              val reagentId =  dbManager!!.getReagentByPos("" + drawerID,"" + scApp?.touchtable).reagentId
+                                dbManager?.addReagentUserRecord(reagentId,2,now,scApp!!.userInfo.getUserName(),eT_weight2.text.toString(),eT_residue.text.toString(),"")
                                 val intent = Intent()
                                 intent.setClass(this, OperationActivity::class.java)
                                 startActivity(intent)
@@ -194,6 +206,9 @@ private var statue:String?=null
                                             weight -=dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt()
                                             var size =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble())
                                             dbManager?.updateReagentSize(eT_code2.text.toString(),size.toString(),eT_weight.text.toString())
+                                            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+                                            val now = sdf.format(Date())
+                                            dbManager?.addReagentUserRecord(eT_code2.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString(),size.toString(),(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble()).toString())
                                         }
                                         else
                                         {
@@ -201,6 +216,9 @@ private var statue:String?=null
 
                                             var size1 =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble())
                                             dbManager?.updateReagentSize(eT_code2.text.toString(),size1.toString(),eT_weight.text.toString())
+                                            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+                                            val now = sdf.format(Date())
+                                            dbManager?.addReagentUserRecord(eT_code2.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString(),size1.toString(),(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble()).toString())
                                         }
                                             val intent = Intent()
                                             intent.setClass(this, OperationActivity::class.java)
@@ -238,8 +256,12 @@ private var statue:String?=null
                             builder.setTitle("报废")
                             builder.setMessage("请取出试剂后点击确定")
                             builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
-                                dbManager?.deleteReagentByPos("" + drawerID, "" + scApp?.touchtable)
-
+//                                dbManager?.deleteReagentByPos("" + drawerID, "" + scApp?.touchtable)
+                                val reagentId=dbManager!!.getReagentByPos("" + drawerID,"" + scApp?.touchtable).reagentId
+                                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+                                val now = sdf.format(Date())
+                                dbManager?.addReagentUserRecord(reagentId,4,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString(),"","")
+                                dbManager?.updateReagentStatusByPos("" + drawerID,""+ scApp?.touchtable,scApp!!.userInfo.getUserName(),4)
                                 val intent = Intent()
                                 intent.setClass(this, OperationActivity::class.java)
                                 startActivity(intent)

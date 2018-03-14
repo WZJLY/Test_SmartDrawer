@@ -1,6 +1,8 @@
 package com.example.smartcabinet
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Camera
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -9,10 +11,18 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.example.smartcabinet.util.*
+import com.google.zxing.client.android.Intents.Scan.ACTION
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_operation.*
 import kotlinx.android.synthetic.main.admin_fragment.*
+import java.security.KeyStore
 import kotlin.math.log
+import android.support.v4.app.NotificationCompat.getExtras
+import android.support.v4.app.NotificationCompat.getExtras
+
+
+
+
 
 
 class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentListen,AdminReagentFragment.adminReagentListen{
@@ -68,16 +78,19 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
     override fun adminReagentButtonClick(text: String) {
         when(text) {
             "Into" -> {
-                    statue = "Into"
-                    try {
-                        val integrator = IntentIntegrator(this)
-                        integrator.setOrientationLocked(false)
-                        integrator.captureActivity = SmallCaptureActivity::class.java
-                        integrator.setTimeout(10000)
-                        integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult
-                    } catch (e: Exception) {
-                        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                    }
+                statue = "Into"
+
+                        try {
+                            val integrator = IntentIntegrator(this)
+                            integrator.setOrientationLocked(false)
+                            integrator.captureActivity = SmallCaptureActivity::class.java
+                            integrator.setTimeout(10000)
+                            integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult
+                        } catch (e: Exception) {
+                            Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                        }
+
+
             }
 
             "adminTake" -> {

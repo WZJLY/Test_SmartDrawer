@@ -190,6 +190,17 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 builder.setMessage("请输入试剂模板编号")
                 builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
                     scApp?.templateID=edit.text.toString()
+//                    val status = Environment.getExternalStorageState()
+//                    if (status.equals(Environment.MEDIA_MOUNTED)) {
+//                        val main = Environment.getExternalStorageDirectory().getPath() + File.separator + "hello"
+//                        val destDir = File(main)
+//                        if (!destDir.exists()) {
+//                            destDir.mkdirs()
+//                        }
+//                        destDir.mkdirs()
+//                        val toFile = main + File.separator + "test.txt"
+//                        FileOutputStream(toFile)//创建test.text空文件
+//                    }
                     downLoad() //下载与导入模板的线程开启
                 })
                 builder.setNeutralButton("取消",null)
@@ -308,27 +319,29 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                          * 5.将input流中的信息写入SDCard
                          * 6.关闭流
                          */
-                    val file = File(pathName)
+                    val status = Environment.getExternalStorageState()
+                    if (status.equals(Environment.MEDIA_MOUNTED)) {
+                        val main = Environment.getExternalStorageDirectory().getPath() + File.separator + "SmartCabinet/ReagentTemplate"
+                        val destDir = File(main)
+                        if (!destDir.exists()) {
+                            destDir.mkdirs()
+                        }
+                        destDir.mkdirs()
+                    }
                     Looper.prepare()
-                    if (file.exists()) {
-                        Log.d("file already exists:", pathName)
-                    } else {
 
                         Toast.makeText(SCApp.getContext(), "开始下载试剂模板", Toast.LENGTH_LONG).show()
-
                         val dir = SDCard + "/" + path
                         File(dir).mkdir()//新建文件夹
-
                         val output = File(pathName)
                         val requestUrl = URL(urlStr)
                         output.writeBytes(requestUrl.readBytes())
                         Toast.makeText(SCApp.getContext(), "模板下载成功", Toast.LENGTH_SHORT).show()
 
-                    }
 
                     if (templateToDB(pathName) == "") {
 
-                        Toast.makeText(SCApp.getContext(), "试剂模板导入成功", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(SCApp.getContext(), "试剂模板导入失败", Toast.LENGTH_SHORT).show()
 
                     }
                     else {
@@ -348,9 +361,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
 
                 } finally {
                     try {
-//                        Looper.prepare()
-//                        output!!.close()
-//                        Looper.loop()
 
                     } catch (e: IOException) {
 
