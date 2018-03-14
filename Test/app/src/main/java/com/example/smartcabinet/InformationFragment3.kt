@@ -28,8 +28,6 @@ private var scApp: SCApp? = null
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         dbManager = DBManager(context.applicationContext)
         scApp = context.applicationContext as SCApp
-            Toast.makeText(context.applicationContext,""+scApp!!.getTouchdrawer(),Toast.LENGTH_SHORT).show()
-            Toast.makeText(context.applicationContext,""+scApp?.getTouchtable(),Toast.LENGTH_SHORT).show()
              reagent = dbManager?.getReagentByPos(""+scApp!!.getTouchdrawer(),""+scApp?.getTouchtable())
             tV_name.text=reagent?.reagentName
             tV_purity.text=reagent?.reagentPurity+"%"

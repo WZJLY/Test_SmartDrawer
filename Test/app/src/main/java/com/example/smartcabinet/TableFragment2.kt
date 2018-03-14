@@ -61,8 +61,8 @@ class TableFragment2 : Fragment() {
                 button.isClickable = false
                 button.text = ""
                 button.setTextColor(Color.BLACK)
-                button.width = 55
-                button.height = 55
+                button.width = 80
+                button.height = 80
                 button.setBackgroundResource(R.drawable.btn_table)
                 tableRow.addView(button)
             }

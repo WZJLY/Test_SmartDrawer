@@ -22,6 +22,7 @@ public class SCApp extends Application {  //全局变量
     private int Touchtable;
     private int TemplateNum;
     private String reagentID;
+    private String serialPortID;
     SerialPortInterface spi;
     private static Context context;
     private String TemplateID;
@@ -30,6 +31,7 @@ public class SCApp extends Application {  //全局变量
         super.onCreate();
         dbManager = new DBManager(this);
         context = getApplicationContext();
+        serialPortID = "/dev/ttyS1";
         //  init ZXing lib
         // ZXingLibrary.initDisplayOpinion(this);
     }
@@ -108,5 +110,12 @@ public class SCApp extends Application {  //全局变量
     public String getReagentID()
     {
         return this.reagentID;
+    }
+
+    public void setSerialPort(String id){
+        serialPortID = id;
+    }
+    public String getSerialPortID(){
+        return serialPortID;
     }
 }

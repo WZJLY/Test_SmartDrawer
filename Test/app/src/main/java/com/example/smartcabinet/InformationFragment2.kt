@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -92,8 +93,9 @@ class InformationFragment2 : Fragment() {
                 eT_data.setText(""+year+"年"+month+"月"+day+"日")
             })
             dialog.setButton(DialogInterface.BUTTON_NEGATIVE,"取消", DialogInterface.OnClickListener { dialogInterface, i ->
-                Log.d("sone","取消")
+                Log.d("setDate","取消")
             })
+            dialog.window.setGravity(Gravity.CENTER)
             dialog.datePicker.calendarViewShown = false
             dialog.show()
         }

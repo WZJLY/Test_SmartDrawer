@@ -219,4 +219,30 @@
         app:layout_constraintStart_toStartOf="@+id/reagent_template"
         app:layout_constraintTop_toTopOf="@+id/reagent_template" />
 
+    <Button
+        android:id="@+id/btn_setup"
+        android:layout_width="260dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_style_ordinary"
+        android:text="系统设置"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auto_update" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_setup"
+        app:layout_constraintEnd_toEndOf="@+id/btn_setup"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="@+id/btn_setup"
+        app:layout_constraintTop_toTopOf="@+id/btn_setup"
+        app:srcCompat="@drawable/zhinengguishezhi_icon" />
+
 </android.support.constraint.ConstraintLayout>

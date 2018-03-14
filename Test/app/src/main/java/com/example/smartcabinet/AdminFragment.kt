@@ -50,7 +50,6 @@ class AdminFragment : Fragment() {
         }
         reagent_op.setOnClickListener{
           buttonClicked("reagent_op")
-
         }
         recordquery.setOnClickListener{
             buttonClicked("recordquery")
@@ -63,6 +62,9 @@ class AdminFragment : Fragment() {
         }
         reagent_template.setOnClickListener{
             buttonClicked("reagent_template")
+        }
+        btn_setup.setOnClickListener {
+            buttonClicked("btn_setup")
         }
 
     }

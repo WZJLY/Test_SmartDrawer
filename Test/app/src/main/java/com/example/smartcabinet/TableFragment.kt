@@ -83,7 +83,6 @@ class TableFragment : Fragment() {
                     val sum = arrListReagent!!.size
                     if(sum>0) {
                         for (m in 1..sum) {
-
                             reagent = arrListReagent.get(m - 1)
                             if(reagent!!.drawerId.toInt()==drawerID&&reagent!!.reagentPosition.toInt()==button.id)
                             {  if(reagent!!.reagentName.length>3)
@@ -168,8 +167,8 @@ class TableFragment : Fragment() {
                     }
                 }
                 button.setTextColor(Color.BLACK)
-                button.width = 55
-                button.height = 55
+                button.width = 80
+                button.height = 80
                 tableRow.addView(button)
             }
             tableLayout.addView(tableRow)

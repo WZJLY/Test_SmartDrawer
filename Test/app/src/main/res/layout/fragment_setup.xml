@@ -1,0 +1,48 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.smartcabinet.SetupFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:id="@+id/btn_serialPort"
+        android:layout_width="300sp"
+        android:layout_height="80sp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/btn_style_denglu"
+        android:text="保存"
+        android:textColor="@android:color/background_dark"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_serialPort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="串口号："
+        android:textColor="@android:color/background_light"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/eT_serialPort"
+        android:layout_width="239dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_edit"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="/dev/ttyS4"
+        android:textColor="@android:color/background_dark"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_serialPort"
+        app:layout_constraintStart_toEndOf="@+id/tv_serialPort"
+        app:layout_constraintTop_toTopOf="@+id/tv_serialPort" />
+</android.support.constraint.ConstraintLayout>

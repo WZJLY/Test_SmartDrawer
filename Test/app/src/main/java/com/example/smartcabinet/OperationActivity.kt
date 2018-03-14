@@ -43,7 +43,8 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
         scApp = application as SCApp
         changeMessage("noFocusable")
         updateDrawer()
-        spi = SerialPortInterface(this.applicationContext)
+        val serialPortID = scApp?.serialPortID
+        spi = SerialPortInterface(this.applicationContext,serialPortID)
         scApp?.setSpi(spi)
 
     }

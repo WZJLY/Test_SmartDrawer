@@ -6,6 +6,8 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.smartcabinet.SCApp;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,10 +23,11 @@ public class SerialPortInterface extends AppCompatActivity {
     SerialPort sp;
     Context context;
 
-    public SerialPortInterface(Context context) {
+
+    public SerialPortInterface(Context context,String serialPortID) {
         this.context = context;
         try {
-            sp = new SerialPort(new File("/dev/ttyS3"), 38400, 0);
+            sp = new SerialPort(new File(serialPortID), 38400, 0);
             mOutputStream = (FileOutputStream) sp.getOutputStream();
             mInputStream = (FileInputStream) sp.getInputStream();
         } catch (SecurityException e) {
@@ -203,14 +206,11 @@ public class SerialPortInterface extends AppCompatActivity {
                         } else
                             break;
                     }
-                    if (i == 9) {
-                        break;
-                    }
                 }
             }catch(Exception e){
-                return Error;
+                return null;
             }
         }
-        return Error;
+        return null;
     }
 }

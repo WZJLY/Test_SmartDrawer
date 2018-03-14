@@ -3,10 +3,6 @@ package com.example.smartcabinet
 import com.journeyapps.barcodescanner.CaptureActivity
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import kotlinx.android.synthetic.main.capture_small.*
-import android.view.SurfaceHolder
-
-
-
 
 
 /**
@@ -17,6 +13,4 @@ class SmallCaptureActivity : CaptureActivity() {
         setContentView(R.layout.capture_small)
         return zxing_barcode_scanner as DecoratedBarcodeView
     }
-
-
 }

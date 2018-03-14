@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AlertDialog
 import android.util.Log
+import android.view.Gravity
 import android.widget.EditText
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
@@ -17,8 +18,16 @@ import kotlinx.android.synthetic.main.activity_admin.*
 import java.io.*
 import java.net.MalformedURLException
 import java.net.URL
+import android.view.WindowManager
 
-class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten, AddPersonFragment.addpersonbuttonlisten, EditPersonFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener,DrawerFragment1.deletDrawerFragmentListener{
+
+
+
+
+
+class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten, AddPersonFragment.addpersonbuttonlisten,
+        EditPersonFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener,DrawerFragment1.deletDrawerFragmentListener,
+        SetupFragment.setupFragmentListener{
     private var scApp: SCApp? = null
     private var returnview = "login"
     private var dbManager: DBManager? = null
@@ -69,6 +78,13 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 }
             }
         })
+    }
+
+    override fun saveSetupClick(text: String) {
+        if(text == "setupFragment") {
+            val adminfrag = AdminFragment()
+            replaceFragment(adminfrag, R.id.framelayout)
+        }
     }
 
     override  fun deletDrawerButtonClick(text: String,drawerID:Int) {
@@ -182,14 +198,13 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
 
             }
             "reagent_template" -> {
-
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("提示")
-                var edit :EditText= EditText(this)
-                builder?.setView(edit)
-                builder.setMessage("请输入试剂模板编号")
-                builder.setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
-                    scApp?.templateID=edit.text.toString()
+                var edit= EditText(this)
+                val dialog = AlertDialog.Builder(this)
+                        .setTitle("提示")
+                        .setView(edit)
+                        .setMessage("请输入试剂模板编号")
+                        .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
+                            scApp?.templateID=edit.text.toString()
 //                    val status = Environment.getExternalStorageState()
 //                    if (status.equals(Environment.MEDIA_MOUNTED)) {
 //                        val main = Environment.getExternalStorageDirectory().getPath() + File.separator + "hello"
@@ -201,12 +216,16 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
 //                        val toFile = main + File.separator + "test.txt"
 //                        FileOutputStream(toFile)//创建test.text空文件
 //                    }
-                    downLoad() //下载与导入模板的线程开启
-                })
-                builder.setNeutralButton("取消",null)
-                builder.create()
-                builder.show()
-
+                            downLoad() //下载与导入模板的线程开启
+                        })
+                        .setNeutralButton("取消",null)
+                        .create()
+                dialog.show()
+                dialog.window.setGravity(Gravity.CENTER)
+            }
+            "btn_setup"->{
+                val setupFragment = SetupFragment()
+                replaceFragment(setupFragment, R.id.framelayout)
             }
         }
     }
