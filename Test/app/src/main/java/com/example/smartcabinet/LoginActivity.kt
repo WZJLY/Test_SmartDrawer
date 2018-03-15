@@ -3,6 +3,7 @@ package com.example.smartcabinet
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.webkit.JavascriptInterface
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
@@ -17,8 +18,8 @@ class LoginActivity : AppCompatActivity() {
     private val NAME = "name"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_login)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE
         dbManager = DBManager(this)
         dbManager?.tableUpgrade()
         scApp = application as SCApp

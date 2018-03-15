@@ -1,21 +1,115 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context="com.example.smartcabinet.RecordFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
-        android:id="@+id/tV_record"
-        android:layout_width="680sp"
-        android:layout_height="80sp"
-        android:background="@drawable/text_reagents"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <EditText
+        android:id="@+id/et_recore"
+        android:layout_width="432dp"
+        android:layout_height="66dp"
+        android:layout_alignLeft="@+id/drawer_area"
+        android:layout_alignStart="@+id/drawer_area"
+        android:layout_alignTop="@+id/serach_area"
+        android:background="@null"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColorLink="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/record_area"
+        app:layout_constraintEnd_toEndOf="@+id/record_area"
+        app:layout_constraintStart_toStartOf="@+id/record_area"
+        app:layout_constraintTop_toTopOf="@+id/record_area" />
+
+    <ImageView
+        android:id="@+id/record_area"
+        android:layout_width="800dp"
+        android:layout_height="87dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/serach_icon" />
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/record_area"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_table_header"
+                android:text="试剂ID"
+                android:textColor="@android:color/black"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="105dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_table_header"
+                android:text="操作类型"
+                android:textColor="@android:color/black"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_table_header"
+                android:text="操作时间"
+                android:textColor="@android:color/black"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="105sp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_table_header"
+                android:text="操作人员"
+                android:textColor="@android:color/black"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_table_header"
+                android:text="称重量"
+                android:textColor="@android:color/black"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_table_header"
+                android:text="余量"
+                android:textColor="@android:color/black"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_table_header"
+                android:text="消耗量"
+                android:textColor="@android:color/black"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>
