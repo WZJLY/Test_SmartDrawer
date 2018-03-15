@@ -19,57 +19,56 @@ import java.security.KeyStore
 import kotlin.math.log
 import android.support.v4.app.NotificationCompat.getExtras
 import android.support.v4.app.NotificationCompat.getExtras
+import android.view.SurfaceHolder
+import java.io.IOException
 
 
-
-
-
-
-class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentListen,AdminReagentFragment.adminReagentListen{
+class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentListen,AdminReagentFragment.adminReagentListen {
     private var scApp: SCApp? = null
-    private var dbManager:DBManager?=null
+    private var dbManager: DBManager? = null
     private var drawer: Drawer? = null
-    private var reagentTemplate:ReagentTemplate? = null
-    private var statue:String?= null
-    var spi: SerialPortInterface ?= null
+    private var reagentTemplate: ReagentTemplate? = null
+    private var statue: String? = null
+    private var camera: android.hardware.Camera? = null
+    var spi: SerialPortInterface? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_operation)
         dbManager = DBManager(applicationContext)
         val cabinetFragment = CabinetFragment()
-        addFragment(R.id.Layout_cabinet,cabinetFragment)
+        addFragment(R.id.Layout_cabinet, cabinetFragment)
 
         scApp = application as SCApp
         changeMessage("noFocusable")
         updateDrawer()
         val serialPortID = scApp?.serialPortID
-        spi = SerialPortInterface(this.applicationContext,serialPortID)
+        spi = SerialPortInterface(this.applicationContext, serialPortID)
         scApp?.setSpi(spi)
 
     }
 
 
     override fun userReagentButtonClick(text: String) {
-        when(text) {
+        when (text) {
             "userTake" -> {
-                    val intent = Intent()
-                    intent.setClass(this, SubOperationActivity::class.java)
-                    intent.putExtra("subOperation", "Take")
+                val intent = Intent()
+                intent.setClass(this, SubOperationActivity::class.java)
+                intent.putExtra("subOperation", "Take")
 
-                    startActivity(intent)
+                startActivity(intent)
             }
 
             "userReturn" -> {
                 val intent = Intent()
-                intent.setClass(this,SubOperationActivity::class.java)
-                intent.putExtra("subOperation","Return")
+                intent.setClass(this, SubOperationActivity::class.java)
+                intent.putExtra("subOperation", "Return")
                 startActivity(intent)
             }
 
             "userBack" -> {
                 val intent = Intent()
-                intent.setClass(this,AdminActivity::class.java)
+                intent.setClass(this, AdminActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -77,55 +76,76 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
 
 
     override fun adminReagentButtonClick(text: String) {
-        when(text) {
+        when (text) {
             "Into" -> {
                 statue = "Into"
-
-                        try {
-                            val integrator = IntentIntegrator(this)
-                            integrator.setOrientationLocked(false)
-                            integrator.captureActivity = SmallCaptureActivity::class.java
-                            integrator.setTimeout(10000)
-                            integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult
-                        } catch (e: Exception) {
-                            Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                        }
-
+                if (camera == null) {
+                    try {
+                        camera = android.hardware.Camera.open(0)
+                    } catch (e: Exception) {
+                        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+                if(camera!=null) {
+                    camera?.release()
+                    try {
+                        val integrator = IntentIntegrator(this)
+                        integrator.setOrientationLocked(false)
+                        integrator.captureActivity = SmallCaptureActivity::class.java
+                        integrator.setTimeout(10000)
+                        integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult
+                    } catch (e: Exception) {
+                        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+                else
+                    Toast.makeText(this,"Cannot connect Camera!!", Toast.LENGTH_LONG).show()
 
             }
 
             "adminTake" -> {
                 val intent = Intent()
-                intent.setClass(this,SubOperationActivity::class.java)
-                intent.putExtra("subOperation","Take")
+                intent.setClass(this, SubOperationActivity::class.java)
+                intent.putExtra("subOperation", "Take")
                 startActivity(intent)
             }
 
             "adminReturn" -> {
                 statue = "Return"
-                try {
-                    val integrator = IntentIntegrator(this)
-                    integrator.setOrientationLocked(false)
-                    integrator.captureActivity = SmallCaptureActivity::class.java
-                    integrator.setTimeout(10000)
-                    integrator.initiateScan()
+                if (camera == null) {
+                    try {
+                        camera = android.hardware.Camera.open(0)
+                    } catch (e: Exception) {
+                        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                    }
                 }
-                catch (e: Exception){
-                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                if(camera!=null) {
+                    camera?.release()
+                    try {
+                        val integrator = IntentIntegrator(this)
+                        integrator.setOrientationLocked(false)
+                        integrator.captureActivity = SmallCaptureActivity::class.java
+                        integrator.setTimeout(10000)
+                        integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult
+                    } catch (e: Exception) {
+                        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                    }
                 }
+                else
+                    Toast.makeText(this,"Cannot connect Camera!!", Toast.LENGTH_LONG).show()
 
             }
 
             "Scrap" -> {
                 val intent = Intent()
-                intent.setClass(this,SubOperationActivity::class.java)
-                intent.putExtra("subOperation","Scrap")
+                intent.setClass(this, SubOperationActivity::class.java)
+                intent.putExtra("subOperation", "Scrap")
                 startActivity(intent)
             }
 
             "adminBack" -> {
                 val intent = Intent()
-                intent.setClass(this,AdminActivity::class.java)
+                intent.setClass(this, AdminActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -142,38 +162,35 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
     {
         val arrListDrawers = dbManager?.getDrawers()
         val sum = arrListDrawers!!.size.toInt()
-        if(sum == 0)
-        {
+        if (sum == 0) {
             Toast.makeText(this, "请添加抽屉", Toast.LENGTH_SHORT).show()
-        }
-
-        else
-        {
-            if(sum>0) {
+        } else {
+            if (sum > 0) {
                 for (i in 1..sum) {
                     drawer = arrListDrawers?.get(i - 1)
                     val drawerFragment2 = DrawerFragment2()
                     val args = Bundle()
                     args.putInt("drawerID", drawer!!.getId())
                     drawerFragment2.setArguments(args)
-                    addFragment(R.id.Layout_drawer,drawerFragment2)
+                    addFragment(R.id.Layout_drawer, drawerFragment2)
 
                 }
             }
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         try {
 
-                val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)    //获取扫码结果
-                val intent = Intent()
-                intent.setClass(this, SubOperationActivity::class.java)
-                if(statue=="Into") {
-                    intent.putExtra("subOperation", "Into")     //跳转到入柜fragment
-                }
-                if(statue=="Return") intent.putExtra("subOperation","Return")//跳转到归还fragment
-                intent.putExtra("scan_value",result.contents)
-                startActivity(intent)
+            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)    //获取扫码结果
+            val intent = Intent()
+            intent.setClass(this, SubOperationActivity::class.java)
+            if (statue == "Into") {
+                intent.putExtra("subOperation", "Into")     //跳转到入柜fragment
+            }
+            if (statue == "Return") intent.putExtra("subOperation", "Return")//跳转到归还fragment
+            intent.putExtra("scan_value", result.contents)
+            startActivity(intent)
 
             if (result != null) {
                 if (result.contents == null) {
@@ -188,17 +205,17 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
                 // This is important, otherwise the result will not be passed to the fragment
                 super.onActivityResult(requestCode, resultCode, data)
             }
-        }
-        catch (e: Exception){
+        } catch (e: Exception) {
             Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
         }
     }
-    fun changeMessage(text: String){        //根据点击的位置，改变下方的功能栏
+
+    fun changeMessage(text: String) {        //根据点击的位置，改变下方的功能栏
         val buttonStyle = Bundle()
-        Log.d("Operation",text)
-        buttonStyle.putString("buttonStyle",text)
-        val userAccount =  scApp?.getUserInfo()
-        when(userAccount?.getUserPower()) {
+        Log.d("Operation", text)
+        buttonStyle.putString("buttonStyle", text)
+        val userAccount = scApp?.getUserInfo()
+        when (userAccount?.getUserPower()) {
             SC_Const.ADMIN -> {
                 val adminReagentFragment = AdminReagentFragment()
                 adminReagentFragment.arguments = buttonStyle
@@ -213,11 +230,10 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
     }
 
     fun AppCompatActivity.replaceFragment(frameId: Int, fragment: Fragment) {
-        supportFragmentManager.inTransaction{replace(frameId, fragment)}
+        supportFragmentManager.inTransaction { replace(frameId, fragment) }
     }
 
     fun AppCompatActivity.addFragment(frameId: Int, fragment: Fragment) {
-        supportFragmentManager.inTransaction{add(frameId, fragment)}
+        supportFragmentManager.inTransaction { add(frameId, fragment) }
     }
-
 }

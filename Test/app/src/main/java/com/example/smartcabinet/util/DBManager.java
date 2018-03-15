@@ -462,4 +462,11 @@ public ReagentUserRecord getReagentUseRecordByDate(String strdate)
                 strReagentDensity, strReagentInvalidDate, strCabinetId,
                 strDrawerId, strReagentPos, iStatus, strReagentUser});
     }
+    public boolean isScrapReagentExist(String strReagentId) {
+        Cursor cursor = db.query("scrapReagent", null, "reagentId=? ", new String[] { strReagentId}, null, null, null);
+        if (cursor.moveToNext()) {
+            return true;
+        }
+        return false;
+    }           //wzj  add
 }

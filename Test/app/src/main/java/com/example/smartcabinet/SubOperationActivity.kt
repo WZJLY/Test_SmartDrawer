@@ -27,6 +27,7 @@ private var statue:String?=null
     private var dbManager:DBManager?=null
     private var reagentTemplate:ReagentTemplate?=null
     var spi: SerialPortInterface?= null
+    private var camera: android.hardware.Camera? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_operation)
@@ -103,6 +104,7 @@ private var statue:String?=null
             when(subOperation)
             {
                 "Into" -> {
+
                     var into_drawer = checkLock(1,1)
                     if (into_drawer == null)
                         Toast.makeText(this,"ERROR：串口通讯！",Toast.LENGTH_SHORT).show()
@@ -120,22 +122,26 @@ private var statue:String?=null
                                     .setTitle("入柜")
                                     .setMessage("请放入试剂后点击确定")
                                     .setPositiveButton("确定", DialogInterface.OnClickListener { dialogInterface, i ->
-                                        reagentTemplate = dbManager!!.reagentTemplate.get(scApp!!.templateNum)
-                                        var Unit = 1
-                                        if(reagentTemplate?.reagentUnit=="ml")
-                                        {
-                                            Unit = 2
-                                        }
-                                        dbManager?.addReagent(eT_code.text.toString(), reagentTemplate?.reagentName, "", ""
-                                                , "", 1, reagentTemplate?.reagentPurity, eT_residue.text.toString(), eT_weight2.text.toString()
-                                                , reagentTemplate?.reagentCreater, reagentTemplate?.reagentGoodsID, Unit, reagentTemplate?.reagentDensity, eT_data.text.toString()
-                                                , "1", drawerID.toString(), scApp?.touchtable.toString(), 1, scApp!!.userInfo.getUserName())
+                                        if(!dbManager!!.isReagentExist(eT_code.text.toString())&&!dbManager!!.isScrapReagentExist(eT_code.text.toString())) {
+                                            reagentTemplate = dbManager!!.reagentTemplate.get(scApp!!.templateNum)
+                                            var Unit = 1
+                                            if (reagentTemplate?.reagentUnit == "ml") {
+                                                Unit = 2
+                                            }
+                                            dbManager?.addReagent(eT_code.text.toString(), reagentTemplate?.reagentName, "", ""
+                                                    , "", 1, reagentTemplate?.reagentPurity, eT_residue.text.toString(), eT_weight2.text.toString()
+                                                    , reagentTemplate?.reagentCreater, reagentTemplate?.reagentGoodsID, Unit, reagentTemplate?.reagentDensity, eT_data.text.toString()
+                                                    , "1", drawerID.toString(), scApp?.touchtable.toString(), 1, scApp!!.userInfo.getUserName())
 
-                                        val intent = Intent()
-                                        scApp?.touchtable=0
-                                        scApp?.touchtable = 0 //新加的
-                                        intent.setClass(this, OperationActivity::class.java)
-                                        startActivity(intent)
+                                            val intent = Intent()
+                                            scApp?.touchtable = 0
+                                            scApp?.touchtable = 0 //新加的
+                                            intent.setClass(this, OperationActivity::class.java)
+                                            startActivity(intent)
+                                        }
+                                        else
+                                            Toast.makeText(this,"该试剂编码已使用",Toast.LENGTH_SHORT).show()
+
                                     })
                                     .setNeutralButton("取消", null)
                                     .create()
@@ -180,7 +186,7 @@ private var statue:String?=null
                 }
 
                 "Return" -> {
-                    if(dbManager?.isReagentExist(eT_code2.text.toString())==true)
+                    if(!dbManager!!.isReagentExist(eT_code.text.toString())&&!dbManager!!.isScrapReagentExist(eT_code.text.toString()))
                     {
                         if(dbManager!!.getReagentById(eT_code2.text.toString()).status==2) {
                             if (eT_weight.text != null) {
@@ -264,8 +270,10 @@ private var statue:String?=null
                                         val reagentId=dbManager!!.getReagentByPos("" + drawerID,"" + scApp?.touchtable).reagentId
                                         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
                                         val now = sdf.format(Date())
+                                        val reagent = dbManager?.getReagentById(reagentId)
+                                        dbManager?.addSrapReagent(reagent?.reagentId,reagent?.reagentName,"","","",reagent!!.reagentType.toInt(),reagent?.reagentPurity,reagent?.reagentSize,reagent?.reagentTotalSize,reagent?.reagentCreater,"",reagent?.reagentUnit,reagent?.reagentDensity,reagent?.reagentInvalidDate,reagent?.reagentCabinetId,drawerID.toString(),reagent?.reagentPosition,4,scApp!!.userInfo.getUserName())
+                                        dbManager?.deleteReagentById(reagentId)
                                         dbManager?.addReagentUserRecord(reagentId,4,now,scApp!!.userInfo.getUserName(),eT_weight?.text.toString(),"","")
-                                        dbManager?.updateReagentStatusByPos("" + drawerID,""+ scApp?.touchtable,scApp!!.userInfo.getUserName(),4)
                                         val intent = Intent()
                                         intent.setClass(this, OperationActivity::class.java)
                                         startActivity(intent)
@@ -294,16 +302,27 @@ private var statue:String?=null
     override fun scanbuttononClick(text: String) {
         if(text == "scan")
         {   statue="Into"
-            try {
-                val integrator = IntentIntegrator(this)
-                integrator.setOrientationLocked(false)
-                integrator.captureActivity = SmallCaptureActivity::class.java
-                integrator.setTimeout(10000)
-                integrator.initiateScan()
+            if (camera == null) {
+                try {
+                    camera = android.hardware.Camera.open(0)
+                } catch (e: Exception) {
+                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                }
             }
-            catch (e: Exception){
-                Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+            if(camera!=null) {
+                camera?.release()
+                try {
+                    val integrator = IntentIntegrator(this)
+                    integrator.setOrientationLocked(false)
+                    integrator.captureActivity = SmallCaptureActivity::class.java
+                    integrator.setTimeout(10000)
+                    integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult
+                } catch (e: Exception) {
+                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                }
             }
+            else
+                Toast.makeText(this,"Cannot connect Camera!!", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -311,16 +330,27 @@ private var statue:String?=null
         if(text == "scan")
         {
             statue="Return"
-            try {
-                val integrator = IntentIntegrator(this)
-                integrator.setOrientationLocked(false)
-                integrator.captureActivity = SmallCaptureActivity::class.java
-                integrator.setTimeout(10000)
-                integrator.initiateScan()
+            if (camera == null) {
+                try {
+                    camera = android.hardware.Camera.open(0)
+                } catch (e: Exception) {
+                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                }
             }
-            catch (e: Exception){
-                Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+            if(camera!=null) {
+                camera?.release()
+                try {
+                    val integrator = IntentIntegrator(this)
+                    integrator.setOrientationLocked(false)
+                    integrator.captureActivity = SmallCaptureActivity::class.java
+                    integrator.setTimeout(10000)
+                    integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult
+                } catch (e: Exception) {
+                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                }
             }
+            else
+                Toast.makeText(this,"Cannot connect Camera!!", Toast.LENGTH_LONG).show()
         }
     }
 
