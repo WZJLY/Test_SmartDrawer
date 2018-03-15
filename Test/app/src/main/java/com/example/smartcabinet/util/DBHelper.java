@@ -64,6 +64,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS reagentUserRecord" +
                 "(_id INTEGER PRIMARY KEY, reagentId VARCHAR,operationType INTEGER, operationTime VARCHAR, " +
                 "operator VARCHAR, reagentTotalSize VARCHAR, reagentSize VARCHAR, consumption VARCHAR)");
+        //试剂报废表
+        db.execSQL("CREATE TABLE IF NOT EXISTS scrapReagent" +
+                "(_id INTEGER PRIMARY KEY, reagentId VARCHAR, reagentName VARCHAR, reagentAlias VARCHAR, " +
+                "reagentFormalName VARCHAR, reagentChemName VARCHAR, reagentType INTEGER, " +
+                "reagentPurity VARCHAR, reagentSize VARCHAR, reagentTotalSize VARCHAR, " +
+                "reagentCreater VARCHAR, reagentGoodsID VARCHAR, reagentUnit INTEGER, " +
+                "reagentDensity VARCHAR, reagentInvalidDate VARCHAR, cabinetId VARCHAR, " +
+                "drawerId VARCHAR, reagentPosition VARCHAR, status INTEGER, reagentUser VARCHAR)");
     }
 
 }

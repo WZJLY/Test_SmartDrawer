@@ -422,7 +422,44 @@ public class DBManager {
     public void addReagentUserRecord(String reagentId, int operationType, String operationTime,String operator,String reagentTotalSize,String reagentSize,String consumption){
         db.execSQL("INSERT INTO reagentUserRecord VALUES(null, ?, ?, ?, ?, ?, ?, ?)", new Object[]{reagentId, operationType, operationTime,operator,reagentTotalSize,reagentSize,consumption});
     }
-
+public ReagentUserRecord getReagentUseRecordByDate(String strdate)
+{
+    Cursor cursor =  db.query("reagentUserRecord", null, "operationTime=?", new String[] { strdate }, null, null, null);
+    ReagentUserRecord reagentUserRecord = null;
+    if (cursor.moveToFirst()) {
+        if (!cursor.isAfterLast()) {
+            reagentUserRecord = new ReagentUserRecord(cursor.getString(cursor.getColumnIndex("reagentId")), cursor.getInt(cursor.getColumnIndex("operationType")), cursor.getString(cursor.getColumnIndex("operationTime")),
+                    cursor.getString(cursor.getColumnIndex("operator")), cursor.getString(cursor.getColumnIndex("reagentTotalSize")), cursor.getString(cursor.getColumnIndex("reagentSize")),
+                    cursor.getString(cursor.getColumnIndex("consumption")));
+            return reagentUserRecord;
+        }
+    }
+    return reagentUserRecord;
+}
 
     //----------------------------------drawer manage end----------------------------//
+    public void addSrapReagent(String strReagentId, String strReagentName, String strReagentAlias,
+                           String strReagentFormalName, String strReagentChemName, int iReagentType,
+                           String strReagentPurity, String strReagentSize, String strReagentTotalSize,
+                           String strReagentCreater, String strReagentGoodsID, int iReagentUnit,
+                           String strReagentDensity, String strReagentInvalidDate, String strCabinetId,
+                           String strDrawerId, String strReagentPos, int iStatus, String strReagentUser) {
+        Reagent reagent = new Reagent(strReagentId, strReagentName, strReagentAlias,
+                strReagentFormalName, strReagentChemName, iReagentType,
+                strReagentPurity, strReagentSize, strReagentTotalSize,
+                strReagentCreater, strReagentGoodsID, iReagentUnit,
+                strReagentDensity, strReagentInvalidDate, strCabinetId,
+                strDrawerId, strReagentPos, iStatus, strReagentUser);
+        db.execSQL("INSERT INTO scrapReagent VALUES(null, ?, ?, ?, " +
+                "?, ?, ?, " +
+                "?, ?, ?, " +
+                "?, ?, ?, " +
+                "?, ?, ?, " +
+                "?, ?, ?, ?)", new Object[]{strReagentId, strReagentName, strReagentAlias,
+                strReagentFormalName, strReagentChemName, iReagentType,
+                strReagentPurity, strReagentSize, strReagentTotalSize,
+                strReagentCreater, strReagentGoodsID, iReagentUnit,
+                strReagentDensity, strReagentInvalidDate, strCabinetId,
+                strDrawerId, strReagentPos, iStatus, strReagentUser});
+    }
 }
