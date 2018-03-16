@@ -101,42 +101,4 @@ class LoginActivity : AppCompatActivity() {
         dbManager?.closeDB()
     }
 
-//    private fun closeBar() {
-//        try {
-//            val command: String
-//            command = "LD_LIBRARY_PATH=/vendor/lib:/system/lib service call activity 42 s16 com.android.systemui"
-//            val envlist = ArrayList<String>()
-//            val env = System.getenv()
-//            for (envName in env.keys) {
-//                envlist.add(envName + "=" + env[envName])
-//            }
-//            val envp = envlist.toArray(arrayOfNulls<String>(0))
-//            val proc = Runtime.getRuntime().exec(
-//                    arrayOf("su", "-c", command), envp)
-//            proc.waitFor()
-//        } catch (ex: Exception) {
-//            // Toast.makeText(getApplicationContext(), ex.getMessage(),
-//            // Toast.LENGTH_LONG).show();
-//        }
-//
-//    }
-//
-//    fun showBar() {
-//        try {
-//            val command: String
-//            command = "LD_LIBRARY_PATH=/vendor/lib:/system/lib am startservice -n com.android.systemui/.SystemUIService"
-//            val envlist = ArrayList<String>()
-//            val env = System.getenv()
-//            for (envName in env.keys) {
-//                envlist.add(envName + "=" + env[envName])
-//            }
-//            val envp = envlist.toArray(arrayOfNulls<String>(0))
-//            val proc = Runtime.getRuntime().exec(
-//                    arrayOf("su", "-c", command), envp)
-//            proc.waitFor()
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//
-//    }
 }

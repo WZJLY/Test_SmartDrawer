@@ -206,17 +206,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                         .setMessage("请输入试剂模板编号")
                         .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
                             scApp?.templateID=edit.text.toString()
-//                    val status = Environment.getExternalStorageState()
-//                    if (status.equals(Environment.MEDIA_MOUNTED)) {
-//                        val main = Environment.getExternalStorageDirectory().getPath() + File.separator + "hello"
-//                        val destDir = File(main)
-//                        if (!destDir.exists()) {
-//                            destDir.mkdirs()
-//                        }
-//                        destDir.mkdirs()
-//                        val toFile = main + File.separator + "test.txt"
-//                        FileOutputStream(toFile)//创建test.text空文件
-//                    }
                             downLoad() //下载与导入模板的线程开启
                         })
                         .setNeutralButton("取消",null)

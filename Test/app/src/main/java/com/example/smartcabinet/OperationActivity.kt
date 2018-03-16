@@ -1,8 +1,8 @@
 package com.example.smartcabinet
 
-import android.content.Context
+
 import android.content.Intent
-import android.graphics.Camera
+
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -11,16 +11,9 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.example.smartcabinet.util.*
-import com.google.zxing.client.android.Intents.Scan.ACTION
+
 import com.google.zxing.integration.android.IntentIntegrator
-import kotlinx.android.synthetic.main.activity_operation.*
-import kotlinx.android.synthetic.main.admin_fragment.*
-import java.security.KeyStore
-import kotlin.math.log
-import android.support.v4.app.NotificationCompat.getExtras
-import android.support.v4.app.NotificationCompat.getExtras
-import android.view.SurfaceHolder
-import java.io.IOException
+
 
 
 class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentListen,AdminReagentFragment.adminReagentListen {
