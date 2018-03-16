@@ -192,7 +192,8 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 startActivity(intent)
             }
             "recordquery" -> {
-
+                val recordFragment = RecordFragment()
+                replaceFragment(recordFragment, R.id.framelayout)
             }
             "auto_update" -> {
 
