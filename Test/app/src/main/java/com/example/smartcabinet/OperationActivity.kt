@@ -82,6 +82,9 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
                 if (camera == null) {
                     try {
                         camera = android.hardware.Camera.open(0)
+                       val parameter =  camera?.parameters
+                        parameter?.setRotation(0)
+                        camera?.setParameters(parameter)
                     } catch (e: Exception) {
                         Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
                     }
@@ -91,6 +94,7 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
                     try {
                         val integrator = IntentIntegrator(this)
                         integrator.setOrientationLocked(false)
+                        integrator.setBeepEnabled(true)
                         integrator.captureActivity = SmallCaptureActivity::class.java
                         integrator.setTimeout(10000)
                         integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult

@@ -175,7 +175,10 @@ private var statue:String?=null
                                         val now = sdf.format(Date())
                                         val reagentId =  dbManager!!.getReagentByPos("" + drawerID,"" + scApp?.touchtable).reagentId
                                         val reagent = dbManager?.getReagentById(reagentId)
-                                        dbManager?.addReagentUserRecord(reagentId,2,now,scApp!!.userInfo.getUserName(),reagent?.reagentTotalSize,reagent?.reagentSize,"")
+                                        var unit = "g"
+                                        if(reagent?.reagentUnit==2)
+                                            unit = "ml"
+                                        dbManager?.addReagentUserRecord(reagentId,2,now,scApp!!.userInfo.getUserName(),reagent?.reagentTotalSize+"g",reagent?.reagentSize+unit,"")
                                         val intent = Intent()
                                         intent.setClass(this, OperationActivity::class.java)
                                         startActivity(intent)
@@ -189,7 +192,7 @@ private var statue:String?=null
                 }
 
                 "Return" -> {
-                    if(!dbManager!!.isReagentExist(eT_code.text.toString())&&!dbManager!!.isScrapReagentExist(eT_code.text.toString()))
+                    if(dbManager!!.isReagentExist(eT_code2.text.toString())&&!dbManager!!.isScrapReagentExist(eT_code2.text.toString()))
                     {
                         if(dbManager!!.getReagentById(eT_code2.text.toString()).status==2) {
                             if (eT_weight.text != null) {
@@ -206,9 +209,10 @@ private var statue:String?=null
                                         into_drawer = checkLock(1,190)
                                     }
                                     if(into_drawer == drawerID) {
+                                        val reagent = dbManager?.getReagentById(eT_code2.text.toString())
                                         val dialog = AlertDialog.Builder(this)
                                                 .setTitle("归还")
-                                                .setMessage("请归还试剂后点击确定")
+                                                .setMessage("请归还试剂后点击确定"+reagent?.drawerId)
                                                 .setPositiveButton("确定", DialogInterface.OnClickListener { dialogInterface, i ->
                                                     dbManager?.updateReagentStatus(eT_code2.text.toString(), 1, scApp!!.userInfo.getUserName())
                                                     var weight:Int = Integer.valueOf(eT_weight.text.toString())
@@ -219,7 +223,6 @@ private var statue:String?=null
                                                     dbManager?.updateReagentSize(eT_code2.text.toString(),size.toString(),eT_weight.text.toString())
                                                     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
                                                     val now = sdf.format(Date())
-                                                    val reagent = dbManager?.getReagentById(eT_code2.text.toString())
                                                     var unit = "g"
                                                     if(reagent?.reagentUnit==2)
                                                         unit="ml"
@@ -233,7 +236,6 @@ private var statue:String?=null
                                                     dbManager?.updateReagentSize(eT_code2.text.toString(),size1.toString(),eT_weight.text.toString())
                                                     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
                                                     val now = sdf.format(Date())
-                                                    val reagent = dbManager?.getReagentById(eT_code2.text.toString())
                                                     var unit = "g"
                                                     if(reagent?.reagentUnit==2)
                                                         unit="ml"
