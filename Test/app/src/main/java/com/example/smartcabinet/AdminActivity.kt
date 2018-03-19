@@ -199,19 +199,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
 
             }
             "reagent_template" -> {
-//                var edit= EditText(this)
-//                val dialog = AlertDialog.Builder(this)
-//                        .setTitle("提示")
-//                        .setView(edit)
-//                        .setMessage("请输入试剂模板编号")
-//                        .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
-//                            scApp?.templateID=edit.text.toString()
-//                            downLoad() //下载与导入模板的线程开启
-//                        })
-//                        .setNeutralButton("取消",null)
-//                        .create()
-//                dialog.show()
-//                dialog.window.setGravity(Gravity.CENTER)
+
                 val editTemplateFragment = EditTemplateFragment()
                 replaceFragment(editTemplateFragment, R.id.framelayout)
             }
@@ -385,6 +373,15 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         }.start()  //开启一个线程
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(scApp?.updateTeamplate==1)
+        {
+            val editTemplateFragment = EditTemplateFragment()
+            replaceFragment(editTemplateFragment, R.id.framelayout)
+            scApp?.updateTeamplate=0
+        }
+    }
 }
 
 

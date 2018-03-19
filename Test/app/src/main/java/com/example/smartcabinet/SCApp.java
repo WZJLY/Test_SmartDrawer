@@ -26,6 +26,7 @@ public class SCApp extends Application {  //全局变量
     SerialPortInterface spi;
     private static Context context;
     private String TemplateID;
+    private int statue;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -117,5 +118,9 @@ public class SCApp extends Application {  //全局变量
     }
     public String getSerialPortID(){
         return serialPortID;
+    }
+    public void setUpdateTeamplate(int update){  statue = update; }
+    public int getUpdateTeamplate(){
+        return statue;
     }
 }

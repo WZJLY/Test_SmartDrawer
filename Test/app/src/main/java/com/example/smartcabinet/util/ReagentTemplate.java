@@ -68,6 +68,7 @@ public class ReagentTemplate {
         return reagentGoodsID;
     }
     public String getReagentDensity() {return reagentDensity;}
+public String getReagentAlias(){return reagentAlias;}
 
 }
 
