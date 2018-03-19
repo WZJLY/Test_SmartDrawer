@@ -33,13 +33,13 @@ class RecordLineFragment : Fragment() {
         {
             date = arguments.getString("date")
             reagentUserRecord=dbmanager?.getReagentUseRecordByDate(date)
-            textView.text=reagentUserRecord?.reagentId
-            textView3.text=reagentUserRecord?.operationType.toString()
-            textView6.text=reagentUserRecord?.operationTime
-            textView7.text=reagentUserRecord?.operator
-            textView8.text=reagentUserRecord?.reagentTotalSize
-            textView9.text=reagentUserRecord?.reagentSize
-            textView10.text=reagentUserRecord?.consumption
+            record_ID.text=reagentUserRecord?.reagentId
+            record_type.text=reagentUserRecord?.operationType.toString()
+            record_time.text=reagentUserRecord?.operationTime
+            record_user.text=reagentUserRecord?.operator
+            record_weigh.text=reagentUserRecord?.reagentTotalSize
+            record_allowance.text=reagentUserRecord?.reagentSize
+            record_wastage.text=reagentUserRecord?.consumption
         }
     }
 }// Required empty public constructor

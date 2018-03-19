@@ -1,0 +1,231 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.smartcabinet.SingleTemplateFragment">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="试剂模板添加"
+        android:textColor="@color/zxing_status_text"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="120dp"
+        android:text="试剂名称："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/template_et_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/template_et_name" />
+
+    <EditText
+        android:id="@+id/template_et_name"
+        android:layout_width="wrap_content"
+        android:layout_height="43dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/edit"
+        android:ems="10"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="8dp"
+        android:text="试剂别称："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/template_et_anotherName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/template_et_anotherName" />
+
+    <EditText
+        android:id="@+id/template_et_anotherName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/edit"
+        android:ems="10"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/template_et_name" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:text="试剂形态："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/template_sp_state"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/template_sp_state" />
+
+    <Spinner
+        android:id="@+id/template_sp_state"
+        android:layout_width="100dp"
+        android:layout_height="40sp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/template_et_anotherName" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:text="试剂瓶容量："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/template_et_volume"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/template_et_volume" />
+
+    <EditText
+        android:id="@+id/template_et_volume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/edit"
+        android:ems="10"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/template_sp_state" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:text="液体试剂密度(g/ml)："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/template_et_density"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/template_et_density" />
+
+    <EditText
+        android:id="@+id/template_et_density"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/edit"
+        android:ems="10"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/template_et_volume" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:text="试剂纯度(%)："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/template_et_purity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/template_et_purity" />
+
+    <EditText
+        android:id="@+id/template_et_purity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/edit"
+        android:ems="10"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/template_et_density" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:text="生产厂商："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/template_et_manufactor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/template_et_manufactor" />
+
+    <EditText
+        android:id="@+id/template_et_manufactor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/edit"
+        android:ems="10"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/template_et_purity" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:text="商品码："
+        android:textColor="@android:color/background_light"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/template_et_code"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/template_et_code" />
+
+    <EditText
+        android:id="@+id/template_et_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/edit"
+        android:ems="10"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/template_et_manufactor" />
+
+    <Button
+        android:id="@+id/template_btn_save"
+        android:layout_width="300sp"
+        android:layout_height="80sp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/btn_style_denglu"
+        android:text="确定"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

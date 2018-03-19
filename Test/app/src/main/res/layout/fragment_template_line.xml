@@ -3,76 +3,88 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    tools:context=".RecordLineFragment">
+    tools:context="com.example.smartcabinet.TemplateLineFragment">
 
+    <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:id="@+id/record_ID"
-        android:layout_width="100dp"
+        android:id="@+id/templateLine_name"
+        android:layout_width="120dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@drawable/tv_table_form"
-        android:text="试剂ID"
+        android:text="试剂名称"
         android:textColor="@android:color/black"
         android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/record_type"
-        android:layout_width="105dp"
+        android:id="@+id/templateLine_anotherName"
+        android:layout_width="120dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@drawable/tv_table_form"
-        android:text="操作类型"
+        android:text="试剂别称"
         android:textColor="@android:color/black"
         android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/record_time"
-        android:layout_width="195dp"
+        android:id="@+id/templateLine_volume"
+        android:layout_width="120dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@drawable/tv_table_form"
-        android:text="操作时间"
+        android:text="试剂瓶容量"
         android:textColor="@android:color/black"
         android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/record_user"
-        android:layout_width="105sp"
+        android:id="@+id/templateLine_state"
+        android:layout_width="120dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@drawable/tv_table_form"
-        android:text="操作人员"
+        android:text="试剂形态"
         android:textColor="@android:color/black"
         android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/record_weigh"
-        android:layout_width="90dp"
+        android:id="@+id/templateLine_density"
+        android:layout_width="120sp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@drawable/tv_table_form"
-        android:text="称重量"
+        android:text="试剂密度"
         android:textColor="@android:color/black"
         android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/record_allowance"
-        android:layout_width="90dp"
+        android:id="@+id/templateLine_purity"
+        android:layout_width="120dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@drawable/tv_table_form"
-        android:text="余量"
+        android:text="试剂纯度"
         android:textColor="@android:color/black"
         android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/record_wastage"
-        android:layout_width="90dp"
+        android:id="@+id/templateLine__manufator"
+        android:layout_width="120dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@drawable/tv_table_form"
-        android:text="消耗量"
+        android:text="生产厂商"
         android:textColor="@android:color/black"
         android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/templateLine__code"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/tv_table_form"
+        android:text="商品码"
+        android:textColor="@android:color/black"
+        android:textSize="22sp" />
+
 </LinearLayout>

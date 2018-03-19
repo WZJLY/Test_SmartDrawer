@@ -1,0 +1,162 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.smartcabinet.EditTemplateFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="试剂模板操作"
+        android:textColor="@android:color/background_light"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/Linear_editTemplate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/tv_table_header"
+                            android:text="试剂名称"
+                            android:textColor="@android:color/black"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/tv_table_header"
+                            android:text="试剂别称"
+                            android:textColor="@android:color/black"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/tv_table_header"
+                            android:text="试剂瓶容量(g或ml)"
+                            android:textColor="@android:color/black"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/tv_table_header"
+                            android:text="试剂形态"
+                            android:textColor="@android:color/black"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/tv_table_header"
+                            android:text="液体试剂密度(g/ml)"
+                            android:textColor="@android:color/black"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/tv_table_header"
+                            android:text="试剂纯度(%)"
+                            android:textColor="@android:color/black"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/tv_table_header"
+                            android:text="生产厂商"
+                            android:textColor="@android:color/black"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/tv_table_header"
+                            android:text="商品码"
+                            android:textColor="@android:color/black"
+                            android:textSize="22sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Button" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_clean"
+        android:layout_width="200sp"
+        android:layout_height="60sp"
+        android:layout_marginEnd="110dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_style_ordinary"
+        android:text="清除模板"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="200sp"
+        android:layout_height="60sp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_style_ordinary"
+        android:text="导入模板"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+</android.support.constraint.ConstraintLayout>
