@@ -48,6 +48,7 @@ class OperationDialog(context: Context) : Dialog(context){
 
         initData()
         initEvent()
+        addNum2()
     }
 
     private fun initEvent() {

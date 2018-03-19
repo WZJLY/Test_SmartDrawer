@@ -210,13 +210,16 @@ private var statue:String?=null
                                     }
                                     if(into_drawer == drawerID) {
                                         val reagent = dbManager?.getReagentById(eT_code2.text.toString())
-                                        val dialog = AlertDialog.Builder(this)
-                                                .setTitle("归还")
-                                                .setMessage("请归还试剂后点击确定"+reagent?.drawerId)
-                                                .setPositiveButton("确定", DialogInterface.OnClickListener { dialogInterface, i ->
-                                                    dbManager?.updateReagentStatus(eT_code2.text.toString(), 1, scApp!!.userInfo.getUserName())
-                                                    var weight:Int = Integer.valueOf(eT_weight.text.toString())
-                                                    if(weight>dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt())
+                                        val dialog = OperationDialog(this)
+                                        val num =dbManager!!.getDrawerByDrawerId(drawerID).drawerSize
+                                        dialog.setTitle("归还")
+                                        dialog.setMessage("请归还试剂后点击确定")
+                                        dialog.setNum(num,reagent!!.reagentPosition.toInt())
+                                        dialog.setYesOnclickListener("确定",object :OperationDialog.onYesOnclickListener{
+                                            override fun onYesClick() {
+                                                dbManager?.updateReagentStatus(eT_code2.text.toString(), 1, scApp!!.userInfo.getUserName())
+                                                var weight:Int = Integer.valueOf(eT_weight.text.toString())
+                                                if(weight>dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt())
                                                 {
                                                     weight -=dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt()
                                                     var size =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble())
@@ -241,14 +244,22 @@ private var statue:String?=null
                                                         unit="ml"
                                                     dbManager?.addReagentUserRecord(eT_code2.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g ",size1.toString()+unit,(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble()).toString())
                                                 }
-                                                    val intent = Intent()
-                                                    intent.setClass(this, OperationActivity::class.java)
-                                                    startActivity(intent)
+                                                val intent = Intent()
+                                                intent.setClass(applicationContext, OperationActivity::class.java)
+                                                startActivity(intent)
+                                                dialog.dismiss()
+                                            }
+
                                                 })
-                                                .setNeutralButton("取消", null)
-                                                .create()
+                                        dialog.setNoOnclickListener("取消",object :OperationDialog.onNoOnclickListener{
+                                            override fun onNoClick() {
+                                                dialog.dismiss()
+                                            }
+                                        })
+
+
+
                                         dialog.show()
-                                        dialog.window.setGravity(Gravity.CENTER)
                                     }
                                 }
                             }
