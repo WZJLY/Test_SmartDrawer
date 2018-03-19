@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="103dp"
+        android:layout_width="100dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@drawable/tv_table_form"

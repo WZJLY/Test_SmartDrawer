@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/tV_person"
-        android:layout_width="250sp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@android:color/background_light"
@@ -45,7 +45,7 @@
 
     <TextView
         android:id="@+id/tV_purity"
-        android:layout_width="130sp"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@android:color/background_light"
@@ -68,7 +68,7 @@
 
     <TextView
         android:id="@+id/tV_name"
-        android:layout_width="180dp"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@android:color/background_light"
@@ -91,9 +91,10 @@
 
     <TextView
         android:id="@+id/tV_num"
-        android:layout_width="180sp"
+        android:layout_width="150sp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:text="1000005"
         android:textColor="@android:color/background_light"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/title_num"
@@ -114,7 +115,7 @@
 
     <TextView
         android:id="@+id/tV_manufactor"
-        android:layout_width="180sp"
+        android:layout_width="150sp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@android:color/background_light"
@@ -137,7 +138,7 @@
 
     <TextView
         android:id="@+id/tV_residue"
-        android:layout_width="180sp"
+        android:layout_width="170sp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@android:color/background_light"
@@ -160,10 +161,10 @@
 
     <TextView
         android:id="@+id/tV_data"
-        android:layout_width="130dp"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="2018.02.27"
+        android:text="2018年02月27日"
         android:textColor="@android:color/background_light"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/title_data"
