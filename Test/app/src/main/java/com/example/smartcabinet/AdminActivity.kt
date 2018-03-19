@@ -20,19 +20,37 @@ import kotlinx.android.synthetic.main.activity_admin.*
 import java.io.*
 import java.net.MalformedURLException
 import java.net.URL
-import android.view.WindowManager
+
 import android.view.inputmethod.InputMethodManager
+import kotlinx.android.synthetic.main.fragment_single_template.*
+import kotlinx.android.synthetic.main.fragment_template_line.*
 
 
 class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten, AddPersonFragment.addpersonbuttonlisten,
         EditPersonFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener,DrawerFragment1.deletDrawerFragmentListener,
-        SetupFragment.setupFragmentListener,EditTemplateFragment.editTemplateListen{
+        SetupFragment.setupFragmentListener,EditTemplateFragment.editTemplateListen,SingleTemplateFragment.singleTemplateListen{
     private var scApp: SCApp? = null
     private var returnview = "login"
     private var dbManager: DBManager? = null
     var handler =Handler()
     var download_handler=Handler()
+    var mHandler: Handler = object : Handler() {
+      override  fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            when (msg.what) {
+                0 -> {
+                    //在这里得到数据，并且可以直接更新UI
+                    val data = msg.obj as String
+                    Toast.makeText(this@AdminActivity,data,Toast.LENGTH_SHORT).show()
+                    val editTemplateFragment = EditTemplateFragment()
+                    replaceFragment(editTemplateFragment, R.id.framelayout)
+                }
+                else -> {
+                }
+            }
+        }
 
+    }
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if(null != this.currentFocus) {
             val mInputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -181,7 +199,50 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 replaceFragment(singleTemplateFragment, R.id.framelayout)
 
             }
+            "btn_clean" ->{
+
+                val dialog = AlertDialog.Builder(this)
+                        .setTitle("提示")
+                        .setMessage("是否要清空模板")
+                        .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
+                            dbManager?.deleteAllReagentTemplate()
+                            val editTemplateFragment = EditTemplateFragment()
+                            replaceFragment(editTemplateFragment, R.id.framelayout)
+                            Toast.makeText(this,"试剂清空完成",Toast.LENGTH_SHORT).show()
+                        })
+                        .setNeutralButton("取消",null)
+                        .create()
+                dialog.show()
+                dialog.window.setGravity(Gravity.CENTER)
+            }
+            "btn_import" ->{
+                var edit= EditText(this)
+                val dialog = AlertDialog.Builder(this)
+                        .setTitle("提示")
+                        .setView(edit)
+                        .setMessage("请输入试剂模板编号")
+                        .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
+                            scApp?.templateID=edit.text.toString()
+                            downLoad() //下载与导入模板的线程开启
+
+                        })
+                        .setNeutralButton("取消",null)
+                        .create()
+                dialog.show()
+                dialog.window.setGravity(Gravity.CENTER)
+            }
         }
+    }
+    override fun singleTemplateButtonClick(text: String){
+        when(text){
+            "btn_save" ->{      //下拉框未添加，内容未进行判断
+                dbManager?.addReagentTemplate("",template_et_name.text.toString(),template_et_anotherName.text.toString(),"","",1,template_et_purity.text.toString(),template_et_volume.text.toString(),template_et_manufactor.text.toString(),template_et_code.text.toString(),"g",template_et_density.text.toString())
+                val editTemplateFragment = EditTemplateFragment()
+                replaceFragment(editTemplateFragment, R.id.framelayout)
+            }
+
+        }
+
     }
 
     override fun onButtonClick(text: String) {
@@ -229,6 +290,7 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 val setupFragment = SetupFragment()
                 replaceFragment(setupFragment, R.id.framelayout)
             }
+
         }
     }
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
@@ -368,7 +430,10 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                     else {
 
                         Toast.makeText(SCApp.getContext(), "试剂模板导入成功", Toast.LENGTH_SHORT).show()
-
+                        val msg = Message()
+                        msg.what = 0
+                        msg.obj = "更新成功"
+                        mHandler.sendMessage(msg)
                     }
                 } catch (e: MalformedURLException) {
 
@@ -395,15 +460,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         }.start()  //开启一个线程
     }
 
-    override fun onResume() {
-        super.onResume()
-        if(scApp?.updateTeamplate==1)
-        {
-            val editTemplateFragment = EditTemplateFragment()
-            replaceFragment(editTemplateFragment, R.id.framelayout)
-            scApp?.updateTeamplate=0
-        }
-    }
 }
 
 

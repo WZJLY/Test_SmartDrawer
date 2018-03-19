@@ -62,40 +62,12 @@ class EditTemplateFragment : Fragment() {
         else
             Toast.makeText(context,"没有试剂模板",Toast.LENGTH_SHORT).show()
         btn_import.setOnClickListener{
-            var edit= EditText(context)
-            val dialog = AlertDialog.Builder(context)
-                    .setTitle("提示")
-                    .setView(edit)
-                    .setMessage("请输入试剂模板编号")
-                    .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
-                        scApp?.templateID=edit.text.toString()
-                        downLoad() //下载与导入模板的线程开启
-//                            while (true)
-//                            {
-//                                if(dbManager!!.reagentTemplate.size>0)
-//                                break
-//                            }
 
-                    })
-                    .setNeutralButton("取消",null)
-                    .create()
-            dialog.show()
-            dialog.window.setGravity(Gravity.CENTER)
+            editTemplateClicked("btn_import")
         }
         btn_clean.setOnClickListener{
-            dbManager?.deleteAllReagentTemplate()
-            Toast.makeText(context,"试剂清空完成",Toast.LENGTH_SHORT).show()
-            val dialog = AlertDialog.Builder(context)
-                    .setTitle("提示")
-                    .setMessage("是否要清空模板")
-                    .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
+            editTemplateClicked("btn_clean")
 
-                    scApp?.updateTeamplate=1
-                    })
-                    .setNeutralButton("取消",null)
-                    .create()
-            dialog.show()
-            dialog.window.setGravity(Gravity.CENTER)
         }
         btn_single.setOnClickListener{
             editTemplateClicked("btn_single")
@@ -135,7 +107,7 @@ class EditTemplateFragment : Fragment() {
                     var line =buffreader.readLine()
                     var lineNumber = 1
                     var lineArray: Array<String>? = null
-                    dbManager?.deleteAllReagentTemplate()   //删除原有数据
+//                    dbManager?.deleteAllReagentTemplate()   //删除原有数据
                     while ( line != null) {
                         line=buffreader.readLine()
                         Log.e("wzj",line)
