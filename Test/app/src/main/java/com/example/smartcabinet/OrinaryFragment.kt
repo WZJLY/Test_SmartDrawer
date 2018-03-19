@@ -47,6 +47,10 @@ class OrinaryFragment : Fragment() {
         record_query?.setOnClickListener{
 
         }
+
+        orinary_template.setOnClickListener {
+            orinarybuttonClicked("orinary_template")
+        }
     }
     private fun orinarybuttonClicked(text: String) {
         activityCallback?.orinaryButtonClick(text)

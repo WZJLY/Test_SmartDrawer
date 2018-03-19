@@ -1,9 +1,12 @@
 package com.example.smartcabinet
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.webkit.JavascriptInterface
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
@@ -30,6 +33,14 @@ class LoginActivity : AppCompatActivity() {
             login(et_userName.text.toString(),et_userPassword.text.toString())
         })
 
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if(null != this.currentFocus) {
+            val mInputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0)
+        }
+        return super.onTouchEvent(event)
     }
 
     @JavascriptInterface

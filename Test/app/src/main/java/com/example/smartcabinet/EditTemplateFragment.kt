@@ -1,6 +1,7 @@
 package com.example.smartcabinet
 
 
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Environment
@@ -27,9 +28,13 @@ import java.net.URL
  * A simple [Fragment] subclass.
  */
 class EditTemplateFragment : Fragment() {
+    var activityCallback: EditTemplateFragment.editTemplateListen? = null
     private var reagentTemplate: ReagentTemplate?=null
     private var dbManager: DBManager? = null
     private var scApp: SCApp? = null
+    interface editTemplateListen {
+        fun editTemplateButtonClick(text: String)
+    }
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -56,29 +61,26 @@ class EditTemplateFragment : Fragment() {
         }
         else
             Toast.makeText(context,"没有试剂模板",Toast.LENGTH_SHORT).show()
-        button2.setOnClickListener{
-
-                            var edit= EditText(context)
-                val dialog = AlertDialog.Builder(context)
-                        .setTitle("提示")
-                        .setView(edit)
-                        .setMessage("请输入试剂模板编号")
-                        .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
-                            scApp?.templateID=edit.text.toString()
-                            downLoad() //下载与导入模板的线程开启
+        btn_import.setOnClickListener{
+            var edit= EditText(context)
+            val dialog = AlertDialog.Builder(context)
+                    .setTitle("提示")
+                    .setView(edit)
+                    .setMessage("请输入试剂模板编号")
+                    .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
+                        scApp?.templateID=edit.text.toString()
+                        downLoad() //下载与导入模板的线程开启
 //                            while (true)
 //                            {
 //                                if(dbManager!!.reagentTemplate.size>0)
 //                                break
 //                            }
 
-                        })
-                        .setNeutralButton("取消",null)
-                        .create()
-                dialog.show()
-                dialog.window.setGravity(Gravity.CENTER)
-
-
+                    })
+                    .setNeutralButton("取消",null)
+                    .create()
+            dialog.show()
+            dialog.window.setGravity(Gravity.CENTER)
         }
         btn_clean.setOnClickListener{
             dbManager?.deleteAllReagentTemplate()
@@ -96,12 +98,23 @@ class EditTemplateFragment : Fragment() {
             dialog.window.setGravity(Gravity.CENTER)
         }
         btn_single.setOnClickListener{
-
-
-
+            editTemplateClicked("btn_single")
         }
-
     }
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        try {
+            activityCallback = context as editTemplateListen
+        } catch (e: ClassCastException) {
+            throw ClassCastException(context?.toString()
+                    + " must implement AdminFragmentListener")
+        }
+    }
+
+    private fun editTemplateClicked(text: String) {
+        activityCallback?.editTemplateButtonClick(text)
+    }
+
     fun templateToDB(filePath: String?): String {
         var ret = ""
         var content = "" //文件内容字符串

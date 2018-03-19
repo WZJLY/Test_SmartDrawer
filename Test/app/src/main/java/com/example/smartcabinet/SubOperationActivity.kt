@@ -1,5 +1,6 @@
 package com.example.smartcabinet
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -10,6 +11,8 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.Gravity
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.ReagentTemplate
@@ -28,6 +31,14 @@ private var statue:String?=null
     private var reagentTemplate:ReagentTemplate?=null
     var spi: SerialPortInterface?= null
     private var camera: android.hardware.Camera? = null
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if(null != this.currentFocus) {
+            val mInputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0)
+        }
+        return super.onTouchEvent(event)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_operation)

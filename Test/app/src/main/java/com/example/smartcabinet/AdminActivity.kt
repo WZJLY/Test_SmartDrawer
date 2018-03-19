@@ -1,5 +1,6 @@
 package com.example.smartcabinet
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.*
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.Gravity
+import android.view.MotionEvent
 import android.widget.EditText
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
@@ -19,20 +21,25 @@ import java.io.*
 import java.net.MalformedURLException
 import java.net.URL
 import android.view.WindowManager
-
-
-
-
+import android.view.inputmethod.InputMethodManager
 
 
 class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten, AddPersonFragment.addpersonbuttonlisten,
         EditPersonFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener,DrawerFragment1.deletDrawerFragmentListener,
-        SetupFragment.setupFragmentListener{
+        SetupFragment.setupFragmentListener,EditTemplateFragment.editTemplateListen{
     private var scApp: SCApp? = null
     private var returnview = "login"
     private var dbManager: DBManager? = null
     var handler =Handler()
     var download_handler=Handler()
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if(null != this.currentFocus) {
+            val mInputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0)
+        }
+        return super.onTouchEvent(event)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
@@ -158,6 +165,21 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 val intent = Intent()
                 intent.setClass(this,OperationActivity::class.java)
                 startActivity(intent)
+            }
+
+            "orinary_template" ->{
+                val editTemplateFragment = EditTemplateFragment()
+                replaceFragment(editTemplateFragment, R.id.framelayout)
+            }
+        }
+    }
+
+    override fun editTemplateButtonClick(text: String) {
+        when(text) {
+            "btn_single" -> {
+                val singleTemplateFragment = SingleTemplateFragment()
+                replaceFragment(singleTemplateFragment, R.id.framelayout)
+
             }
         }
     }

@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/btn_import"
         app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
@@ -137,23 +137,23 @@
         android:id="@+id/btn_clean"
         android:layout_width="200sp"
         android:layout_height="60sp"
-        android:layout_marginEnd="50dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/btn_style_ordinary"
         android:text="清除模板"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_single"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_import"
         android:layout_width="200sp"
         android:layout_height="60sp"
-        android:layout_marginStart="50dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/btn_style_ordinary"
         android:text="批量导入"
         android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_single"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -161,13 +161,11 @@
         android:id="@+id/btn_single"
         android:layout_width="200sp"
         android:layout_height="60sp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/btn_style_ordinary"
         android:text="单个导入"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_clean"
-        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 </android.support.constraint.ConstraintLayout>
