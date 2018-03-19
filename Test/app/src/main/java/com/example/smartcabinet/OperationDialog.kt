@@ -19,6 +19,8 @@ class OperationDialog(context: Context) : Dialog(context){
 
     private var yesStr: String? = null
     private var noStr: String? = null
+    private var numInt: Int = 0
+    private var positInt: Int = 0
     private var titleStr: String? = null//从外界设置的title文本
     private var messageStr: String? = null//从外界设置的消息文本
 
@@ -99,6 +101,13 @@ class OperationDialog(context: Context) : Dialog(context){
     }
 
     /**
+     * 设置格子数和高亮格子
+     */
+    fun setNum(num: Int,posit: Int) {
+        numInt = num
+        positInt = posit
+    }
+    /**
      * 设置确定按钮和取消被点击的接口
      */
     interface onYesOnclickListener {
@@ -109,14 +118,19 @@ class OperationDialog(context: Context) : Dialog(context){
         fun onNoClick()
     }
 
-    fun addNum2(num: Int){
-        for(i in 1..num){
+    fun addNum2(){
+        for(i in 1..numInt){
             val tableRow = TableRow(context)
-            for(j in 1..num){
+            for(j in 1..numInt){
                 val textView = TextView(context)
                 textView.width = 40
                 textView.height = 40
-                textView.setBackgroundResource(R.drawable.btn_table)
+                if((i-1)*numInt+j == positInt) {
+                    textView.setBackgroundResource(R.drawable.btn_choose)
+                }
+                else{
+                    textView.setBackgroundResource(R.drawable.btn_table)
+                }
 
                 tableRow.addView(textView)
             }
