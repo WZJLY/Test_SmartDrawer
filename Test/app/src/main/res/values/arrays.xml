@@ -13,4 +13,9 @@
         <item>6</item>
         <item>7</item>
     </string-array>
+
+    <string-array name="template_type">
+        <item>固体</item>
+        <item>液体</item>
+    </string-array>
 </resources>
