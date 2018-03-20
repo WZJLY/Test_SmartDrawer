@@ -106,7 +106,7 @@ class TableFragment : Fragment() {
                         view.isFocusable = true
                         view.requestFocus()
                         view.requestFocusFromTouch()
-                        val row = button.id.toString()
+                        var row = button.id.toString()
                         val operationActivity = activity as OperationActivity
                         if(dbManager?.getReagentByPos(drawerID.toString(),row)!=null)
                         {
@@ -114,7 +114,7 @@ class TableFragment : Fragment() {
                                 operationActivity.changeMessage("style1")
                             else
                                 operationActivity.changeMessage("style2")
-                            if(childFragmentManager.findFragmentByTag("Info")==null) {
+
                                 val informationFragment4 = InformationFragment4()
                                 val fragmentTrasaction = childFragmentManager.beginTransaction()
                                 val arg = Bundle()
@@ -123,17 +123,7 @@ class TableFragment : Fragment() {
                                 informationFragment4.arguments = arg
                                 fragmentTrasaction.replace(R.id.frameLayout, informationFragment4, "Info")
                                 fragmentTrasaction.commit()
-                            }
-                            else
-                            {
-                                tV_num2.text!=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentId
-                                tV_name2.text=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentName
-                                tV_purity2.text=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentPurity
-                                tV_data2.text=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentInvalidDate
-                                tV_manufactor2.text=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentCreater
-                                tV_residue2.text=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentSize
-                                tV_person2.text=dbManager!!.getReagentByPos(drawerID.toString(),row).reagentUser
-                            }
+
                         }
                         else
                         {
@@ -141,7 +131,6 @@ class TableFragment : Fragment() {
                             if(childFragmentManager.findFragmentByTag("Info")!=null) {
                             val informationFragment4 = childFragmentManager.findFragmentByTag("Info")
                             val fragmentTrasaction = fragmentManager.beginTransaction()
-
                             fragmentTrasaction.remove(informationFragment4)
                             fragmentTrasaction.commit()
                             }
