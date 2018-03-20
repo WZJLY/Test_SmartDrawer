@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
@@ -102,8 +103,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                     returnview = "admin"
                 }
             }
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS)
         })
     }
 
@@ -141,8 +140,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     override fun savepersonButtonClick(text: String) {
         if(text == "save") {
             val editperson = AddPersonFragment()
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS)
             replaceFragment(editperson, R.id.framelayout)
         }
     }
