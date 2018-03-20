@@ -113,12 +113,6 @@ public class SCApp extends Application {  //全局变量
         return this.reagentID;
     }
 
-    public void setSerialPort(String id){
-        serialPortID = id;
-    }
-    public String getSerialPortID(){
-        return serialPortID;
-    }
     public void setUpdateTeamplate(int update){  statue = update; }
     public int getUpdateTeamplate(){
         return statue;

@@ -23,6 +23,8 @@ import java.net.MalformedURLException
 import java.net.URL
 
 import android.view.inputmethod.InputMethodManager
+import android_serialport_api.SerialPort
+import kotlinx.android.synthetic.main.fragment_setup.*
 import kotlinx.android.synthetic.main.fragment_single_template.*
 import kotlinx.android.synthetic.main.fragment_template_line.*
 
@@ -106,11 +108,22 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
         })
     }
 
-    override fun saveSetupClick(text: String) {
-        if(text == "setupFragment") {
-            val adminfrag = AdminFragment()
-            replaceFragment(adminfrag, R.id.framelayout)
+    override fun saveSetupClick(text: String, serialPortNum: Int) {
+        when(text){
+            "setupFragment"-> {
+                dbManager?.addCabinetNo(setup_et_number.text.toString(),setup_et_serviceCode.text.toString(),serialPortNum.toString())
+                val adminfrag = AdminFragment()
+                replaceFragment(adminfrag, R.id.framelayout)
+            }
+            "updateFragment"-> {
+                dbManager?.deleteAllCabinetNo()
+                dbManager?.addCabinetNo(setup_et_number.text.toString(),setup_et_serviceCode.text.toString(),serialPortNum.toString())
+                val adminfrag = AdminFragment()
+                replaceFragment(adminfrag, R.id.framelayout)
+            }
         }
+
+
     }
 
     override  fun deletDrawerButtonClick(text: String,drawerID:Int) {
@@ -181,9 +194,13 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 replaceFragment(editMessageFragment, R.id.framelayout)
             }
             "reagent_operation" ->{
-                val intent = Intent()
-                intent.setClass(this,OperationActivity::class.java)
-                startActivity(intent)
+                if(dbManager!!.cabinetNo.size > 0){
+                    val intent = Intent()
+                    intent.setClass(this,OperationActivity::class.java)
+                    startActivity(intent)
+                }
+                else
+                    Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
             }
 
             "orinary_template" ->{
@@ -278,9 +295,13 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
 
             }
             "reagent_op"-> {
-                val intent = Intent()
-                intent.setClass(this,OperationActivity::class.java)
-                startActivity(intent)
+                if(dbManager!!.cabinetNo.size > 0){
+                    val intent = Intent()
+                    intent.setClass(this,OperationActivity::class.java)
+                    startActivity(intent)
+                }
+                else
+                    Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
             }
             "recordquery" -> {
                 val recordFragment = RecordFragment()
@@ -290,7 +311,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
 
             }
             "reagent_template" -> {
-
                 val editTemplateFragment = EditTemplateFragment()
                 replaceFragment(editTemplateFragment, R.id.framelayout)
             }

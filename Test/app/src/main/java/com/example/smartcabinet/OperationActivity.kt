@@ -35,10 +35,15 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
         scApp = application as SCApp
         changeMessage("noFocusable")
         updateDrawer()
-        val serialPortID = scApp?.serialPortID
-        spi = SerialPortInterface(this.applicationContext, serialPortID)
-        scApp?.setSpi(spi)
-
+        if(dbManager!!.cabinetNo.size > 0){
+            val serialPortNum = dbManager!!.cabinetNo.get(0).serialNumber.toInt()
+            val SPID = resources.getStringArray(R.array.serialPort)
+            val serialPortID = SPID[serialPortNum-1]
+            spi = SerialPortInterface(this.applicationContext, serialPortID)
+            scApp?.setSpi(spi)
+        }
+        else
+            Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
     }
 
 
