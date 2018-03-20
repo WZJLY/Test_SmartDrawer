@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:text="智能试剂柜"
+        android:text="安储智能"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.504"

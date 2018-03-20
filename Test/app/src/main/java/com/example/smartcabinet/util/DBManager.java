@@ -396,7 +396,10 @@ public class DBManager {
         return arrListCabinetInfo;
     }
 
-
+    public void deleteAllCabinetNo()
+    {
+        db.execSQL("DELETE FROM cabinet_no");
+    }
     public void addCabinetNo(String cabinentNo,String serviceCode,String serialNumber) {
         db.execSQL("INSERT INTO cabinet_no VALUES(null,?,?,?)", new Object[]{cabinentNo,serviceCode,serialNumber});
     }
