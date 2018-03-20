@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.KeyEvent
 import android.widget.Toast
 import com.example.smartcabinet.util.*
 
@@ -46,6 +47,12 @@ class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentLis
             Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode === KeyEvent.KEYCODE_BACK) {
+            return true // return true 和 false 我都试过，都能屏蔽，原因还未知，希望知道的可以告诉我一下，谢谢
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 
     override fun userReagentButtonClick(text: String) {
         when (text) {

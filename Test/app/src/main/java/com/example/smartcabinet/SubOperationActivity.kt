@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -39,6 +40,14 @@ private var statue:String?=null
         }
         return super.onTouchEvent(event)
     }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode === KeyEvent.KEYCODE_BACK) {
+            return true // return true 和 false 我都试过，都能屏蔽，原因还未知，希望知道的可以告诉我一下，谢谢
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_operation)
@@ -115,57 +124,30 @@ private var statue:String?=null
             when(subOperation)
             {
                 "Into" -> {
-
-                    var into_drawer = checkLock(1,1)
-                    if (into_drawer == null)
-                        Toast.makeText(this,"ERROR：串口通讯！",Toast.LENGTH_SHORT).show()
-                    else if(into_drawer != drawerID && into_drawer > 0)
+                    if(!dbManager!!.isReagentExist(eT_code.text.toString())&&!dbManager!!.isScrapReagentExist(eT_code.text.toString())){
+                        var into_drawer = checkLock(1,1)
+                        if (into_drawer == null)
+                            Toast.makeText(this,"ERROR：串口通讯！",Toast.LENGTH_SHORT).show()
+                        else if(into_drawer != drawerID && into_drawer > 0)
                             Toast.makeText(this, " 请关闭" + (into_drawer) + "号抽屉", Toast.LENGTH_SHORT).show()
-                    else
-                    {
-                        if(into_drawer != drawerID) {
-                            spi?.sendOpenLock(1, drawerID)
-                            Toast.makeText(this, " 请拉开" + (drawerID) + "号抽屉", Toast.LENGTH_SHORT).show()
-                            into_drawer = checkLock(1,190)
-                        }
-                        if (into_drawer == drawerID) {
-                            val dialog = AlertDialog.Builder(this)
-                                    .setTitle("入柜")
-                                    .setMessage("请放入试剂后点击确定")
-                                    .setPositiveButton("确定", DialogInterface.OnClickListener { dialogInterface, i ->
-                                        if(!dbManager!!.isReagentExist(eT_code.text.toString())&&!dbManager!!.isScrapReagentExist(eT_code.text.toString())) {
-                                            reagentTemplate = dbManager!!.reagentTemplate.get(scApp!!.templateNum)
-                                            var Unit = 1
-                                            if (reagentTemplate?.reagentUnit == "ml") {
-                                                Unit = 2
-                                            }
-                                            dbManager?.addReagent(eT_code.text.toString(), reagentTemplate?.reagentName, "", ""
-                                                    , "", 1, reagentTemplate?.reagentPurity, eT_residue.text.toString(), eT_weight2.text.toString()
-                                                    , reagentTemplate?.reagentCreater, reagentTemplate?.reagentGoodsID, Unit, reagentTemplate?.reagentDensity, eT_data.text.toString()
-                                                    , "1", drawerID.toString(), scApp?.touchtable.toString(), 1, scApp!!.userInfo.getUserName())
-                                            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
-                                            val now = sdf.format(Date())
-                                            dbManager?.addReagentUserRecord(eT_code.text.toString(),1,now,scApp!!.userInfo.getUserName(),eT_weight2.text.toString()+"g",eT_residue.text.toString()+reagentTemplate?.reagentUnit,"")
-                                            val intent = Intent()
-                                            scApp?.touchtable = 0
-                                            scApp?.touchtable = 0 //新加的
-                                            intent.setClass(this, OperationActivity::class.java)
-                                            startActivity(intent)
-                                        }
-                                        else
-                                            Toast.makeText(this,"该试剂编码已使用",Toast.LENGTH_SHORT).show()
-
-                                    })
-                                    .setNeutralButton("取消", null)
-                                    .create()
-                            dialog.show()
-                            dialog.window.setGravity(Gravity.CENTER)
+                        else {
+                            if(into_drawer != drawerID) {
+                                spi?.sendOpenLock(1, drawerID)
+                                Toast.makeText(this, " 请拉开" + (drawerID) + "号抽屉", Toast.LENGTH_SHORT).show()
+//                            Thread.sleep(50)
+                                into_drawer = checkLock(1,190)
+                            }
+                            if (into_drawer == drawerID) {
+                                intoDialog(drawerID)
+                            }
                         }
                     }
+                    else
+                        Toast.makeText(this,"该试剂编码已使用",Toast.LENGTH_SHORT).show()
                 }
 
                 "Take" -> {
-                    var into_drawer = checkLock(1, 1)
+                    var into_drawer = checkLock(1, 3)
                     if (into_drawer == null)
                         Toast.makeText(this,"ERROR：串口通讯！",Toast.LENGTH_SHORT).show()
                     else if(into_drawer != drawerID && into_drawer > 0)
@@ -174,30 +156,11 @@ private var statue:String?=null
                         if (into_drawer != drawerID) {
                             spi?.sendOpenLock(1, drawerID)
                             Toast.makeText(this, " 请拉开" + (drawerID) + "号抽屉", Toast.LENGTH_SHORT).show()
+//                            Thread.sleep(50)
                             into_drawer = checkLock(1,190)
                         }
                         if (into_drawer == drawerID) {
-                            val dialog = AlertDialog.Builder(this)
-                                    .setTitle("取用")
-                                    .setMessage("请取出试剂后点击确定")
-                                    .setPositiveButton("确定", DialogInterface.OnClickListener { dialogInterface, i ->
-                                        dbManager?.updateReagentStatusByPos("" + drawerID, "" + scApp?.touchtable, scApp!!.userInfo.getUserName(), 2)
-                                        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
-                                        val now = sdf.format(Date())
-                                        val reagentId =  dbManager!!.getReagentByPos("" + drawerID,"" + scApp?.touchtable).reagentId
-                                        val reagent = dbManager?.getReagentById(reagentId)
-                                        var unit = "g"
-                                        if(reagent?.reagentUnit==2)
-                                            unit = "ml"
-                                        dbManager?.addReagentUserRecord(reagentId,2,now,scApp!!.userInfo.getUserName(),reagent?.reagentTotalSize+"g",reagent?.reagentSize+unit,"")
-                                        val intent = Intent()
-                                        intent.setClass(this, OperationActivity::class.java)
-                                        startActivity(intent)
-                                    })
-                                    .setNeutralButton("取消", null)
-                                    .create()
-                            dialog.show()
-                            dialog.window.setGravity(Gravity.CENTER)
+                            takeDialog(drawerID)
                         }
                     }
                 }
@@ -217,60 +180,11 @@ private var statue:String?=null
                                     if(into_drawer != drawerID) {
                                         spi?.sendOpenLock(1, drawerID)
                                         Toast.makeText(this, " 请拉开" + (drawerID) + "号抽屉", Toast.LENGTH_SHORT).show()
+//                                        Thread.sleep(50)
                                         into_drawer = checkLock(1,190)
                                     }
                                     if(into_drawer == drawerID) {
-                                        val reagent = dbManager?.getReagentById(eT_code2.text.toString())
-                                        val dialog = OperationDialog(this)
-                                        val num =dbManager!!.getDrawerByDrawerId(drawerID).drawerSize
-                                        dialog.setTitle("归还")
-                                        dialog.setMessage("请归还试剂后点击确定")
-                                        dialog.setNum(num,reagent!!.reagentPosition.toInt())
-                                        dialog.setYesOnclickListener("确定",object :OperationDialog.onYesOnclickListener{
-                                            override fun onYesClick() {
-                                                dbManager?.updateReagentStatus(eT_code2.text.toString(), 1, scApp!!.userInfo.getUserName())
-                                                var weight:Int = Integer.valueOf(eT_weight.text.toString())
-                                                if(weight>dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt())
-                                                {
-                                                    weight -=dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt()
-                                                    var size =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble())
-                                                    dbManager?.updateReagentSize(eT_code2.text.toString(),size.toString(),eT_weight.text.toString())
-                                                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
-                                                    val now = sdf.format(Date())
-                                                    var unit = "g"
-                                                    if(reagent?.reagentUnit==2)
-                                                        unit="ml"
-                                                    dbManager?.addReagentUserRecord(eT_code2.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g",size.toString()+unit,(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble()).toString())
-                                                }
-                                                else
-                                                {
-                                                    weight =dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt()-weight
-
-                                                    var size1 =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble())
-                                                    dbManager?.updateReagentSize(eT_code2.text.toString(),size1.toString(),eT_weight.text.toString())
-                                                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
-                                                    val now = sdf.format(Date())
-                                                    var unit = "g"
-                                                    if(reagent?.reagentUnit==2)
-                                                        unit="ml"
-                                                    dbManager?.addReagentUserRecord(eT_code2.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g ",size1.toString()+unit,(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble()).toString())
-                                                }
-                                                val intent = Intent()
-                                                intent.setClass(applicationContext, OperationActivity::class.java)
-                                                startActivity(intent)
-                                                dialog.dismiss()
-                                            }
-
-                                                })
-                                        dialog.setNoOnclickListener("取消",object :OperationDialog.onNoOnclickListener{
-                                            override fun onNoClick() {
-                                                dialog.dismiss()
-                                            }
-                                        })
-
-
-
-                                        dialog.show()
+                                        returnDialog(drawerID)
                                     }
                                 }
                             }
@@ -295,28 +209,11 @@ private var statue:String?=null
                         if (into_drawer != drawerID) {
                             spi?.sendOpenLock(1, drawerID)
                             Toast.makeText(this, " 请拉开" + (drawerID) + "号抽屉", Toast.LENGTH_SHORT).show()
+//                            Thread.sleep(50)
                             into_drawer = checkLock(1,190)
                         }
                         if (into_drawer == drawerID) {
-                            val dialog = AlertDialog.Builder(this)
-                                    .setTitle("报废")
-                                    .setMessage("请取出试剂后点击确定")
-                                    .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
-                                        val reagentId=dbManager!!.getReagentByPos("" + drawerID,"" + scApp?.touchtable).reagentId
-                                        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
-                                        val now = sdf.format(Date())
-                                        val reagent = dbManager?.getReagentById(reagentId)
-                                        dbManager?.addSrapReagent(reagent?.reagentId,reagent?.reagentName,"","","",reagent!!.reagentType.toInt(),reagent?.reagentPurity,reagent?.reagentSize,reagent?.reagentTotalSize,reagent?.reagentCreater,"",reagent?.reagentUnit,reagent?.reagentDensity,reagent?.reagentInvalidDate,reagent?.reagentCabinetId,drawerID.toString(),reagent?.reagentPosition,4,scApp!!.userInfo.getUserName())
-                                        dbManager?.deleteReagentById(reagentId)
-                                        dbManager?.addReagentUserRecord(reagentId,4,now,scApp!!.userInfo.getUserName(),eT_weight?.text.toString(),"","")
-                                        val intent = Intent()
-                                        intent.setClass(this, OperationActivity::class.java)
-                                        startActivity(intent)
-                                    })
-                                    .setNeutralButton("取消", null)
-                                    .create()
-                            dialog.show()
-                            dialog.window.setGravity(Gravity.CENTER)
+                            scrap(drawerID)
                         }
                     }
                 }
@@ -417,6 +314,7 @@ private var statue:String?=null
     }
 
     fun checkLock(DID: Int,num: Int): Int? {
+        var time:Int = 0
         for(i in 1..num) {
             val lockData = spi?.sendGetStat(DID)
             if (lockData != null) {
@@ -427,9 +325,144 @@ private var statue:String?=null
                 else
                     continue
             }
-            else
-                return null
+            else {
+                if (i > 1)
+                    return null
+                else{
+                    time++
+                    continue
+                }
+            }
         }
         return 0
+    }
+
+    fun takeDialog(drawerID:Int){
+        val dialog = AlertDialog.Builder(this)
+                .setTitle("取用")
+                .setMessage("请取出试剂后点击确定")
+                .setPositiveButton("确定", DialogInterface.OnClickListener { dialogInterface, i ->
+                    dbManager?.updateReagentStatusByPos("" + drawerID, "" + scApp?.touchtable, scApp!!.userInfo.getUserName(), 2)
+                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+                    val now = sdf.format(Date())
+                    val reagentId =  dbManager!!.getReagentByPos("" + drawerID,"" + scApp?.touchtable).reagentId
+                    val reagent = dbManager?.getReagentById(reagentId)
+                    var unit = "g"
+                    if(reagent?.reagentUnit==2)
+                        unit = "ml"
+                    dbManager?.addReagentUserRecord(reagentId,2,now,scApp!!.userInfo.getUserName(),reagent?.reagentTotalSize+"g",reagent?.reagentSize+unit,"")
+                    val intent = Intent()
+                    intent.setClass(this, OperationActivity::class.java)
+                    startActivity(intent)
+                })
+                .setNeutralButton("取消", null)
+                .create()
+        dialog.show()
+        dialog.window.setGravity(Gravity.CENTER)
+    }
+
+    fun returnDialog(drawerID:Int) {
+        val reagent = dbManager?.getReagentById(eT_code2.text.toString())
+        val dialog = OperationDialog(this)
+        val num =dbManager!!.getDrawerByDrawerId(drawerID).drawerSize
+        dialog.setTitle("归还")
+        dialog.setMessage("请归还试剂后点击确定")
+        dialog.setNum(num,reagent!!.reagentPosition.toInt())
+        dialog.setYesOnclickListener("确定",object :OperationDialog.onYesOnclickListener{
+            override fun onYesClick() {
+                dbManager?.updateReagentStatus(eT_code2.text.toString(), 1, scApp!!.userInfo.getUserName())
+                var weight:Int = Integer.valueOf(eT_weight.text.toString())
+                if(weight>dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt())
+                {
+                    weight -=dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt()
+                    var size =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble())
+                    dbManager?.updateReagentSize(eT_code2.text.toString(),size.toString(),eT_weight.text.toString())
+                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+                    val now = sdf.format(Date())
+                    var unit = "g"
+                    if(reagent?.reagentUnit==2)
+                        unit="ml"
+                    dbManager?.addReagentUserRecord(eT_code2.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g",size.toString()+unit,(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble()).toString())
+                }
+                else
+                {
+                    weight =dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt()-weight
+
+                    var size1 =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble())
+                    dbManager?.updateReagentSize(eT_code2.text.toString(),size1.toString(),eT_weight.text.toString())
+                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+                    val now = sdf.format(Date())
+                    var unit = "g"
+                    if(reagent?.reagentUnit==2)
+                        unit="ml"
+                    dbManager?.addReagentUserRecord(eT_code2.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g ",size1.toString()+unit,(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble()).toString())
+                }
+                val intent = Intent()
+                intent.setClass(applicationContext, OperationActivity::class.java)
+                startActivity(intent)
+                dialog.dismiss()
+            }
+
+        })
+        dialog.setNoOnclickListener("取消",object :OperationDialog.onNoOnclickListener{
+            override fun onNoClick() {
+                dialog.dismiss()
+            }
+        })
+        dialog.show()
+        dialog.window.setGravity(Gravity.CENTER)
+    }
+
+    fun intoDialog(drawerID:Int) {
+        val dialog = AlertDialog.Builder(this)
+                .setTitle("入柜")
+                .setMessage("请放入试剂后点击确定")
+                .setPositiveButton("确定", DialogInterface.OnClickListener { dialogInterface, i ->
+                        reagentTemplate = dbManager!!.reagentTemplate.get(scApp!!.templateNum)
+                        var Unit = 1
+                        if (reagentTemplate?.reagentUnit == "ml") {
+                            Unit = 2
+                        }
+                        dbManager?.addReagent(eT_code.text.toString(), reagentTemplate?.reagentName, "", ""
+                                , "", 1, reagentTemplate?.reagentPurity, eT_residue.text.toString(), eT_weight2.text.toString()
+                                , reagentTemplate?.reagentCreater, reagentTemplate?.reagentGoodsID, Unit, reagentTemplate?.reagentDensity, eT_data.text.toString()
+                                , "1", drawerID.toString(), scApp?.touchtable.toString(), 1, scApp!!.userInfo.getUserName())
+                        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+                        val now = sdf.format(Date())
+                        dbManager?.addReagentUserRecord(eT_code.text.toString(),1,now,scApp!!.userInfo.getUserName(),eT_weight2.text.toString()+"g",eT_residue.text.toString()+reagentTemplate?.reagentUnit,"")
+                        val intent = Intent()
+                        scApp?.touchtable = 0
+                        scApp?.touchtable = 0 //新加的
+                        intent.setClass(this, OperationActivity::class.java)
+                        startActivity(intent)
+
+
+                })
+                .setNeutralButton("取消", null)
+                .create()
+        dialog.show()
+        dialog.window.setGravity(Gravity.CENTER)
+    }
+
+    fun scrap(drawerID:Int) {
+        val dialog = AlertDialog.Builder(this)
+                .setTitle("报废")
+                .setMessage("请取出试剂后点击确定")
+                .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
+                    val reagentId=dbManager!!.getReagentByPos("" + drawerID,"" + scApp?.touchtable).reagentId
+                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+                    val now = sdf.format(Date())
+                    val reagent = dbManager?.getReagentById(reagentId)
+                    dbManager?.addSrapReagent(reagent?.reagentId,reagent?.reagentName,"","","",reagent!!.reagentType.toInt(),reagent?.reagentPurity,reagent?.reagentSize,reagent?.reagentTotalSize,reagent?.reagentCreater,"",reagent?.reagentUnit,reagent?.reagentDensity,reagent?.reagentInvalidDate,reagent?.reagentCabinetId,drawerID.toString(),reagent?.reagentPosition,4,scApp!!.userInfo.getUserName())
+                    dbManager?.deleteReagentById(reagentId)
+                    dbManager?.addReagentUserRecord(reagentId,4,now,scApp!!.userInfo.getUserName(),eT_weight?.text.toString(),"","")
+                    val intent = Intent()
+                    intent.setClass(this, OperationActivity::class.java)
+                    startActivity(intent)
+                })
+                .setNeutralButton("取消", null)
+                .create()
+        dialog.show()
+        dialog.window.setGravity(Gravity.CENTER)
     }
 }
