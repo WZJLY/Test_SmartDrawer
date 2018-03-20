@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.fragment_setup.*
 
 
@@ -26,11 +28,20 @@ class SetupFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val serialPortID = scApp?.serialPortID
-        eT_serialPort.setText(serialPortID)
-        btn_serialPort.setOnClickListener {
-            val id = eT_serialPort.text.toString()
-            scApp?.setSerialPort(id)
+        val Madapter = ArrayAdapter.createFromResource(context, R.array.serialPort, R.layout.spinner_style)
+        Madapter?.setDropDownViewResource(R.layout.dropdown_style)
+        sp_serialPort.adapter = Madapter
+        sp_serialPort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View,
+                                        pos: Int, id: Long) {
+
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Another interface callback
+            }
+        }
+        btn_setup.setOnClickListener {
+
             saveSetupClick("setupFragment")
         }
     }

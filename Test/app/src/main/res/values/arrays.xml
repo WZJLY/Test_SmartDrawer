@@ -18,4 +18,12 @@
         <item>固体</item>
         <item>液体</item>
     </string-array>
+
+    <string-array name="serialPort">
+        <item>/dev/ttyS1</item>
+        <item>/dev/ttyS2</item>
+        <item>/dev/ttyS3</item>
+        <item>/dev/ttyS4</item>
+        <item>/dev/ttyS5</item>
+    </string-array>
 </resources>

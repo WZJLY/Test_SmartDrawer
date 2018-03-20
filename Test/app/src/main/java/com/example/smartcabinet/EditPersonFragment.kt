@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -13,6 +14,9 @@ import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.SC_Const
 import com.example.smartcabinet.util.UserAccount
 import kotlinx.android.synthetic.main.fragment_edit_person.*
+import android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS
+
+
 
 
 /**

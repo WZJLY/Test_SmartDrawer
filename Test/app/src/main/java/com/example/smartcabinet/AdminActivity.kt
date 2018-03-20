@@ -102,6 +102,8 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                     returnview = "admin"
                 }
             }
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS)
         })
     }
 
@@ -139,6 +141,8 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
     override fun savepersonButtonClick(text: String) {
         if(text == "save") {
             val editperson = AddPersonFragment()
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS)
             replaceFragment(editperson, R.id.framelayout)
         }
     }
@@ -351,7 +355,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                     var line =buffreader.readLine()
                     var lineNumber = 1
                     var lineArray: Array<String>? = null
-                    dbManager?.deleteAllReagentTemplate()   //删除原有数据
                     while ( line != null) {
                         line=buffreader.readLine()
                         Log.e("wzj",line)
