@@ -57,7 +57,7 @@
 
     <EditText
         android:id="@+id/template_et_name"
-        android:layout_width="285dp"
+        android:layout_width="284dp"
         android:layout_height="43dp"
         android:layout_marginTop="48dp"
         android:background="@drawable/edit"
@@ -84,7 +84,7 @@
 
     <EditText
         android:id="@+id/template_et_anotherName"
-        android:layout_width="285dp"
+        android:layout_width="284dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@drawable/edit"
@@ -109,7 +109,7 @@
 
     <Spinner
         android:id="@+id/template_sp_state"
-        android:layout_width="285dp"
+        android:layout_width="284dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/information_dropdown_style"
         android:layout_below="@id/information_spinner_style"
@@ -132,7 +132,7 @@
 
     <EditText
         android:id="@+id/template_et_volume"
-        android:layout_width="262dp"
+        android:layout_width="263dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@drawable/edit"
@@ -157,7 +157,7 @@
 
     <EditText
         android:id="@+id/template_et_density"
-        android:layout_width="179dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@drawable/edit"
@@ -182,7 +182,7 @@
 
     <EditText
         android:id="@+id/template_et_purity"
-        android:layout_width="250dp"
+        android:layout_width="251dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@drawable/edit"
@@ -207,7 +207,7 @@
 
     <EditText
         android:id="@+id/template_et_manufactor"
-        android:layout_width="284dp"
+        android:layout_width="285dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@drawable/edit"
@@ -232,7 +232,7 @@
 
     <EditText
         android:id="@+id/template_et_code"
-        android:layout_width="306dp"
+        android:layout_width="307dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@drawable/edit"
