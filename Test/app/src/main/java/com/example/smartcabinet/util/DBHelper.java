@@ -59,7 +59,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //存放试剂编号
         db.execSQL("CREATE TABLE IF NOT EXISTS cabinet_no" +
-                "(cabinet_no VARCHAR)");
+                "(_id INTEGER PRIMARY KEY,cabinet_no VARCHAR,cabinet_serviceCode VARCHAR,serial_number VARCHAR)");
         //试剂使用记录表
         db.execSQL("CREATE TABLE IF NOT EXISTS reagentUserRecord" +
                 "(_id INTEGER PRIMARY KEY, reagentId VARCHAR,operationType INTEGER, operationTime VARCHAR, " +

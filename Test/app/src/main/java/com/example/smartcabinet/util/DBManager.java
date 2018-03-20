@@ -383,18 +383,22 @@ public class DBManager {
     }
 
     //获取试剂柜编号
-    public String getCabinetNo() {
-        Cursor cursor = db.rawQuery("select * from cabinet_no",null);
+    public ArrayList<CabinetInfo> getCabinetNo() {
+        Cursor cursor = db.rawQuery("select * from cabinet_no order by cabinet_no",null);
+        ArrayList<CabinetInfo> arrListCabinetInfo = new ArrayList<>();
         if (cursor.moveToFirst()) {
             if (!cursor.isAfterLast()) {
-                return cursor.getString(cursor.getColumnIndex("cabinet_no"));
+                CabinetInfo cabinetInfo = new CabinetInfo(cursor.getString(cursor.getColumnIndex("cabinet_no")), cursor.getString(cursor.getColumnIndex("cabinet_serviceCode")),cursor.getString(cursor.getColumnIndex("serial_number")));
+                arrListCabinetInfo.add(cabinetInfo);
+                cursor.moveToNext();
             }
         }
-        return "";
+        return arrListCabinetInfo;
     }
 
-    public void addCabinetNo(String cabinentNo) {
-        db.execSQL("INSERT INTO cabinet_no VALUES(?)", new Object[]{cabinentNo});
+
+    public void addCabinetNo(String cabinentNo,String serviceCode,String serialNumber) {
+        db.execSQL("INSERT INTO cabinet_no VALUES(null,?,?,?)", new Object[]{cabinentNo,serviceCode,serialNumber});
     }
 
     public void deleteAllReagentTemplate()
