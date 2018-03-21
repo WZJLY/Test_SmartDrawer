@@ -362,7 +362,6 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
 
     fun templateToDB(filePath: String?): String {
         var ret = ""
-        var content = "" //文件内容字符串
         //打开文件
         if (filePath == null)
             return "导入模板失败"
@@ -417,16 +416,25 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 val urlStr = SC_Const.REAGENTTEMPLATEADDRESS + fileName
                 val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
                 val pathName = "$SDCard/$path/$fileName"//文件存储路径
-                try {
-                         /*
+                if (File(pathName).exists()) {
+                    templateToDB(pathName)
+                    val msg = Message()
+                    msg.what = 0
+                    msg.obj = "更新成功"
+                    mHandler.sendMessage(msg)
+                }
+                else
+                {
+                    try {
+                        /*
                          * 通过URL取得HttpURLConnection
                          * 要网络连接成功，需在AndroidMainfest.xml中进行权限配置
                          * <uses-permission android:name="android.permission.INTERNET" />
                          */
-                    val url = URL(urlStr)
-                    //取得inputStream，并将流中的信息写入SDCard
+                        val url = URL(urlStr)
+                        //取得inputStream，并将流中的信息写入SDCard
 
-                    /*
+                        /*
                          * 写前准备
                          * 1.在AndroidMainfest.xml中进行权限配置
                          * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -437,16 +445,16 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                          * 5.将input流中的信息写入SDCard
                          * 6.关闭流
                          */
-                    val status = Environment.getExternalStorageState()
-                    if (status.equals(Environment.MEDIA_MOUNTED)) {
-                        val main = Environment.getExternalStorageDirectory().getPath() + File.separator + "SmartCabinet/ReagentTemplate"
-                        val destDir = File(main)
-                        if (!destDir.exists()) {
+                        val status = Environment.getExternalStorageState()
+                        if (status.equals(Environment.MEDIA_MOUNTED)) {
+                            val main = Environment.getExternalStorageDirectory().getPath() + File.separator + "SmartCabinet/ReagentTemplate"
+                            val destDir = File(main)
+                            if (!destDir.exists()) {
+                                destDir.mkdirs()
+                            }
                             destDir.mkdirs()
                         }
-                        destDir.mkdirs()
-                    }
-                    Looper.prepare()
+                        Looper.prepare()
 
                         Toast.makeText(SCApp.getContext(), "开始下载试剂模板", Toast.LENGTH_LONG).show()
                         val dir = SDCard + "/" + path
@@ -457,40 +465,39 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                         Toast.makeText(SCApp.getContext(), "模板下载成功", Toast.LENGTH_SHORT).show()
 
 
-                    if (templateToDB(pathName) == "") {
+                        if (templateToDB(pathName) == "") {
 
-                        Toast.makeText(SCApp.getContext(), "试剂模板导入失败", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(SCApp.getContext(), "试剂模板导入失败", Toast.LENGTH_SHORT).show()
 
-                    }
-                    else {
+                        } else {
 
-                        Toast.makeText(SCApp.getContext(), "试剂模板导入成功", Toast.LENGTH_SHORT).show()
-                        val msg = Message()
-                        msg.what = 0
-                        msg.obj = "更新成功"
-                        mHandler.sendMessage(msg)
-                    }
-                } catch (e: MalformedURLException) {
-
-                    e.printStackTrace()
-
-                } catch (e: IOException) {
-
-                    Toast.makeText(SCApp.getContext(), "该试剂模板编码不存在", Toast.LENGTH_LONG).show()
-
-                    e.printStackTrace()
-
-                } finally {
-                    try {
-
-                    } catch (e: IOException) {
+                            Toast.makeText(SCApp.getContext(), "试剂模板导入成功", Toast.LENGTH_SHORT).show()
+                            val msg = Message()
+                            msg.what = 0
+                            msg.obj = "更新成功"
+                            mHandler.sendMessage(msg)
+                        }
+                    } catch (e: MalformedURLException) {
 
                         e.printStackTrace()
 
-                    }
-                    Looper.loop()
-                }
+                    } catch (e: IOException) {
 
+                        Toast.makeText(SCApp.getContext(), "该试剂模板编码不存在", Toast.LENGTH_LONG).show()
+
+                        e.printStackTrace()
+
+                    } finally {
+                        try {
+
+                        } catch (e: IOException) {
+
+                            e.printStackTrace()
+
+                        }
+                        Looper.loop()
+                    }
+            }
         }
         }.start()  //开启一个线程
     }
