@@ -102,9 +102,11 @@ class InformationFragment2 : Fragment() {
     }
 
     fun initDatePicker() {
-        val sdf = SimpleDateFormat("yyyy年MM月dd日", Locale.CHINA)
-        val now = sdf.format(Date())
-        eT_data.setText(now)
+        val cal = Calendar.getInstance()
+        val year = cal.get(Calendar.YEAR)+1
+        val month = cal.get(Calendar.MONTH)+1
+        val day  = cal.get(Calendar.DAY_OF_MONTH)
+        eT_data.setText(""+year+"年"+month+"月"+day+"日")
     }
     interface scanbuttonlisten {
         fun scanbuttononClick(text: String)

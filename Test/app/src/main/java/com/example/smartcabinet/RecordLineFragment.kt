@@ -34,7 +34,20 @@ class RecordLineFragment : Fragment() {
             date = arguments.getString("date")
             reagentUserRecord=dbmanager?.getReagentUseRecordByDate(date)
             record_ID.text=reagentUserRecord?.reagentId
-            record_type.text=reagentUserRecord?.operationType.toString()
+            when(reagentUserRecord?.operationType){
+                1 ->{
+                    record_type.text = "入柜"
+                }
+                2->{
+                    record_type.text = "取用"
+                }
+                3->{
+                    record_type.text = "归还"
+                }
+                4->{
+                    record_type.text = "移除"
+                }
+            }
             record_time.text=reagentUserRecord?.operationTime
             record_user.text=reagentUserRecord?.operator
             record_weigh.text=reagentUserRecord?.reagentTotalSize

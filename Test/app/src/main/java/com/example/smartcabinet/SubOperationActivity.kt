@@ -449,7 +449,7 @@ private var statue:String?=null
 
     fun scrap(drawerID:Int) {
         val dialog = AlertDialog.Builder(this)
-                .setTitle("报废")
+                .setTitle("移除")
                 .setMessage("请取出试剂后点击确定")
                 .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
                     val reagentId=dbManager!!.getReagentByPos("" + drawerID,"" + scApp?.touchtable).reagentId
