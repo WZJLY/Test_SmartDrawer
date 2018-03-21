@@ -98,6 +98,7 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
                     camera?.release()
                     try {
                         val integrator = IntentIntegrator(this)
+                        spi?.sendLED(1,1)
                         integrator.setOrientationLocked(false)
                         integrator.setBeepEnabled(true)
                         integrator.captureActivity = SmallCaptureActivity::class.java
@@ -132,6 +133,7 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
                     camera?.release()
                     try {
                         val integrator = IntentIntegrator(this)
+                        spi?.sendLED(1,1)
                         integrator.setOrientationLocked(false)
                         integrator.captureActivity = SmallCaptureActivity::class.java
                         integrator.setTimeout(10000)
@@ -195,9 +197,13 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
             val intent = Intent()
             intent.setClass(this, SubOperationActivity::class.java)
             if (statue == "Into") {
+                spi?.sendLED(1,0)
                 intent.putExtra("subOperation", "Into")     //跳转到入柜fragment
             }
-            if (statue == "Return") intent.putExtra("subOperation", "Return")//跳转到归还fragment
+            if (statue == "Return"){
+                spi?.sendLED(1,0)
+                intent.putExtra("subOperation", "Return")//跳转到归还fragment
+            }
             intent.putExtra("scan_value", result.contents)
             startActivity(intent)
 
