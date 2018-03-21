@@ -43,12 +43,18 @@ class EditTemplateFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         scApp = context.applicationContext as SCApp
         dbManager = DBManager(context)
+        val userAccount =  scApp?.getUserInfo()
+        when(userAccount?.getUserPower()){
+            SC_Const.NORMAL -> {
+                btn_clean.visibility = View.GONE
+                btn_import.visibility = View.GONE
+            }
+        }
         val arrListReagentTemplate = dbManager?.reagentTemplate
         val sum = arrListReagentTemplate!!.size
         if(sum>0)
         {
             for (i in 1..sum) {
-
                 reagentTemplate = arrListReagentTemplate?.get(i - 1)
                 val fragment = childFragmentManager.beginTransaction()
                 val templateLineFragment = TemplateLineFragment()
