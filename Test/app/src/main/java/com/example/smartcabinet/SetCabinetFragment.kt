@@ -52,10 +52,10 @@ class SetCabinetFragment : Fragment() {
 
 
         iBt_addCabinet.setOnClickListener {
-            val cabinetFragment = CabinetFragment()
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.add(R.id.Layout_cabinet,cabinetFragment)
-            fragmentTransaction.commit()
+//            val cabinetFragment = CabinetFragment()
+//            val fragmentTransaction = fragmentManager.beginTransaction()
+//            fragmentTransaction.add(R.id.Layout_cabinet,cabinetFragment)
+//            fragmentTransaction.commit()
 
         }
 
