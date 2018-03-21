@@ -14,7 +14,7 @@ import com.example.smartcabinet.util.SC_Const
 import com.example.smartcabinet.util.UserAccount
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity :BaseActivity() {
     private var dbManager: DBManager? = null
     private var scApp: SCApp? = null
     private val LOGINNAME = "smart_cabinet)smart_cabinet_login_name"

@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_single_template.*
 import kotlinx.android.synthetic.main.fragment_template_line.*
 
 
-class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten, AddPersonFragment.addpersonbuttonlisten,
+class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten, AddPersonFragment.addpersonbuttonlisten,
         EditPersonFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener,DrawerFragment1.deletDrawerFragmentListener,
         SetupFragment.setupFragmentListener,EditTemplateFragment.editTemplateListen,SingleTemplateFragment.singleTemplateListen{
     private var scApp: SCApp? = null

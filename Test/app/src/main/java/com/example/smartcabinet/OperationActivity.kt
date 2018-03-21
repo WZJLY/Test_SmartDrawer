@@ -17,7 +17,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 
 
 
-class OperationActivity : AppCompatActivity(),UserReagentFragment.userReagentListen,AdminReagentFragment.adminReagentListen {
+class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,AdminReagentFragment.adminReagentListen {
     private var scApp: SCApp? = null
     private var dbManager: DBManager? = null
     private var drawer: Drawer? = null

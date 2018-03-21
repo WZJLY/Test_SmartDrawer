@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_information2.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SubOperationActivity : AppCompatActivity(),InformationFragment2.scanbuttonlisten,InformationFragment1.return_scanbuttonlisten{
+class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonlisten,InformationFragment1.return_scanbuttonlisten{
 private var statue:String?=null
     private var scApp: SCApp? = null
     private var dbManager:DBManager?=null
