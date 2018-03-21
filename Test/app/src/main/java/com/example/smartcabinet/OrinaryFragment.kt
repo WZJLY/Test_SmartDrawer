@@ -45,7 +45,7 @@ class OrinaryFragment : Fragment() {
             orinarybuttonClicked("reagent_operation")
         }
         record_query?.setOnClickListener{
-
+            orinarybuttonClicked("record_query")
         }
 
         orinary_template.setOnClickListener {

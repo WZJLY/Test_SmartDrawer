@@ -210,6 +210,11 @@ class AdminActivity : AppCompatActivity(),AdminFragment.AdminFragmentListener,Or
                 else
                     Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
             }
+            "record_query" ->{
+
+                val recordFragment = RecordFragment()
+                replaceFragment(recordFragment, R.id.framelayout)
+            }
 
             "orinary_template" ->{
                 val editTemplateFragment = EditTemplateFragment()
