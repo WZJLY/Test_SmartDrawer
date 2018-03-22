@@ -146,7 +146,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
             val setDrawer = SetDrawerFragment()
             val args = Bundle()
             args.putString("setDrawer",""+drawerID)
-            setDrawer.setArguments(args)
+            setDrawer.arguments=args
             replaceFragment(setDrawer, R.id.framelayout)
 
 
@@ -247,7 +247,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 dialog.window.setGravity(Gravity.CENTER)
             }
             "btn_import" ->{
-                var edit= EditText(this)
+                val edit= EditText(this)
                 val dialog = AlertDialog.Builder(this)
                         .setTitle("提示")
                         .setView(edit)
@@ -321,6 +321,9 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 replaceFragment(recordFragment, R.id.framelayout)
             }
             "auto_update" -> {
+
+
+
 
             }
             "reagent_template" -> {
@@ -413,7 +416,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
 
 
-    fun downLoad() {
+    fun downLoad() {                    //下载线程
         object : Thread() {
             override fun run() {
                 val path = "SmartCabinet/ReagentTemplate"

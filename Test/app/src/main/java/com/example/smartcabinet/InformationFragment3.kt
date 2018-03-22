@@ -28,7 +28,7 @@ private var scApp: SCApp? = null
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         dbManager = DBManager(context.applicationContext)
         scApp = context.applicationContext as SCApp
-             reagent = dbManager?.getReagentByPos(""+scApp!!.getTouchdrawer(),""+scApp?.getTouchtable())
+             reagent = dbManager?.getReagentByPos(""+scApp!!.touchdrawer,""+scApp?.getTouchtable())
             tV_name.text=reagent?.reagentName
             tV_purity.text=reagent?.reagentPurity+"%"
             tV_data.text=reagent?.reagentInvalidDate

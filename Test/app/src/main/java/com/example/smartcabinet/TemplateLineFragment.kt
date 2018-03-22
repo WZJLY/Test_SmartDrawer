@@ -26,21 +26,24 @@ class TemplateLineFragment : Fragment() {
         dbManager= DBManager(context.applicationContext)
         if(arguments!=null)
         {
-            val order = arguments.getInt("order")
-            val arrListReagentTemplate = dbManager?.reagentTemplate
-
-                    reagentTemplate = arrListReagentTemplate?.get(order)
-            templateLine_name.text=reagentTemplate?.reagentName
-            templateLine_anotherName.text=reagentTemplate?.reagentAlias
-            templateLine_volume.text=reagentTemplate?.reagentSize
-            templateLine__code.text=reagentTemplate?.reagentGoodsID
-            templateLine__manufator.text=reagentTemplate?.reagentCreater
-            templateLine_purity.text=reagentTemplate?.reagentPurity+"%"
-            templateLine_density.text=reagentTemplate?.reagentDensity
-            if(reagentTemplate?.reagentUnit=="g")
-            templateLine_state.text="固体"
-            else
-                templateLine_state.text="液体"
+            addTemplateLine()
         }
+    }
+
+    fun addTemplateLine(){
+        val order = arguments.getInt("order")
+        val arrListReagentTemplate = dbManager?.reagentTemplate
+        reagentTemplate = arrListReagentTemplate?.get(order)
+        templateLine_name.text=reagentTemplate?.reagentName
+        templateLine_anotherName.text=reagentTemplate?.reagentAlias
+        templateLine_volume.text=reagentTemplate?.reagentSize
+        templateLine__code.text=reagentTemplate?.reagentGoodsID
+        templateLine__manufator.text=reagentTemplate?.reagentCreater
+        templateLine_purity.text=reagentTemplate?.reagentPurity+"%"
+        templateLine_density.text=reagentTemplate?.reagentDensity
+        if(reagentTemplate?.reagentUnit=="g")
+            templateLine_state.text="固体"
+        else
+            templateLine_state.text="液体"
     }
 }// Required empty public constructor

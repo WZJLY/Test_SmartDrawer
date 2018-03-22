@@ -51,14 +51,14 @@ class InformationFragment2 : Fragment() {
 
             if(sum>0) {
                 for (i in 1..sum) {
-                    reagentTemplate = arrListReagentTemplate?.get(i - 1)
+                    reagentTemplate = arrListReagentTemplate[i - 1]
                     data_list.add(reagentTemplate!!.reagentName+","+"纯度："+reagentTemplate!!.reagentPurity+"%"
                             +","+reagentTemplate!!.reagentCreater+","+reagentTemplate!!.reagentSize+reagentTemplate!!.reagentUnit)
 
                 }
             }
         }
-        data_list?.setDropDownViewResource(R.layout.information_dropdown_style)  //下拉框通过遍历试剂模板试剂库添加源
+        data_list.setDropDownViewResource(R.layout.information_dropdown_style)  //下拉框通过遍历试剂模板试剂库添加源
         spinner_type.adapter=data_list
         spinner_type.setSelection(0)
         spinner_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

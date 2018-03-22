@@ -39,7 +39,7 @@ class SetDrawerFragment : Fragment() {
         val Madapter = ArrayAdapter.createFromResource(context, R.array.drawer, R.layout.spinner_style)
         Madapter?.setDropDownViewResource(R.layout.dropdown_style)
         spinner_drawer.adapter = Madapter
-       if(getArguments().getString("setDrawer")!=null&&getArguments().getString("setDrawer")!="set")
+       if(arguments.getString("setDrawer")!=null&&getArguments().getString("setDrawer")!="set")
        {
 
            drawerID = getArguments().getString("setDrawer").toInt()
@@ -57,7 +57,7 @@ class SetDrawerFragment : Fragment() {
            btn_save.setVisibility(View.GONE)
        }
 
-        if(getArguments().getString("setDrawer")=="set") {
+        if(arguments.getString("setDrawer")=="set") {
             spinner_drawer.setSelection(0)
             spinner_drawer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View,

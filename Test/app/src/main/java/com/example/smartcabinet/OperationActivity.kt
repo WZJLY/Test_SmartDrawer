@@ -87,9 +87,6 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
                 if (camera == null) {
                     try {
                         camera = android.hardware.Camera.open(0)
-                       val parameter =  camera?.parameters
-                        parameter?.setRotation(0)
-                        camera?.setParameters(parameter)
                     } catch (e: Exception) {
                         Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
                     }
@@ -223,7 +220,7 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
         val buttonStyle = Bundle()
         Log.d("Operation", text)
         buttonStyle.putString("buttonStyle", text)
-        val userAccount = scApp?.getUserInfo()
+        val userAccount = scApp?.userInfo
         when (userAccount?.getUserPower()) {
             SC_Const.ADMIN -> {
                 val adminReagentFragment = AdminReagentFragment()

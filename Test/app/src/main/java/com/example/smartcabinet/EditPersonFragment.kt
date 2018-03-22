@@ -41,7 +41,7 @@ class EditPersonFragment : Fragment() {
         dbManager = DBManager(context.applicationContext)
         scApp = context.applicationContext as SCApp
 
-        userID = scApp!!.getUserInfo().getUserId()
+        userID = scApp!!.userInfo.getUserId()
         username=dbManager!!.getUserAccountByUserId(userID).getUserName()
         userpasswd=dbManager!!.getUserAccountByUserId(userID).getUserPassword()
         if(getArguments().getString("editfile") =="editperson")
@@ -69,7 +69,7 @@ class EditPersonFragment : Fragment() {
             }
         }
         button_save.setOnClickListener {
-            if(getArguments().getString("editfile") =="editperson")
+            if(arguments.getString("editfile") =="editperson")
             {
                 updateUserAccountByID(userID)
                 Toast.makeText(context,"个人信息修改成功",Toast.LENGTH_SHORT).show()
@@ -125,7 +125,6 @@ class EditPersonFragment : Fragment() {
         editText_Num.isEnabled = false
         editText_Num.isFocusable = false
         editText_Num.isFocusableInTouchMode = false
-
     }
 
     /**

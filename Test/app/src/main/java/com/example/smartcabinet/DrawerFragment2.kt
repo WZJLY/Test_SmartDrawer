@@ -25,9 +25,9 @@ private var dbManager:DBManager?=null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        if(getArguments()!=null)
+        if(arguments!=null)
         {
-            drawerID = getArguments().getInt("drawerID")
+            drawerID = arguments.getInt("drawerID")
         }
         return inflater!!.inflate(R.layout.fragment_drawer2, container, false)
     }
@@ -45,7 +45,7 @@ private var dbManager:DBManager?=null
                 val args = Bundle()
                 args.putString("statue","drawer1")
                 args.putInt("tablenum", drawerID)
-                tableFragment.setArguments(args)
+                tableFragment.arguments=args
                 val fragmentTransaction = childFragmentManager.beginTransaction()
                 fragmentTransaction.add(R.id.linearLayout_drawer, tableFragment, "table")
                 fragmentTransaction.commit()
@@ -57,7 +57,7 @@ private var dbManager:DBManager?=null
                 val args = Bundle()
                 args.putString("statue","drawer1")
                 args.putInt("tablenum", drawerID)
-                tableFragment.setArguments(args)
+                tableFragment.arguments=args
                 val fragmentTransaction = childFragmentManager.beginTransaction()
                 fragmentTransaction.add(R.id.linearLayout_drawer, tableFragment, "table")
                 fragmentTransaction.commit()

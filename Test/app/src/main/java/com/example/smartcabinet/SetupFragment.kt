@@ -30,13 +30,13 @@ class SetupFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var serialNumber: Int = 1
+        var serialNumber = 1
         dbManager = DBManager(context)
 
         if(dbManager!!.cabinetNo.size > 0){
-            serialNumber = dbManager!!.cabinetNo.get(0).serialNumber.toInt()
-            setup_et_number.setText(dbManager!!.cabinetNo.get(0).cabinetNo)
-            setup_et_serviceCode.setText(dbManager!!.cabinetNo.get(0).cabinetServiceCode)
+            serialNumber = dbManager!!.cabinetNo[0].serialNumber.toInt()
+            setup_et_number.setText(dbManager!!.cabinetNo[0].cabinetNo)
+            setup_et_serviceCode.setText(dbManager!!.cabinetNo[0].cabinetServiceCode)
 //            setup_et_number.isEnabled = false
 //            setup_et_number.isFocusable = false
 //            setup_et_number.isFocusableInTouchMode = false

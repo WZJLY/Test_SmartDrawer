@@ -1,10 +1,8 @@
 package com.example.smartcabinet
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,8 +43,7 @@ class AdminFragment : Fragment() {
             buttonClicked("personal_management")
         }
         editflie.setOnClickListener{
-            buttonClicked(" editflie")
-
+            buttonClicked(" editflie")1
         }
         reagent_op.setOnClickListener{
           buttonClicked("reagent_op")

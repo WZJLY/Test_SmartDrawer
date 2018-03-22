@@ -48,7 +48,7 @@ class TableFragment : Fragment() {
             drawer = dbManager?.getDrawerByDrawerId(drawerID)
 
             if (drawer != null)
-                num = drawer!!.getDrawerSize()
+                num = drawer!!.drawerSize
             addNum(num)
         }
             if(arguments.getString("statue")=="add")
@@ -83,7 +83,7 @@ class TableFragment : Fragment() {
                     val sum = arrListReagent!!.size
                     if(sum>0) {
                         for (m in 1..sum) {
-                            reagent = arrListReagent.get(m - 1)
+                            reagent = arrListReagent[m - 1]
                             if(reagent!!.drawerId.toInt()==drawerID&&reagent!!.reagentPosition.toInt()==button.id)
                             {  if(reagent!!.reagentName.length>3)
                                 button.text = reagent!!.reagentName.subSequence(0,3)

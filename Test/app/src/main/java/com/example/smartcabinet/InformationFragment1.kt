@@ -22,9 +22,9 @@ class InformationFragment1 : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        if(getArguments().getString("scan_value")!==null)
+        if(arguments.getString("scan_value")!==null)
         {
-            val value = getArguments().getString("scan_value")
+            val value = arguments.getString("scan_value")
             eT_code2.setText(value)
         }
         button3.setOnClickListener{

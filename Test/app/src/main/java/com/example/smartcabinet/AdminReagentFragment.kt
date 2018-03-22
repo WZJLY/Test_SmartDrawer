@@ -33,6 +33,7 @@ class AdminReagentFragment : Fragment() {
     interface adminReagentListen{
         fun adminReagentButtonClick(text: String)
     }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_admin_reagent, container, false)

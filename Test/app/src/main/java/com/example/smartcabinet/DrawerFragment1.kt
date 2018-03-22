@@ -68,7 +68,7 @@ class DrawerFragment1 : Fragment() {
         val sum = arrListReagent!!.size
         if(sum>0) {
             for (m in 1..sum) {
-                reagent = arrListReagent?.get(m - 1)
+                reagent = arrListReagent[m - 1]         //修改
                 if(reagent!!.drawerId.toInt()!=drawerID&&dbManager!!.drawers.size==drawerID)
                 {
                     dbManager?.deleteDrawer(drawerID,1)
