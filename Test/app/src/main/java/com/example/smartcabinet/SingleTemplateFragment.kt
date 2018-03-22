@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.example.smartcabinet.util.DBManager
 import kotlinx.android.synthetic.main.fragment_single_template.*
 
 
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_single_template.*
 class SingleTemplateFragment : Fragment() {
     var state:Int = 0
     var activityCallback: SingleTemplateFragment.singleTemplateListen? = null
+    private var dbManager: DBManager? = null
 
     interface singleTemplateListen {
         fun singleTemplateButtonClick(text: String, state: Int)
@@ -31,6 +33,7 @@ class SingleTemplateFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        dbManager = DBManager(context)
         val template_state = ArrayAdapter.createFromResource(context, R.array.template_type, R.layout.information_spinner_style)
         template_state?.setDropDownViewResource(R.layout.information_dropdown_style)
         template_sp_state.adapter=template_state
@@ -46,8 +49,18 @@ class SingleTemplateFragment : Fragment() {
         }
         template_btn_save.setOnClickListener{
             if (template_et_name.length()>0) {
-                if (template_et_volume.length()>0)
+                if (template_et_volume.length()>0) {
+                    if (state == 1) {
+                        dbManager?.addReagentTemplate("", template_et_name.text.toString(), template_et_anotherName.text.toString(), "", "",
+                                1, template_et_purity.text.toString(), template_et_volume.text.toString(), template_et_manufactor.text.toString(),
+                                template_et_code.text.toString(), "g", template_et_density.text.toString())
+                    } else if (state == 2) {
+                        dbManager?.addReagentTemplate("", template_et_name.text.toString(), template_et_anotherName.text.toString(), "", "",
+                                2, template_et_purity.text.toString(), template_et_volume.text.toString(), template_et_manufactor.text.toString(),
+                                template_et_code.text.toString(), "ml", template_et_density.text.toString())
+                    }
                     singleTemplateClicked("btn_save", state)
+                }
                 else
                     Toast.makeText(context,"试剂瓶容量未填写",Toast.LENGTH_SHORT).show()
             }

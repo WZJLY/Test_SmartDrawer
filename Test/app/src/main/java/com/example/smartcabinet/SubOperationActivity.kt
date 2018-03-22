@@ -244,6 +244,7 @@ private var statue:String?=null
             if(camera!=null) {
                 camera?.release()
                 try {
+                    spi?.sendLED(1,1)
                     val integrator = IntentIntegrator(this)
                     integrator.setOrientationLocked(false)
                     integrator.captureActivity = SmallCaptureActivity::class.java
@@ -272,6 +273,7 @@ private var statue:String?=null
             if(camera!=null) {
                 camera?.release()
                 try {
+                    spi?.sendLED(1,1)
                     val integrator = IntentIntegrator(this)
                     integrator.setOrientationLocked(false)
                     integrator.captureActivity = SmallCaptureActivity::class.java
@@ -290,6 +292,7 @@ private var statue:String?=null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         try {
+            spi?.sendLED(1,0)
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if(statue=="Into")
                 eT_code.setText(result.contents)
@@ -446,7 +449,7 @@ private var statue:String?=null
 
     fun scrap(drawerID:Int) {
         val dialog = AlertDialog.Builder(this)
-                .setTitle("报废")
+                .setTitle("移除")
                 .setMessage("请取出试剂后点击确定")
                 .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
                     val reagentId=dbManager!!.getReagentByPos("" + drawerID,"" + scApp?.touchtable).reagentId

@@ -267,18 +267,9 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
     override fun singleTemplateButtonClick(text: String,state: Int){
         when(text){
             "btn_save" ->{      //下拉框未添加，内容未进行判断
-                if(state == 1) {
-                    dbManager?.addReagentTemplate("", template_et_name.text.toString(), template_et_anotherName.text.toString(), "", "", 1, template_et_purity.text.toString(), template_et_volume.text.toString(), template_et_manufactor.text.toString(), template_et_code.text.toString(), "g", template_et_density.text.toString())
                     val editTemplateFragment = EditTemplateFragment()
                     replaceFragment(editTemplateFragment, R.id.framelayout)
-                }
-                else if(state == 2) {
-                    dbManager?.addReagentTemplate("", template_et_name.text.toString(), template_et_anotherName.text.toString(), "", "", 2, template_et_purity.text.toString(), template_et_volume.text.toString(), template_et_manufactor.text.toString(), template_et_code.text.toString(), "ml", template_et_density.text.toString())
-                    val editTemplateFragment = EditTemplateFragment()
-                    replaceFragment(editTemplateFragment, R.id.framelayout)
-                }
             }
-
         }
 
     }
