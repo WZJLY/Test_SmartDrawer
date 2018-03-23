@@ -76,7 +76,7 @@
         android:layout_marginStart="108dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_style_ordinary"
-        android:text="编辑信息"
+        android:text="账号信息"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -7,6 +7,16 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="260dp"
+        android:layout_height="90dp"
+        android:background="@drawable/btn_style_ordinary"
+        android:text="系统升级"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="68dp"
+        tools:layout_editor_absoluteY="438dp" />
+
     <EditText
         android:id="@+id/setup_et_number"
         android:layout_width="300dp"
@@ -89,4 +99,14 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_serialPort"
         app:layout_constraintStart_toEndOf="@+id/tv_serialPort"
         app:layout_constraintTop_toTopOf="@+id/tv_serialPort" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="260dp"
+        android:layout_height="90dp"
+        android:background="@drawable/btn_style_ordinary"
+        android:text="智能柜设置"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="68dp"
+        tools:layout_editor_absoluteY="303dp" />
 </android.support.constraint.ConstraintLayout>

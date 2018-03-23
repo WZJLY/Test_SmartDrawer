@@ -5,6 +5,71 @@
     android:layout_height="match_parent">
 
 
+    <EditText
+        android:id="@+id/editText_userName3"
+        android:layout_width="410sp"
+        android:layout_height="60sp"
+        android:layout_alignBottom="@+id/textView_name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/bg_edit"
+        android:ems="10"
+        android:inputType="text"
+        android:paddingLeft="10sp"
+        android:textAlignment="viewStart"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_title" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@+id/editText_userName"
+        android:text="账号"
+        android:textColor="@android:color/background_dark"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_userName3"
+        app:layout_constraintEnd_toStartOf="@+id/editText_userName3"
+        app:layout_constraintTop_toTopOf="@+id/editText_userName3" />
+
+    <EditText
+        android:id="@+id/editText_userName2"
+        android:layout_width="410sp"
+        android:layout_height="60sp"
+        android:layout_alignBottom="@+id/textView_name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_edit"
+        android:ems="10"
+        android:inputType="number"
+        android:paddingLeft="10sp"
+        android:textAlignment="viewStart"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_Num" />
+
+    <TextView
+        android:id="@+id/textView_name2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@+id/editText_userName"
+        android:text="手机号"
+        android:textColor="@android:color/background_dark"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_userName2"
+        app:layout_constraintEnd_toStartOf="@+id/editText_userName2"
+        app:layout_constraintTop_toTopOf="@+id/editText_userName2"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/textView_title"
         android:layout_width="wrap_content"
@@ -26,7 +91,7 @@
         android:layout_below="@+id/editText_userName"
         android:layout_marginEnd="8dp"
         android:layout_toStartOf="@+id/editText_userName"
-        android:text="编号"
+        android:text="学/工号"
         android:textColor="@android:color/background_dark"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="@+id/editText_Num"
@@ -79,7 +144,7 @@
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_Num" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_userName3" />
 
     <TextView
         android:id="@+id/textView_Password2"
@@ -148,17 +213,16 @@
         android:layout_alignBottom="@+id/textView_name"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/bg_edit"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:paddingLeft="10sp"
-        android:text="Name"
         android:textAlignment="viewStart"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_title" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_level" />
 
     <TextView
         android:id="@+id/textView_name"
@@ -172,7 +236,8 @@
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="@+id/editText_userName"
         app:layout_constraintEnd_toStartOf="@+id/editText_userName"
-        app:layout_constraintTop_toTopOf="@+id/editText_userName" />
+        app:layout_constraintTop_toTopOf="@+id/editText_userName"
+        app:layout_constraintVertical_bias="0.545" />
 
     <Button
         android:id="@+id/button_save"
@@ -180,7 +245,7 @@
         android:layout_height="80sp"
         android:layout_alignBottom="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/btn_style_denglu"
         android:contentDescription="activity_add_person"
         android:text="保存"
@@ -188,5 +253,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.534"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_level" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_userName2" />
+
 </android.support.constraint.ConstraintLayout>
