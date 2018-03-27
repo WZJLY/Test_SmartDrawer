@@ -60,7 +60,6 @@ class SetCabinetFragment : Fragment() {
         }
 
         iBt_addDrawer.setOnClickListener {
-
             activityCallback?.setCabinetClick("setDrawer")
         }
     }
@@ -72,11 +71,8 @@ class SetCabinetFragment : Fragment() {
         {
             Toast.makeText(context.applicationContext, "请添加抽屉", Toast.LENGTH_SHORT).show()
         }
-
-
      else
      {
-
          if(sum>0) {
              for (i in 1..sum) {
                  drawer = arrListDrawers?.get(i - 1)
@@ -87,7 +83,6 @@ class SetCabinetFragment : Fragment() {
                  drawerFragment1.setArguments(args)
                  fragment.add(R.id.Layout_drawer, drawerFragment1, "抽屉")
                  fragment.commit()
-
              }
          }
         }

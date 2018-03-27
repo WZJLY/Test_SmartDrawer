@@ -13,7 +13,6 @@ import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.MotionEvent
-import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
@@ -24,15 +23,12 @@ import java.net.MalformedURLException
 import java.net.URL
 
 import android.view.inputmethod.InputMethodManager
-import android_serialport_api.SerialPort
-import kotlinx.android.synthetic.main.fragment_setup.*
-import kotlinx.android.synthetic.main.fragment_single_template.*
-import kotlinx.android.synthetic.main.fragment_template_line.*
+import kotlinx.android.synthetic.main.fragment_hardware_setup.*
 
 
 class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten, AddPersonFragment.addpersonbuttonlisten,
         EditPersonFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener,DrawerFragment1.deletDrawerFragmentListener,
-        SetupFragment.setupFragmentListener,EditTemplateFragment.editTemplateListen,SingleTemplateFragment.singleTemplateListen{
+        HardwareSetupFragment.hardwareSetupListener,EditTemplateFragment.editTemplateListen,SingleTemplateFragment.singleTemplateListen,SetupFragment.setuplisten{
     private var scApp: SCApp? = null
     private var returnview = "login"
     private var dbManager: DBManager? = null
@@ -81,8 +77,8 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         back_button.setOnClickListener({
             when(returnview){
                 "admin" -> {
-                    val adminfrag = AdminFragment()
-                    replaceFragment(adminfrag, R.id.framelayout)
+                    val adminfragment = AdminFragment()
+                    replaceFragment(adminfragment, R.id.framelayout)
                     returnview ="login"
                 }
                 "orinary" -> {
@@ -105,6 +101,16 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                     replaceFragment(setCabinetFragment,R.id.framelayout)
                     returnview = "admin"
                 }
+                "setup" -> {
+                    val setupFragment = SetupFragment()
+                    replaceFragment(setupFragment,R.id.framelayout)
+                    returnview = "admin"
+                }
+                "setCabinet" -> {
+                    val setCabinetFragment = SetCabinetFragment()
+                    replaceFragment(setCabinetFragment,R.id.framelayout)
+                    returnview = "setup"
+                }
             }
         })
     }
@@ -118,20 +124,8 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
     override fun saveSetupClick(text: String, serialPortNum: Int) {
         when(text){
-            "setupFragment"-> {
-                dbManager?.addCabinetNo(setup_et_number.text.toString(),setup_et_serviceCode.text.toString(),serialPortNum.toString())
-                val adminfrag = AdminFragment()
-                replaceFragment(adminfrag, R.id.framelayout)
-            }
-            "updateFragment"-> {
-                dbManager?.deleteAllCabinetNo()
-                dbManager?.addCabinetNo(setup_et_number.text.toString(),setup_et_serviceCode.text.toString(),serialPortNum.toString())
-                val adminfrag = AdminFragment()
-                replaceFragment(adminfrag, R.id.framelayout)
-            }
+
         }
-
-
     }
 
     override  fun deletDrawerButtonClick(text: String,drawerID:Int) {
@@ -202,13 +196,13 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 replaceFragment(editMessageFragment, R.id.framelayout)
             }
             "reagent_operation" ->{
-                if(dbManager!!.cabinetNo.size > 0){
+//                if(dbManager!!.cabinetNo.size > 0){
                     val intent = Intent()
                     intent.setClass(this,OperationActivity::class.java)
                     startActivity(intent)
-                }
-                else
-                    Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
+//                }
+//                else
+//                    Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
             }
             "record_query" ->{
 
@@ -255,7 +249,6 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                         .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
                             scApp?.templateID=edit.text.toString()
                             downLoad() //下载与导入模板的线程开启
-
                         })
                         .setNeutralButton("取消",null)
                         .create()
@@ -274,13 +267,9 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
     }
 
-    override fun onButtonClick(text: String) {
+    override fun adminOnButtonClick(text: String) {
         returnview = "admin"
         when(text) {
-            "setBox_button" -> {
-                val setCabinet = SetCabinetFragment()
-                replaceFragment(setCabinet, R.id.framelayout)
-            }
             "reagent_search"-> {
                 val serachfrag = SerachFragment()
                 replaceFragment(serachfrag, R.id.framelayout)
@@ -299,33 +288,47 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
             }
             "reagent_op"-> {
-                if(dbManager!!.cabinetNo.size > 0){
+//                if(dbManager!!.cabinetNo.size > 0){
                     val intent = Intent()
                     intent.setClass(this,OperationActivity::class.java)
                     startActivity(intent)
-                }
-                else
-                    Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
+//                }
+//                else
+//                    Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
             }
             "recordquery" -> {
                 val recordFragment = RecordFragment()
                 replaceFragment(recordFragment, R.id.framelayout)
             }
-            "auto_update" -> {
-
-
-
-
-            }
             "reagent_template" -> {
                 val editTemplateFragment = EditTemplateFragment()
                 replaceFragment(editTemplateFragment, R.id.framelayout)
             }
-            "btn_setup"->{
+
+            "btn_setup" -> {
                 val setupFragment = SetupFragment()
                 replaceFragment(setupFragment, R.id.framelayout)
             }
+        }
+    }
 
+    override fun setupClick(text: String) {
+        returnview = "setup"
+        when (text){
+            "binding" -> {
+                val bingdingFragment = BingdingFragment()
+                replaceFragment(bingdingFragment,R.id.framelayout)
+            }
+
+            "setbox" -> {
+                val setCabinet = SetCabinetFragment()
+                replaceFragment(setCabinet, R.id.framelayout)
+            }
+
+            "hardware" -> {
+                val hardwareSetupFragment = HardwareSetupFragment()
+                replaceFragment(hardwareSetupFragment, R.id.framelayout)
+            }
         }
     }
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
@@ -342,19 +345,15 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
     }
 
     override fun setCabinetClick(fragment: String) {
+        returnview = "setup"
         when (fragment){
             "setDrawer" -> {
-
                 val setDrawer = SetDrawerFragment()
                 val args = Bundle()
                 args.putString("setDrawer","set")
                 setDrawer.setArguments(args)
                 replaceFragment(setDrawer, R.id.framelayout)
                 Log.d("data",fragment)
-
-            }
-            else -> {
-                Log.d("data","else")
             }
         }
     }

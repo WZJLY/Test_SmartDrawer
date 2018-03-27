@@ -21,7 +21,7 @@ class AdminFragment : Fragment() {
     }
 
     interface AdminFragmentListener {
-        fun onButtonClick(text: String)
+        fun adminOnButtonClick(text: String)
     }
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -36,36 +36,31 @@ class AdminFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         reagent_search.setOnClickListener {
-            buttonClicked("reagent_search")
+            adminButtonClicked("reagent_search")
         }
         personal_management.setOnClickListener{
 
-            buttonClicked("personal_management")
+            adminButtonClicked("personal_management")
         }
         editflie.setOnClickListener{
-            buttonClicked(" editflie")
+            adminButtonClicked(" editflie")
         }
         reagent_op.setOnClickListener{
-          buttonClicked("reagent_op")
+          adminButtonClicked("reagent_op")
         }
         recordquery.setOnClickListener{
-            buttonClicked("recordquery")
+            adminButtonClicked("recordquery")
         }
-        setBox_button.setOnClickListener{
-            buttonClicked("setBox_button")
-        }
-        auto_update.setOnClickListener{
-            buttonClicked("auto_update")
-        }
+
         reagent_template.setOnClickListener{
-            buttonClicked("reagent_template")
+            adminButtonClicked("reagent_template")
         }
         btn_setup.setOnClickListener {
-            buttonClicked("btn_setup")
+            adminButtonClicked("btn_setup")
         }
 
     }
-    private fun buttonClicked(text: String) {
-        activityCallback?.onButtonClick(text)
+    private fun adminButtonClicked(text: String) {
+        activityCallback?.adminOnButtonClick(text)
     }
 }

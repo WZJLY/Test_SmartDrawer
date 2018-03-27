@@ -51,32 +51,11 @@
         app:layout_constraintTop_toBottomOf="@+id/reagent_op" />
 
     <Button
-        android:id="@+id/setBox_button"
-        android:layout_width="260dp"
-        android:layout_height="90dp"
-        android:layout_alignLeft="@+id/reagent_search"
-        android:layout_alignStart="@+id/reagent_search"
-        android:layout_below="@+id/reagent_search"
-        android:layout_marginEnd="64dp"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/btn_style_ordinary"
-        android:text="智能柜设置"
-        android:textColor="@android:color/background_light"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/record_query"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reagent_search" />
-
-    <Button
         android:id="@+id/recordquery"
         android:layout_width="260dp"
-        android:layout_height="90dp"
-        android:layout_alignTop="@+id/setBox_button"
+        android:layout_height="89dp"
         android:layout_marginEnd="108dp"
         android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/setBox_button"
-        android:layout_toRightOf="@+id/setBox_button"
         android:background="@drawable/btn_style_ordinary"
         android:text="记录查询"
         android:textColor="@android:color/background_light"
@@ -88,19 +67,16 @@
         android:id="@+id/personal_management"
         android:layout_width="260dp"
         android:layout_height="90dp"
-        android:layout_alignLeft="@+id/setBox_button"
-        android:layout_alignStart="@+id/setBox_button"
+
         android:layout_centerVertical="true"
-        android:layout_marginEnd="64dp"
-        android:layout_marginStart="108dp"
+        android:layout_marginEnd="108dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_style_ordinary"
         android:text="人员管理"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/edit_flie"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setBox_button" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recordquery" />
 
     <Button
         android:id="@+id/editflie"
@@ -109,60 +85,29 @@
         android:layout_alignLeft="@+id/record_query"
         android:layout_alignStart="@+id/record_query"
         android:layout_alignTop="@+id/personal_management"
-        android:layout_marginEnd="108dp"
+        android:layout_marginStart="108dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/qita_button"
         android:text="账号信息"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recordquery" />
-
-    <Button
-        android:id="@+id/auto_update"
-        android:layout_width="260dp"
-        android:layout_height="90dp"
-        android:layout_alignLeft="@+id/personal_management"
-        android:layout_alignStart="@+id/personal_management"
-        android:layout_below="@+id/personal_management"
-        android:layout_marginEnd="64dp"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/btn_style_ordinary"
-        android:text="系统升级"
-        android:textColor="@android:color/background_light"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/reagent_template"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personal_management" />
+        app:layout_constraintTop_toBottomOf="@+id/reagent_template" />
 
     <Button
         android:id="@+id/reagent_template"
         android:layout_width="260dp"
         android:layout_height="90dp"
-        android:layout_alignBaseline="@+id/auto_update"
-        android:layout_alignBottom="@+id/auto_update"
         android:layout_alignLeft="@+id/edit_flie"
         android:layout_alignStart="@+id/edit_flie"
-        android:layout_marginEnd="108dp"
+        android:layout_marginStart="108dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_style_ordinary"
         android:text="试剂模板"
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editflie" />
-
-    <ImageView
-        android:id="@+id/set_icon"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:background="@drawable/zhinengguishezhi_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/setBox_button"
-        app:layout_constraintEnd_toEndOf="@+id/setBox_button"
-        app:layout_constraintHorizontal_bias="0.12"
-        app:layout_constraintStart_toStartOf="@+id/setBox_button"
-        app:layout_constraintTop_toTopOf="@+id/setBox_button" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reagent_search" />
 
     <ImageView
         android:id="@+id/search_icon"
@@ -202,17 +147,6 @@
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:background="@drawable/jiluchaxun_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/auto_update"
-        app:layout_constraintEnd_toEndOf="@+id/auto_update"
-        app:layout_constraintHorizontal_bias="0.12"
-        app:layout_constraintStart_toStartOf="@+id/auto_update"
-        app:layout_constraintTop_toTopOf="@+id/auto_update" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:background="@drawable/jiluchaxun_icon"
         app:layout_constraintBottom_toBottomOf="@+id/reagent_template"
         app:layout_constraintEnd_toEndOf="@+id/reagent_template"
         app:layout_constraintHorizontal_bias="0.12"
@@ -230,7 +164,7 @@
         android:textColor="@android:color/background_light"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/auto_update" />
+        app:layout_constraintTop_toBottomOf="@+id/editflie" />
 
     <ImageView
         android:id="@+id/imageView5"

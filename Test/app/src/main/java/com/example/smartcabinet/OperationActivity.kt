@@ -36,15 +36,15 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
         scApp = application as SCApp
         changeMessage("noFocusable")
         updateDrawer()
-        if(dbManager!!.cabinetNo.size > 0){
-            val serialPortNum = dbManager!!.cabinetNo.get(0).serialNumber.toInt()
-            val SPID = resources.getStringArray(R.array.serialPort)
-            val serialPortID = SPID[serialPortNum-1]
-            spi = SerialPortInterface(this.applicationContext, serialPortID)
-            scApp?.setSpi(spi)
-        }
-        else
-            Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
+//        if(dbManager!!.cabinetNo.size > 0){
+//            val serialPortNum = dbManager!!.cabinetNo.get(0).serialNumber.toInt()
+//            val SPID = resources.getStringArray(R.array.serialPort)
+//            val serialPortID = SPID[serialPortNum-1]
+//            spi = SerialPortInterface(this.applicationContext, serialPortID)
+//            scApp?.setSpi(spi)
+//        }
+//        else
+//            Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -226,19 +226,9 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
         val buttonStyle = Bundle()
         Log.d("Operation", text)
         buttonStyle.putString("buttonStyle", text)
-        val userAccount = scApp?.userInfo
-        when (userAccount?.getUserPower()) {
-            SC_Const.ADMIN -> {
-                val adminReagentFragment = AdminReagentFragment()
-                adminReagentFragment.arguments = buttonStyle
-                replaceFragment(R.id.frameLayout_button, adminReagentFragment)
-            }
-            SC_Const.NORMAL -> {
-                val userReagentFragment = UserReagentFragment()
-                userReagentFragment.arguments = buttonStyle
-                replaceFragment(R.id.frameLayout_button, userReagentFragment)
-            }
-        }
+        val adminReagentFragment = AdminReagentFragment()
+        adminReagentFragment.arguments = buttonStyle
+        replaceFragment(R.id.frameLayout_button, adminReagentFragment)
     }
 
     fun AppCompatActivity.replaceFragment(frameId: Int, fragment: Fragment) {

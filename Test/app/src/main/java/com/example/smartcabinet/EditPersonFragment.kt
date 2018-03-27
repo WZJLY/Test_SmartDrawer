@@ -3,6 +3,7 @@ package com.example.smartcabinet
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,11 +46,12 @@ class EditPersonFragment : Fragment() {
         dbManager = DBManager(context.applicationContext)
         scApp = context.applicationContext as SCApp
         username=scApp!!.userInfo.getUserName()
+        Log.d("username",username)
         user=dbManager?.getUserAccountByUserName(username)
-        userAccount=user!!.getUserAccount()
+        userAccount=user?.getUserAccount().toString()
         userID=user!!.userId
         userpasswd=user!!.getUserPassword()
-        phoneNum=user!!.getPhoneNumber()
+        phoneNum=user?.getPhoneNumber().toString()
         userpower=user!!.getUserPower()
 
         if(getArguments().getString("editfile") =="editperson")
@@ -164,10 +166,14 @@ class EditPersonFragment : Fragment() {
         editText_account.isFocusableInTouchMode = false
         if(userpower==0) spinner_level.setSelection(1)
         else spinner_level.setSelection(1)
+        if(userAccount == "null")
+            userAccount = ""
         editText_userName.setText(userAccount)
         editText_Password.setText(userpasswd)
         editText_Password2.setText(userpasswd)
         editText_Num.setText(userID)
+        if(phoneNum == "null")
+            phoneNum = ""
         editText_phoneNum.setText(phoneNum)
         editText_account.setText(username)
     }
