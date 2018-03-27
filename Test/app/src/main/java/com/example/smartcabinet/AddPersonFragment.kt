@@ -62,8 +62,8 @@ class AddPersonFragment : Fragment() {
             val fragment = childFragmentManager.beginTransaction()
             val personFragment =PersonLineFragment()
             val args = Bundle()
-            args.putString("userid",userAccount!!.getUserId().toString())
-            personFragment.setArguments(args)
+            args.putString("userName",userAccount!!.getUserName().toString())
+            personFragment.arguments=args
             fragment.add(R.id.LL_person, personFragment,userAccount?.getUserName())
             fragment.commit()
 

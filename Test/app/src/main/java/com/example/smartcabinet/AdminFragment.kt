@@ -43,7 +43,7 @@ class AdminFragment : Fragment() {
             buttonClicked("personal_management")
         }
         editflie.setOnClickListener{
-            buttonClicked(" editflie")1
+            buttonClicked(" editflie")
         }
         reagent_op.setOnClickListener{
           buttonClicked("reagent_op")

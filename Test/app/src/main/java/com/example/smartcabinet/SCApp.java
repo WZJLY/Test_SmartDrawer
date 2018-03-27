@@ -48,8 +48,8 @@ public class SCApp extends Application {  //全局变量
         userInfo = u;
     }
 
-    public void setUserInfo(String id, String account, String password, int power){
-        userInfo = new UserAccount(id, account, password, power);
+    public void setUserInfo(String id, String account, String password, int power ,String name,String phoneNum){
+        userInfo = new UserAccount(id, account, password, power,name,phoneNum);
     }
 
     public UserAccount getUserInfo(){

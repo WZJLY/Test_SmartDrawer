@@ -38,7 +38,7 @@ public class DBManager {
     }
     public void addAccount(UserAccount user) {
         if(!isAccountExist(user.userName)){
-            db.execSQL("INSERT INTO user VALUES(null, ?, ?, ?, ?)", new Object[]{user.userId, user.userName, user.userPassword, user.userPower});
+            db.execSQL("INSERT INTO user VALUES(null, ?, ?, ?, ?, ?, ?)", new Object[]{user.userId, user.userName, user.userPassword, user.userPower, user.userAccount, user.phoneNumber});
             Log.i(DBOPERATION, "Insert Success");
         }else{
             Log.i(DBOPERATION, "already exist!");
@@ -57,7 +57,7 @@ public class DBManager {
 
     }
     public boolean isAccountExist(String strUserName) {
-        Cursor cursor = db.query("user", new String[] {"userName"}, "userName=?", new String[] { strUserName }, null, null, null);
+        Cursor cursor = db.query("user", new String[] {"userId", "userName", "userPassword"}, "userName=?", new String[] { strUserName }, null, null, null);
         if (cursor.moveToNext()) {
             return true;
         }
@@ -65,7 +65,7 @@ public class DBManager {
     }
 
     public boolean isAccountExist(String strUserName, String strUserPWD) {
-        Cursor cursor = db.query("user", new String[] {"userName", "userPassword", "userPower"}, "userName=? AND userPassword=?", new String[] { strUserName, strUserPWD }, null, null, null);
+        Cursor cursor = db.query("user", new String[] {"userId", "userName", "userPassword", "userPower","userAccount","phoneNumber"}, "userName=? AND userPassword=?", new String[] { strUserName, strUserPWD }, null, null, null);
         if (cursor.moveToNext()) {
             Log.i(DBOPERATION, "find this user in DB - name:" + cursor.getString(cursor.getColumnIndex("userName")) + "\t password:" + cursor.getString((cursor.getColumnIndex("userPower"))));
             return true;
@@ -73,40 +73,45 @@ public class DBManager {
         return false;
     }
 
-    public UserAccount getUserAccountByUserId(String strUserId){
-        Cursor cursor = db.query("user", new String[] {"userId", "userName", "userPassword", "userPower"}, "userId=?", new String[] { strUserId }, null, null, null);
+    public UserAccount getUserAccountByUserName(String strUserName){
+        Cursor cursor = db.query("user", new String[] {"userId", "userName", "userPassword", "userPower","userAccount","phoneNumber"}, "userName=?", new String[] { strUserName }, null, null, null);
         cursor.moveToNext();
         UserAccount userInfo = new UserAccount(
                 cursor.getString(cursor.getColumnIndex("userId")),
                 cursor.getString(cursor.getColumnIndex("userName")),
                 cursor.getString(cursor.getColumnIndex("userPassword")),
-                parseInt(cursor.getString(cursor.getColumnIndex("userPower")))
+                parseInt(cursor.getString(cursor.getColumnIndex("userPower"))),
+                cursor.getString(cursor.getColumnIndex("userAccount")),
+                cursor.getString(cursor.getColumnIndex("phoneNumber"))
         );
         return userInfo;
     }
 
-    public void updateAccountByUserId(String strUserId, String strUserName, String strUserPWD, int iUserPower){
+    public void updateAccountByUserName(String strUserName, String strUserId, String strUserPWD, int strUserPower,String strUserAccount,String strPhoneNumber){
         ContentValues cv = new ContentValues();
         cv.put("userId", strUserId);
         cv.put("userName", strUserName);
         cv.put("userPassword", strUserPWD);
-        cv.put("userPower", iUserPower);
-        db.update("user", cv, "userId=?", new String[] { strUserId });
+        cv.put("userPower", strUserPower);
+        cv.put("userAccount",strUserAccount);
+        cv.put("phoneNumber",strPhoneNumber);
+        db.update("user", cv, "userName=?", new String[] { strUserName });
     }
 
     public UserAccount getUserAccount(String strUserName, String strUserPWD){
         if(!isAccountExist(strUserName, strUserPWD)){
             Log.e(DBOPERATION, "user is not exist! error from getUserPower");
-            return new UserAccount();
         }
-        Cursor cursor = db.query("user", new String[] {"userId", "userName", "userPassword", "userPower"}, "userName=? AND userPassword=?", new String[] { strUserName, strUserPWD }, null, null, null);
+        Cursor cursor = db.query("user", new String[] {"userId", "userName", "userPassword", "userPower","userAccount","phoneNumber"}, "userName=? AND userPassword=?", new String[] { strUserName, strUserPWD }, null, null, null);
         cursor.moveToNext();
         UserAccount userInfo = new UserAccount(
                 cursor.getString(cursor.getColumnIndex("userId")),
                 cursor.getString(cursor.getColumnIndex("userName")),
                 cursor.getString(cursor.getColumnIndex("userPassword")),
-                parseInt(cursor.getString(cursor.getColumnIndex("userPower")))
-                );
+                parseInt(cursor.getString(cursor.getColumnIndex("userPower"))),
+                cursor.getString(cursor.getColumnIndex("userAccount")),
+                cursor.getString(cursor.getColumnIndex("phoneNumber"))
+        );
         return userInfo;
     }
 
@@ -128,7 +133,9 @@ public class DBManager {
                         cursor.getString(cursor.getColumnIndex("userId")),
                         cursor.getString(cursor.getColumnIndex("userName")),
                         cursor.getString(cursor.getColumnIndex("userPassword")),
-                        parseInt(cursor.getString(cursor.getColumnIndex("userPower")))
+                        parseInt(cursor.getString(cursor.getColumnIndex("userPower"))),
+                        cursor.getString(cursor.getColumnIndex("userAccount")),
+                        cursor.getString(cursor.getColumnIndex("phoneNumber"))
                 );
                 arrListUsers.add(userAccount);
                 cursor.moveToNext();

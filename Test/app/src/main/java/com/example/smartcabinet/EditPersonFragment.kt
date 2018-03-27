@@ -29,6 +29,10 @@ class EditPersonFragment : Fragment() {
     private  var username = String()
     private var userpasswd = String()
     private var userID = String()
+    private var userAccount= String()
+    private var phoneNum= String()
+    private var userpower= 0
+    private var user:UserAccount?=null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         return inflater!!.inflate(R.layout.fragment_edit_person, container, false)
@@ -40,16 +44,20 @@ class EditPersonFragment : Fragment() {
         spinner_level.adapter = Madapter
         dbManager = DBManager(context.applicationContext)
         scApp = context.applicationContext as SCApp
+        username=scApp!!.userInfo.getUserName()
+        user=dbManager?.getUserAccountByUserName(username)
+        userAccount=user!!.getUserAccount()
+        userID=user!!.userId
+        userpasswd=user!!.getUserPassword()
+        phoneNum=user!!.getPhoneNumber()
+        userpower=user!!.getUserPower()
 
-        userID = scApp!!.userInfo.getUserId()
-        username=dbManager!!.getUserAccountByUserId(userID).getUserName()
-        userpasswd=dbManager!!.getUserAccountByUserId(userID).getUserPassword()
         if(getArguments().getString("editfile") =="editperson")
         {
             UserMessage()
         }
 
-        val userAccount = UserAccount()
+        var userAccount=UserAccount()
         spinner_level.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View,
                                         pos: Int, id: Long) {
@@ -57,11 +65,13 @@ class EditPersonFragment : Fragment() {
 
                 if(power[pos]=="管理员")
                 {
-                    userAccount.userPower = SC_Const.ADMIN
+                    userAccount?.userPower = SC_Const.ADMIN
+                    userpower=0
                 }
                 if(power[pos]=="普通")
                 {
-                    userAccount.userPower = SC_Const.NORMAL
+                    userAccount?.userPower = SC_Const.NORMAL
+                    userpower=1
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -69,14 +79,13 @@ class EditPersonFragment : Fragment() {
             }
         }
         button_save.setOnClickListener {
-            if(arguments.getString("editfile") =="editperson")
-            {
-                updateUserAccountByID(userID)
-                Toast.makeText(context,"个人信息修改成功",Toast.LENGTH_SHORT).show()
-            }
-            else {
-                userAccount.userId = editText_Num.text.toString()
-                userAccount.userName = editText_userName.text.toString()
+//            if(arguments.getString("editfile") =="editperson")
+//            {
+//                updateUserAccountByName(username)
+//                Toast.makeText(context,"个人信息修改成功",Toast.LENGTH_SHORT).show()
+//            }
+//            else {
+
                 if (editText_Num.length() == 0) {
                     Toast.makeText(context, "编码信息未填写", Toast.LENGTH_SHORT).show()
                 }
@@ -86,19 +95,37 @@ class EditPersonFragment : Fragment() {
                 if (editText_Password.length() == 0) {
                     Toast.makeText(context, "密码为空", Toast.LENGTH_SHORT).show()
                 }
+                if(editText_phoneNum.length()==0){
+                    Toast.makeText(context,"手机号未填写",Toast.LENGTH_SHORT).show()
+                }
+                if(editText_account.length()==0)
+                {
+                    Toast.makeText(context, "账号未填写", Toast.LENGTH_SHORT).show()
+                }
                 if (editText_Password.text.toString() == editText_Password2.text.toString() && editText_Num.length() != 0 && editText_userName.length() != 0 && editText_Password.length() != 0) {
-                    userAccount.userPassword = editText_Password.text.toString()
-                    if (dbManager?.isAccountExist(userAccount.userName) == true) {
-                        Toast.makeText(context, "该用户已经存在", Toast.LENGTH_SHORT).show()
+                    if(arguments.getString("editfile") =="editperson")
+                    {
+                        updateUserAccountByName(username)
+                        Toast.makeText(context,"个人信息修改成功",Toast.LENGTH_SHORT).show()
                     }
                     else {
-                        dbManager?.addAccount(userAccount)
-                        savebuttonClicked("save")
-                        Toast.makeText(context, "用户添加成功", Toast.LENGTH_SHORT).show()
+                        userAccount?.userPassword = editText_Password.text.toString()
+                        userAccount?.userId = editText_Num.text.toString()
+                        userAccount?.userName = editText_account.text.toString()
+                        userAccount?.phoneNumber = editText_phoneNum.text.toString()
+                        userAccount?.userAccount = editText_userName.text.toString()
+                        if (dbManager?.isAccountExist(editText_userName.text.toString()) == true) {
+                            Toast.makeText(context, "该用户已经存在", Toast.LENGTH_SHORT).show()
+                        }
+                        else {
+                            dbManager?.addAccount(userAccount)
+                            savebuttonClicked("save")
+                            Toast.makeText(context, "用户添加成功", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 } else
                     Toast.makeText(context, "两次密码输入不一样", Toast.LENGTH_SHORT).show()
-            }
+//            }
         }
     }
     interface savepersonbuttonlisten {
@@ -128,38 +155,28 @@ class EditPersonFragment : Fragment() {
     }
 
     /**
-     *个人信息设置界面，无法修改编号，无法修改级别
+     *个人信息设置界面，无法修改账号
      */
   private fun UserMessage(){
         textView_title.text ="个人信息修改"
-        editText_Num.isEnabled = false
-        editText_Num.isFocusable = false
-        editText_Num.isFocusableInTouchMode = false
-        textViewlevel.visibility = View.INVISIBLE
-        spinner_level.visibility = View.INVISIBLE
-        editText_userName.setText(username)
+        editText_account.isEnabled = false
+        editText_account.isFocusable = false
+        editText_account.isFocusableInTouchMode = false
+        if(userpower==0) spinner_level.setSelection(1)
+        else spinner_level.setSelection(1)
+        editText_userName.setText(userAccount)
         editText_Password.setText(userpasswd)
         editText_Password2.setText(userpasswd)
         editText_Num.setText(userID)
+        editText_phoneNum.setText(phoneNum)
+        editText_account.setText(username)
     }
     /**
      *通过用户ID更新用户信息
      */
-   private fun updateUserAccountByID(useid:String)
+   private fun updateUserAccountByName(userName:String)
     {
-        var usename = editText_userName.text.toString()
-        var usepassword = editText_Password.text.toString()
-        if(editText_Password2.text.toString()== editText_Password.text.toString())
-        {
-            dbManager?.updateAccountByUserId(useid,usename,usepassword,scApp!!.getUserInfo().getUserPower())
-            editText_userName.setText(username)
-            editText_Password.setText(usepassword)
-            editText_Password2.setText(usepassword)
-        }
-        else
-        {
-            Toast.makeText(context.applicationContext,"两次密码输入不一样",Toast.LENGTH_SHORT).show()
-        }
+            dbManager?.updateAccountByUserName(userName,editText_Num.text.toString(),editText_Password.text.toString(),userpower,editText_userName.text.toString(),editText_phoneNum.text.toString())
 
     }
 

@@ -23,14 +23,14 @@ class PersonLineFragment : Fragment() {
     var activityCallback: PersonLineFragment.deletbuttonlisten? = null
     private var dbManager: DBManager? = null
     private var scApp: SCApp? = null
-    var userid = String()
+    var userName = String()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        if(getArguments()!=null)
+        if(arguments!=null)
         {
-            userid = getArguments().getString("userid")
+            userName = arguments.getString("userName")
         }
         return inflater!!.inflate(R.layout.fragment_line_person, container, false)
     }
@@ -50,14 +50,14 @@ class PersonLineFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         scApp = context.applicationContext as SCApp
         dbManager = DBManager(context.applicationContext)
-      val daccout=dbManager?.getUserAccountByUserId(userid)
+      val daccout=dbManager?.getUserAccountByUserName(userName)
         tV_userName.text=daccout?.getUserName()
-        val account= scApp?.getUserInfo()
-        if(account?.userId == userid)
+        val account= scApp?.userInfo
+        if(account?.userName == userName)
         {
             iBt_deletPerson.setVisibility(View.GONE)
         }
-        if(userid=="00001")
+        if(userName=="admin")
             {
 
             iBt_deletPerson.setVisibility(View.GONE)   //对可删除的用户就行了判断

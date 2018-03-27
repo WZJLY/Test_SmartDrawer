@@ -70,9 +70,9 @@ class LoginActivity :BaseActivity() {
                 val strAccount = "admin"
                 val strPassword = "admin"
                 val iPower = SC_Const.ADMIN
-                val account = UserAccount(strUserId, strAccount, strPassword, iPower)
+                val account = UserAccount(strUserId, strAccount, strPassword, iPower,"","")
                 dbManager?.addAccount(account)
-                scApp?.setUserInfo(strUserId, strAccount, strPassword, iPower)
+                scApp?.setUserInfo(strUserId, strAccount, strPassword, iPower,"","")
                 saveUserName(strAccount)
                 intent.setClass(this, AdminActivity::class.java)
                 startActivity(intent)

@@ -6,7 +6,7 @@
 
 
     <EditText
-        android:id="@+id/editText_userName3"
+        android:id="@+id/editText_account"
         android:layout_width="410sp"
         android:layout_height="60sp"
         android:layout_alignBottom="@+id/textView_name"
@@ -15,7 +15,7 @@
         android:layout_marginTop="100dp"
         android:background="@drawable/bg_edit"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="textPersonName"
         android:paddingLeft="10sp"
         android:textAlignment="viewStart"
         android:textSize="36sp"
@@ -33,12 +33,12 @@
         android:text="账号"
         android:textColor="@android:color/background_dark"
         android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="@+id/editText_userName3"
-        app:layout_constraintEnd_toStartOf="@+id/editText_userName3"
-        app:layout_constraintTop_toTopOf="@+id/editText_userName3" />
+        app:layout_constraintBottom_toBottomOf="@+id/editText_account"
+        app:layout_constraintEnd_toStartOf="@+id/editText_account"
+        app:layout_constraintTop_toTopOf="@+id/editText_account" />
 
     <EditText
-        android:id="@+id/editText_userName2"
+        android:id="@+id/editText_phoneNum"
         android:layout_width="410sp"
         android:layout_height="60sp"
         android:layout_alignBottom="@+id/textView_name"
@@ -65,9 +65,9 @@
         android:text="手机号"
         android:textColor="@android:color/background_dark"
         android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="@+id/editText_userName2"
-        app:layout_constraintEnd_toStartOf="@+id/editText_userName2"
-        app:layout_constraintTop_toTopOf="@+id/editText_userName2"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_phoneNum"
+        app:layout_constraintEnd_toStartOf="@+id/editText_phoneNum"
+        app:layout_constraintTop_toTopOf="@+id/editText_phoneNum"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -144,7 +144,7 @@
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_userName3" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_account" />
 
     <TextView
         android:id="@+id/textView_Password2"
@@ -216,7 +216,7 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/bg_edit"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="textPersonName"
         android:paddingLeft="10sp"
         android:textAlignment="viewStart"
         android:textSize="36sp"
@@ -253,6 +253,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.534"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_userName2" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_phoneNum" />
 
 </android.support.constraint.ConstraintLayout>

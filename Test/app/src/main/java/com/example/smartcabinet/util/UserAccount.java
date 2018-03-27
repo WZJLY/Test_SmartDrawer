@@ -10,10 +10,11 @@ public class UserAccount {
     public String userName;
     public String userPassword;
     public int userPower;   //用户权限，对应SC_Const.java中的常量
+    public String phoneNumber;
+    public String userAccount;
+public UserAccount(){
 
-    public UserAccount() {
-    }
-
+}
     public String getUserId(){
         return this.userId;
     }
@@ -26,14 +27,20 @@ public class UserAccount {
         return this.userPassword;
     }
 
-    public int getUserPower(){
+    public int   getUserPower(){
         return this.userPower;
     }
 
-    public UserAccount(String ID, String account, String password, int power) {
+    public String getUserAccount(){return  this.userAccount;}
+
+    public String getPhoneNumber(){return  this.phoneNumber;}
+
+    public UserAccount(String ID, String name, String password, int power,String account,String number) {
         this.userId = ID;
-        this.userName = account;
+        this.userName = name;
         this.userPassword = password;
         this.userPower = power;
+        this.userAccount=account;
+        this.phoneNumber=number;
     }
 }

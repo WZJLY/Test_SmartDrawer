@@ -10,23 +10,32 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "smart_cabinet_0926.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public DBHelper(Context context) {
+
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         createTable(db);
-
         //main Box
         db.execSQL("INSERT INTO box VALUES(?)", new Object[]{1});
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onCreate(db);
+        switch (oldVersion) {
+            case 1:
+                db.execSQL("ALTER TABLE user add column userAccount VARCHAR");
+                db.execSQL("ALTER TABLE user add column phoneNumber VARCHAR");
+            case 2:
+
+            default:
+
+        }
     }
 
     public void createTable(SQLiteDatabase db){
@@ -72,6 +81,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "reagentCreater VARCHAR, reagentGoodsID VARCHAR, reagentUnit INTEGER, " +
                 "reagentDensity VARCHAR, reagentInvalidDate VARCHAR, cabinetId VARCHAR, " +
                 "drawerId VARCHAR, reagentPosition VARCHAR, status INTEGER, reagentUser VARCHAR)");
+    }
+    private void addColumnToTable(SQLiteDatabase db,String tableName,String cloumnType,String defaultValue){
+
+
     }
 
 }
