@@ -40,7 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void createTable(SQLiteDatabase db){
         db.execSQL("CREATE TABLE IF NOT EXISTS user" +
-                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, userId VARCHAR, userName VARCHAR, userPassword VARCHAR, userPower INTEGER)");
+                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, userId VARCHAR, userName VARCHAR, userPassword VARCHAR, userPower INTEGER,userAccount VARCHAR,phoneNumber VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS box" +
                 "(_id INTEGER PRIMARY KEY)");
 
