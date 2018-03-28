@@ -31,10 +31,7 @@ class HardwareSetupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var serialNumber = 1
         dbManager = DBManager(context)
-
-        if(dbManager!!.cabinetNo.size > 0){
-            serialNumber = dbManager!!.cabinetNo[0].serialNumber.toInt()
-        }
+        
         val Madapter = ArrayAdapter.createFromResource(context, R.array.serialPort, R.layout.spinner_style)
         Madapter?.setDropDownViewResource(R.layout.dropdown_style)
         sp_serialPort.adapter = Madapter

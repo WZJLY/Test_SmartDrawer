@@ -31,6 +31,9 @@ public class DBHelper extends SQLiteOpenHelper {
             case 1:
                 db.execSQL("ALTER TABLE user add column userAccount VARCHAR");
                 db.execSQL("ALTER TABLE user add column phoneNumber VARCHAR");
+                db.execSQL("ALTER TABLE cabinet_no drop column serial_number VARCHAR");
+                db.execSQL("CREATE TABLE IF NOT EXISTS sysSeting"+
+                        "(_id INTEGER PRIMARY KEY, serialNum VARCHAR, cameraVersion VARCHAR)");
             case 2:
 
             default:
@@ -68,7 +71,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //存放试剂编号
         db.execSQL("CREATE TABLE IF NOT EXISTS cabinet_no" +
-                "(_id INTEGER PRIMARY KEY,cabinet_no VARCHAR,cabinet_serviceCode VARCHAR,serial_number VARCHAR)");
+                "(_id INTEGER PRIMARY KEY,cabinet_no VARCHAR,cabinet_serviceCode VARCHAR)");
         //试剂使用记录表
         db.execSQL("CREATE TABLE IF NOT EXISTS reagentUserRecord" +
                 "(_id INTEGER PRIMARY KEY, reagentId VARCHAR,operationType INTEGER, operationTime VARCHAR, " +
@@ -81,10 +84,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "reagentCreater VARCHAR, reagentGoodsID VARCHAR, reagentUnit INTEGER, " +
                 "reagentDensity VARCHAR, reagentInvalidDate VARCHAR, cabinetId VARCHAR, " +
                 "drawerId VARCHAR, reagentPosition VARCHAR, status INTEGER, reagentUser VARCHAR)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS sysSeting"+
+                "(_id INTEGER PRIMARY KEY, serialNum VARCHAR, cameraVersion VARCHAR)");
     }
-    private void addColumnToTable(SQLiteDatabase db,String tableName,String cloumnType,String defaultValue){
 
 
-    }
 
 }

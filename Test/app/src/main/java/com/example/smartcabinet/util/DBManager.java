@@ -395,7 +395,7 @@ public class DBManager {
         ArrayList<CabinetInfo> arrListCabinetInfo = new ArrayList<>();
         if (cursor.moveToFirst()) {
             if (!cursor.isAfterLast()) {
-                CabinetInfo cabinetInfo = new CabinetInfo(cursor.getString(cursor.getColumnIndex("cabinet_no")), cursor.getString(cursor.getColumnIndex("cabinet_serviceCode")),cursor.getString(cursor.getColumnIndex("serial_number")));
+                CabinetInfo cabinetInfo = new CabinetInfo(cursor.getString(cursor.getColumnIndex("cabinet_no")), cursor.getString(cursor.getColumnIndex("cabinet_serviceCode")));
                 arrListCabinetInfo.add(cabinetInfo);
                 cursor.moveToNext();
             }
@@ -407,8 +407,8 @@ public class DBManager {
     {
         db.execSQL("DELETE FROM cabinet_no");
     }
-    public void addCabinetNo(String cabinentNo,String serviceCode,String serialNumber) {
-        db.execSQL("INSERT INTO cabinet_no VALUES(null,?,?,?)", new Object[]{cabinentNo,serviceCode,serialNumber});
+    public void addCabinetNo(String cabinentNo,String serviceCode) {
+        db.execSQL("INSERT INTO cabinet_no VALUES(null,?,?,)", new Object[]{cabinentNo,serviceCode});
     }
 
     public void deleteAllReagentTemplate()
@@ -483,4 +483,28 @@ public ReagentUserRecord getReagentUseRecordByDate(String strdate)
         }
         return false;
     }           //wzj  add
+
+
+
+    //----------------------------------sysSeting manage ----------------------------//
+    public ArrayList<SysSeting> getSysSeting() {
+        Cursor cursor = db.rawQuery("select * from cabinet_no order by cabinet_no",null);
+        ArrayList<SysSeting> arrListSysSeting = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            if (!cursor.isAfterLast()) {
+               SysSeting sysSeting = new SysSeting(cursor.getString(cursor.getColumnIndex("serialNum")), cursor.getString(cursor.getColumnIndex("cameraVersion")));
+                arrListSysSeting.add(sysSeting);
+                cursor.moveToNext();
+            }
+        }
+        return arrListSysSeting;
+    }
+
+    public void deleteAllSysSeting()
+    {
+        db.execSQL("DELETE FROM sysSeting");
+    }
+    public void addSysSeting(String serialNum,String cameraVersion) {
+        db.execSQL("INSERT INTO cabinet_no VALUES(null,?,?,)", new Object[]{serialNum,cameraVersion});
+    }
 }
