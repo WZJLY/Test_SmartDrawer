@@ -11,7 +11,7 @@ public class SysSeting {
         return CameraVersion;
     }
     public String getSerialNum(){return SerialNum;}
-    public  SysSeting(String cameraVersion,String serialNum) {
+    public  SysSeting(String serialNum,String cameraVersion) {
         this.CameraVersion = cameraVersion;
         this.SerialNum=serialNum;
     }

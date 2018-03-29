@@ -26,4 +26,9 @@
         <item>/dev/ttyS4</item>
         <item>/dev/ttyS5</item>
     </string-array>
+
+    <string-array name="camera">
+        <item>camera1</item>
+        <item>camera2</item>
+    </string-array>
 </resources>

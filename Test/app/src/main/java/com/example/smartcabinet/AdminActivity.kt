@@ -122,11 +122,16 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         return super.onKeyDown(keyCode, event)
     }
 
-    override fun saveSetupClick(text: String, serialPortNum: Int) {
-        when(text){
-
+    override fun saveHardwareClick(text: String) {
+        when(text) {
+            "saveHardware" -> {
+                val setupFragment = SetupFragment()
+                replaceFragment(setupFragment,R.id.framelayout)
+                returnview = "admin"
+            }
         }
     }
+
 
     override  fun deletDrawerButtonClick(text: String,drawerID:Int) {
         if(text == "delet")
@@ -196,13 +201,13 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 replaceFragment(editMessageFragment, R.id.framelayout)
             }
             "reagent_operation" ->{
-//                if(dbManager!!.cabinetNo.size > 0){
+                if(dbManager!!.sysSeting.size > 0){
                     val intent = Intent()
                     intent.setClass(this,OperationActivity::class.java)
                     startActivity(intent)
-//                }
-//                else
-//                    Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
+                }
+                else
+                    Toast.makeText(this,"请进行系统硬件设置",Toast.LENGTH_SHORT).show()
             }
             "record_query" ->{
 
@@ -288,13 +293,13 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
             }
             "reagent_op"-> {
-//                if(dbManager!!.cabinetNo.size > 0){
+                if(dbManager!!.sysSeting.size > 0){
                     val intent = Intent()
                     intent.setClass(this,OperationActivity::class.java)
                     startActivity(intent)
-//                }
-//                else
-//                    Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
+                }
+                else
+                    Toast.makeText(this,"请进行系统硬件设置",Toast.LENGTH_SHORT).show()
             }
             "recordquery" -> {
                 val recordFragment = RecordFragment()

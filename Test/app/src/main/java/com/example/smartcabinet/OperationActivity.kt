@@ -36,15 +36,16 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
         scApp = application as SCApp
         changeMessage("noFocusable")
         updateDrawer()
-//        if(dbManager!!.cabinetNo.size > 0){
-//            val serialPortNum = dbManager!!.cabinetNo.get(0).serialNumber.toInt()
-//            val SPID = resources.getStringArray(R.array.serialPort)
-//            val serialPortID = SPID[serialPortNum-1]
+        if(dbManager!!.sysSeting.size > 0){
+            val serialPortNum = dbManager!!.sysSeting[0].serialNum.toInt()
+            val SPID = resources.getStringArray(R.array.serialPort)
+            val serialPortID = SPID[serialPortNum]
+            Log.d("串口操作",serialPortID)
 //            spi = SerialPortInterface(this.applicationContext, serialPortID)
 //            scApp?.setSpi(spi)
-//        }
-//        else
-//            Toast.makeText(this,"请进行系统设置",Toast.LENGTH_SHORT).show()
+        }
+        else
+            Toast.makeText(this,"请进行系统硬件设置",Toast.LENGTH_SHORT).show()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

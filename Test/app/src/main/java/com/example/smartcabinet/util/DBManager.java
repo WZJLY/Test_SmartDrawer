@@ -408,7 +408,7 @@ public class DBManager {
         db.execSQL("DELETE FROM cabinet_no");
     }
     public void addCabinetNo(String cabinentNo,String serviceCode) {
-        db.execSQL("INSERT INTO cabinet_no VALUES(null,?,?,)", new Object[]{cabinentNo,serviceCode});
+        db.execSQL("INSERT INTO cabinet_no VALUES(null,?,?)", new Object[]{cabinentNo,serviceCode});
     }
 
     public void deleteAllReagentTemplate()
@@ -488,7 +488,7 @@ public ReagentUserRecord getReagentUseRecordByDate(String strdate)
 
     //----------------------------------sysSeting manage ----------------------------//
     public ArrayList<SysSeting> getSysSeting() {
-        Cursor cursor = db.rawQuery("select * from cabinet_no order by cabinet_no",null);
+        Cursor cursor = db.rawQuery("select * from sysSeting",null);
         ArrayList<SysSeting> arrListSysSeting = new ArrayList<>();
         if (cursor.moveToFirst()) {
             if (!cursor.isAfterLast()) {
@@ -505,6 +505,6 @@ public ReagentUserRecord getReagentUseRecordByDate(String strdate)
         db.execSQL("DELETE FROM sysSeting");
     }
     public void addSysSeting(String serialNum,String cameraVersion) {
-        db.execSQL("INSERT INTO cabinet_no VALUES(null,?,?,)", new Object[]{serialNum,cameraVersion});
+        db.execSQL("INSERT INTO sysSeting VALUES(null,?,?)", new Object[]{serialNum,cameraVersion});
     }
 }

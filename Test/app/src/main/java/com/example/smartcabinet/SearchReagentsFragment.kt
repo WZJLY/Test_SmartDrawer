@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.Reagent
 import kotlinx.android.synthetic.main.fragment_search_reagents.*
@@ -38,11 +39,14 @@ class SearchReagentsFragment : Fragment() {
             tV_reagents.text=reagent?.reagentName+","+reagent?.reagentSize+unit+","+"纯度:"+reagent?.reagentPurity+"%，"+reagent?.reagentCreater+","+reagent?.reagentInvalidDate
         }
         button4.setOnClickListener{
-            val intent = Intent()
-            intent.setClass(context.applicationContext,OperationActivity::class.java)
-            startActivity(intent)
-            scApp?.reagentID=reagentId
-
+            if(dbmanager!!.sysSeting.size > 0){
+                val intent = Intent()
+                intent.setClass(context.applicationContext,OperationActivity::class.java)
+                startActivity(intent)
+                scApp?.reagentID=reagentId
+            }
+            else
+                Toast.makeText(context,"请进行系统硬件设置",Toast.LENGTH_SHORT).show()
         }
     }
 
