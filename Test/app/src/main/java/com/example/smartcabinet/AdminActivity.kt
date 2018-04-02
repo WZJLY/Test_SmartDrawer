@@ -24,6 +24,10 @@ import java.net.URL
 
 import android.view.inputmethod.InputMethodManager
 import kotlinx.android.synthetic.main.fragment_hardware_setup.*
+import android.R.attr.versionName
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import com.example.smartcabinet.util.UpdateAppManager
 
 
 class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten, AddPersonFragment.addpersonbuttonlisten,
@@ -45,7 +49,9 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                     val editTemplateFragment = EditTemplateFragment()
                     replaceFragment(editTemplateFragment, R.id.framelayout)
                 }
-                else -> {
+                2 -> {
+                    val data = msg.obj as String
+                    Toast.makeText(this@AdminActivity,data,Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -197,7 +203,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 val editMessageFragment = EditPersonFragment()
                 val args = Bundle()
                 args.putString("editfile","editperson")
-                editMessageFragment.setArguments(args)
+                editMessageFragment.arguments=args
                 replaceFragment(editMessageFragment, R.id.framelayout)
             }
             "reagent_operation" ->{
@@ -334,6 +340,13 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 val hardwareSetupFragment = HardwareSetupFragment()
                 replaceFragment(hardwareSetupFragment, R.id.framelayout)
             }
+            "update"->{
+                //进度条下载完成后自动安装
+//                downLoadApk()
+//                Toast.makeText(this, "apk下载成功", Toast.LENGTH_SHORT).show()
+                var manager= UpdateAppManager(this)
+                manager.getUpdateMsg()
+            }
         }
     }
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
@@ -434,7 +447,6 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                          * 要网络连接成功，需在AndroidMainfest.xml中进行权限配置
                          * <uses-permission android:name="android.permission.INTERNET" />
                          */
-                        val url = URL(urlStr)
                         //取得inputStream，并将流中的信息写入SDCard
 
                         /*
@@ -504,7 +516,61 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         }
         }.start()  //开启一个线程
     }
+fun downLoadApk(){
+    object : Thread() {
+        override fun run()
+        {
+            val path = "SmartCabinet"
+            val fileName ="1.0.3 "+ ".apk"
+            val urlStr = SC_Const.APKADDRESS + fileName
+            val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
+            val pathName = "$SDCard/$path/$fileName"//文件存储路径
+            if (File(pathName).exists()) {
+                Log.d("TestFile","文件存在")
+//                installApk(scApp!!.applicationContext,pathName)
+            }
+            else {
+                val msg = Message()
 
+                val output = File(pathName)
+                val requestUrl = URL(urlStr)
+                output.writeBytes(requestUrl.readBytes())
+                Log.d("TestFile","下载完成")
+                msg.what = 2
+                msg.obj = "安装完成"
+                mHandler.sendMessage(msg)
+            }
+
+        }
+    }.start()
+
+
+
+
+}
+
+    fun getVersion(): String {
+
+        try {
+
+            val manager = this.packageManager
+
+            val info = manager.getPackageInfo(this.packageName, 0)
+
+            val version = info.versionName
+
+            return "版本：" + version
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return "找不到版本号"
+        }
+
+    }
+
+    fun installApk(context: Context, apkFile: String) {
+        installApk(context, File(apkFile).toString())
+    }
 }
 
 

@@ -37,7 +37,7 @@ class SetupFragment : Fragment() {
         }
 
         btn_update.setOnClickListener {
-
+            setupClick("update")
         }
     }
     override fun onAttach(context: Context?) {
