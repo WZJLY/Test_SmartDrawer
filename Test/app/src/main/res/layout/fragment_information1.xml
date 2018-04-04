@@ -8,7 +8,7 @@
     <!-- TODO: Update blank fragment layout -->
 
     <EditText
-        android:id="@+id/eT_code2"
+        android:id="@+id/eT_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tV_weight2"
+        android:id="@+id/tV_weight1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -51,12 +51,12 @@
         android:ems="10"
         android:inputType="number"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tV_weight2"
-        app:layout_constraintStart_toEndOf="@+id/tV_weight2"
-        app:layout_constraintTop_toTopOf="@+id/tV_weight2" />
+        app:layout_constraintBottom_toBottomOf="@+id/tV_weight1"
+        app:layout_constraintStart_toEndOf="@+id/tV_weight1"
+        app:layout_constraintTop_toTopOf="@+id/tV_weight1" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_code"
         android:layout_width="70dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
@@ -64,9 +64,9 @@
         android:text="扫码"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/eT_code2"
-        app:layout_constraintStart_toEndOf="@+id/eT_code2"
-        app:layout_constraintTop_toTopOf="@+id/eT_code2" />
+        app:layout_constraintBottom_toBottomOf="@+id/eT_code"
+        app:layout_constraintStart_toEndOf="@+id/eT_code"
+        app:layout_constraintTop_toTopOf="@+id/eT_code" />
 
     <TextView
         android:id="@+id/textView5"

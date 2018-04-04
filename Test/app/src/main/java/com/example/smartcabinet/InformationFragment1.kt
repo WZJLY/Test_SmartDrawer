@@ -25,9 +25,9 @@ class InformationFragment1 : Fragment() {
         if(arguments.getString("scan_value")!==null)
         {
             val value = arguments.getString("scan_value")
-            eT_code2.setText(value)
+            eT_code.setText(value)
         }
-        button3.setOnClickListener{
+        btn_code.setOnClickListener{
             return_scanbuttononClicked("scan")
         }
 

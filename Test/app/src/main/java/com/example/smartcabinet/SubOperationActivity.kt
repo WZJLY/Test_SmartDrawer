@@ -15,10 +15,11 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.example.lib_zxing.activity.CaptureActivity
+import com.example.lib_zxing.activity.CodeUtils
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.ReagentTemplate
 import com.example.smartcabinet.util.SerialPortInterface
-import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_sub_operation.*
 import kotlinx.android.synthetic.main.fragment_information1.*
 import kotlinx.android.synthetic.main.fragment_information2.*
@@ -26,12 +27,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonlisten,InformationFragment1.return_scanbuttonlisten{
-private var statue:String?=null
+    private var statue:String?=null
     private var scApp: SCApp? = null
     private var dbManager:DBManager?=null
     private var reagentTemplate:ReagentTemplate?=null
     var spi: SerialPortInterface?= null
-    private var camera: android.hardware.Camera? = null
+    private var REQUEST_CODE = 1
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if(null != this.currentFocus) {
@@ -124,7 +125,7 @@ private var statue:String?=null
             when(subOperation)
             {
                 "Into" -> {
-                    if(!dbManager!!.isReagentExist(eT_code.text.toString())&&!dbManager!!.isScrapReagentExist(eT_code.text.toString())){
+                    if(!dbManager!!.isReagentExist(eT_code2.text.toString())&&!dbManager!!.isScrapReagentExist(eT_code2.text.toString())){
                         var into_drawer = checkLock(1,1)
                         if (into_drawer == null)
                             Toast.makeText(this,"ERROR：串口通讯！",Toast.LENGTH_SHORT).show()
@@ -166,9 +167,9 @@ private var statue:String?=null
                 }
 
                 "Return" -> {
-                    if(dbManager!!.isReagentExist(eT_code2.text.toString())&&!dbManager!!.isScrapReagentExist(eT_code2.text.toString()))
+                    if(dbManager!!.isReagentExist(eT_code.text.toString())&&!dbManager!!.isScrapReagentExist(eT_code.text.toString()))
                     {
-                        if(dbManager!!.getReagentById(eT_code2.text.toString()).status==2) {
+                        if(dbManager!!.getReagentById(eT_code.text.toString()).status==2) {
                             if (eT_weight.text != null) {
                                 var into_drawer = checkLock(1,1)
                                 if (into_drawer == null)
@@ -232,88 +233,48 @@ private var statue:String?=null
     }
 
     override fun scanbuttononClick(text: String) {
-        if(text == "scan")
-        {   statue="Into"
-            if (camera == null) {
-                try {
-                    camera = android.hardware.Camera.open(0)
-                } catch (e: Exception) {
-                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                }
-            }
-            if(camera!=null) {
-                camera?.release()
-                try {
-                    spi?.sendLED(1,1)
-                    val integrator = IntentIntegrator(this)
-                    integrator.setOrientationLocked(false)
-                    integrator.captureActivity = SmallCaptureActivity::class.java
-                    integrator.setTimeout(10000)
-                    integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult
-                } catch (e: Exception) {
-                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                }
-            }
-            else
-                Toast.makeText(this,"Cannot connect Camera!!", Toast.LENGTH_LONG).show()
+        if(text == "scan") {
+            statue = "Into"
+            spi?.sendLED(1, 1)
+            var intent = Intent(this, CaptureActivity::class.java)
+            startActivityForResult(intent,REQUEST_CODE)
         }
     }
 
     override fun return_scanbuttononClick(text: String) {
-        if(text == "scan")
-        {
-            statue="Return"
-            if (camera == null) {
-                try {
-                    camera = android.hardware.Camera.open(0)
-                } catch (e: Exception) {
-                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                }
-            }
-            if(camera!=null) {
-                camera?.release()
-                try {
-                    spi?.sendLED(1,1)
-                    val integrator = IntentIntegrator(this)
-                    integrator.setOrientationLocked(false)
-                    integrator.captureActivity = SmallCaptureActivity::class.java
-                    integrator.setTimeout(10000)
-                    integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult
-                } catch (e: Exception) {
-                    Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                }
-            }
-            else
-                Toast.makeText(this,"Cannot connect Camera!!", Toast.LENGTH_LONG).show()
+        if(text == "scan") {
+            statue = "Return"
+            spi?.sendLED(1, 1)
+            var intent = Intent(this, CaptureActivity::class.java)
+            startActivityForResult(intent,REQUEST_CODE)
         }
     }
 
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        try {
-            spi?.sendLED(1,0)
-            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-            if(statue=="Into")
-                eT_code.setText(result.contents)
-                if(statue == "Return")
-                    eT_code2.setText(result.contents)
-            if (result != null) {
-                if (result.contents == null) {
-                    //Log.d("MainActivity", "Cancelled scan")
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
-                } else {
-                    //Log.d("MainActivity", "Scanned")
-                    Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+        spi?.sendLED(1,0)
+        if (requestCode == REQUEST_CODE) {
+            if (null != data) {
+                val bundle = data.extras
+                if (bundle == null) {
+                    Toast.makeText(this, "EMPTY", Toast.LENGTH_LONG).show()
+                    return
                 }
-            } else {
-                // This is important, otherwise the result will not be passed to the fragment
-                super.onActivityResult(requestCode, resultCode, data)
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    val result = bundle.getString(CodeUtils.RESULT_STRING)
+                    when(statue) {
+                        "Into" -> {
+                            eT_code2.setText(result)
+                        }
+                        "Return" -> {
+                            eT_code.setText(result)
+                        }
+                    }
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(this, "解析二维码失败", Toast.LENGTH_LONG).show()
+                }
             }
         }
-        catch (e: Exception){
-            Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-        }
+
     }
 
     fun checkLock(DID: Int,num: Int): Int? {
@@ -365,7 +326,7 @@ private var statue:String?=null
     }
 
     fun returnDialog(drawerID:Int) {
-        val reagent = dbManager?.getReagentById(eT_code2.text.toString())
+        val reagent = dbManager?.getReagentById(eT_code.text.toString())
         val dialog = OperationDialog(this)
         val num =dbManager!!.getDrawerByDrawerId(drawerID).drawerSize
         dialog.setTitle("归还")
@@ -373,32 +334,32 @@ private var statue:String?=null
         dialog.setNum(num,reagent!!.reagentPosition.toInt())
         dialog.setYesOnclickListener("确定",object :OperationDialog.onYesOnclickListener{
             override fun onYesClick() {
-                dbManager?.updateReagentStatus(eT_code2.text.toString(), 1, scApp!!.userInfo.getUserName())
+                dbManager?.updateReagentStatus(eT_code.text.toString(), 1, scApp!!.userInfo.getUserName())
                 var weight:Int = Integer.valueOf(eT_weight.text.toString())
-                if(weight>dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt())
+                if(weight>dbManager!!.getReagentById(eT_code.text.toString()).reagentTotalSize.toInt())
                 {
-                    weight -=dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt()
-                    var size =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble())
-                    dbManager?.updateReagentSize(eT_code2.text.toString(),size.toString(),eT_weight.text.toString())
+                    weight -=dbManager!!.getReagentById(eT_code.text.toString()).reagentTotalSize.toInt()
+                    var size =  dbManager!!.getReagentById(eT_code.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code.text.toString()).reagentDensity.toDouble())
+                    dbManager?.updateReagentSize(eT_code.text.toString(),size.toString(),eT_weight.text.toString())
                     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
                     val now = sdf.format(Date())
                     var unit = "g"
                     if(reagent?.reagentUnit==2)
                         unit="ml"
-                    dbManager?.addReagentUserRecord(eT_code2.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g",size.toString()+unit,(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble()).toString())
+                    dbManager?.addReagentUserRecord(eT_code.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g",size.toString()+unit,(weight*dbManager!!.getReagentById(eT_code.text.toString()).reagentDensity.toDouble()).toString())
                 }
                 else
                 {
-                    weight =dbManager!!.getReagentById(eT_code2.text.toString()).reagentTotalSize.toInt()-weight
+                    weight =dbManager!!.getReagentById(eT_code.text.toString()).reagentTotalSize.toInt()-weight
 
-                    var size1 =  dbManager!!.getReagentById(eT_code2.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble())
-                    dbManager?.updateReagentSize(eT_code2.text.toString(),size1.toString(),eT_weight.text.toString())
+                    var size1 =  dbManager!!.getReagentById(eT_code.text.toString()).reagentSize.toDouble()-(weight*dbManager!!.getReagentById(eT_code.text.toString()).reagentDensity.toDouble())
+                    dbManager?.updateReagentSize(eT_code.text.toString(),size1.toString(),eT_weight.text.toString())
                     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
                     val now = sdf.format(Date())
                     var unit = "g"
                     if(reagent?.reagentUnit==2)
                         unit="ml"
-                    dbManager?.addReagentUserRecord(eT_code2.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g ",size1.toString()+unit,(weight*dbManager!!.getReagentById(eT_code2.text.toString()).reagentDensity.toDouble()).toString())
+                    dbManager?.addReagentUserRecord(eT_code.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g ",size1.toString()+unit,(weight*dbManager!!.getReagentById(eT_code.text.toString()).reagentDensity.toDouble()).toString())
                 }
                 val intent = Intent()
                 intent.setClass(applicationContext, OperationActivity::class.java)
@@ -426,13 +387,13 @@ private var statue:String?=null
                         if (reagentTemplate?.reagentUnit == "ml") {
                             Unit = 2
                         }
-                        dbManager?.addReagent(eT_code.text.toString(), reagentTemplate?.reagentName, "", ""
+                        dbManager?.addReagent(eT_code2.text.toString(), reagentTemplate?.reagentName, "", ""
                                 , "", 1, reagentTemplate?.reagentPurity, eT_residue.text.toString(), eT_weight2.text.toString()
                                 , reagentTemplate?.reagentCreater, reagentTemplate?.reagentGoodsID, Unit, reagentTemplate?.reagentDensity, eT_data.text.toString()
                                 , "1", drawerID.toString(), scApp?.touchtable.toString(), 1, scApp!!.userInfo.getUserName())
                         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
                         val now = sdf.format(Date())
-                        dbManager?.addReagentUserRecord(eT_code.text.toString(),1,now,scApp!!.userInfo.getUserName(),eT_weight2.text.toString()+"g",eT_residue.text.toString()+reagentTemplate?.reagentUnit,"")
+                        dbManager?.addReagentUserRecord(eT_code2.text.toString(),1,now,scApp!!.userInfo.getUserName(),eT_weight2.text.toString()+"g",eT_residue.text.toString()+reagentTemplate?.reagentUnit,"")
                         val intent = Intent()
                         scApp?.touchtable = 0
                         scApp?.touchtable = 0 //新加的

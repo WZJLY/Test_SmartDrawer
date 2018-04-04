@@ -11,21 +11,17 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.KeyEvent
 import android.widget.Toast
+import com.example.lib_zxing.activity.CaptureActivity
+import com.example.lib_zxing.activity.CodeUtils
 import com.example.smartcabinet.util.*
-
-import com.google.zxing.integration.android.IntentIntegrator
-
-
 
 class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,AdminReagentFragment.adminReagentListen {
     private var scApp: SCApp? = null
     private var dbManager: DBManager? = null
     private var drawer: Drawer? = null
-    private var reagentTemplate: ReagentTemplate? = null
     private var statue: String? = null
-    private var camera: android.hardware.Camera? = null
     var spi: SerialPortInterface? = null
-
+    private var REQUEST_CODE = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_operation)
@@ -61,7 +57,6 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
                 val intent = Intent()
                 intent.setClass(this, SubOperationActivity::class.java)
                 intent.putExtra("subOperation", "Take")
-
                 startActivity(intent)
             }
 
@@ -80,37 +75,14 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
         }
     }
 
-
     override fun adminReagentButtonClick(text: String) {
         when (text) {
             "Into" -> {
                 statue = "Into"
-                if (camera == null) {
-                    try {
-                        camera = android.hardware.Camera.open(0)
-                    } catch (e: Exception) {
-                        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                    }
-                }
-                if(camera!=null) {
-                    camera?.release()
-                    try {
-                        val integrator = IntentIntegrator(this)
-                        spi?.sendLED(1,1)
-                        integrator.setOrientationLocked(false)
-                        integrator.setBeepEnabled(true)
-                        integrator.captureActivity = SmallCaptureActivity::class.java
-                        integrator.setTimeout(10000)
-                        integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult
-                    } catch (e: Exception) {
-                        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                    }
-                }
-                else
-                    Toast.makeText(this,"Cannot connect Camera!!", Toast.LENGTH_LONG).show()
-
+                spi?.sendLED(1, 1)
+                var intent = Intent(this, CaptureActivity::class.java)
+                startActivityForResult(intent, REQUEST_CODE)
             }
-
             "adminTake" -> {
                 val intent = Intent()
                 intent.setClass(this, SubOperationActivity::class.java)
@@ -120,29 +92,9 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
 
             "adminReturn" -> {
                 statue = "Return"
-                if (camera == null) {
-                    try {
-                        camera = android.hardware.Camera.open(0)
-                    } catch (e: Exception) {
-                        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                    }
-                }
-                if(camera!=null) {
-                    camera?.release()
-                    try {
-                        val integrator = IntentIntegrator(this)
-                        spi?.sendLED(1,1)
-                        integrator.setOrientationLocked(false)
-                        integrator.captureActivity = SmallCaptureActivity::class.java
-                        integrator.setTimeout(10000)
-                        integrator.initiateScan()           //打开扫码活动，扫码时间为10s，扫码完成或者10s时间到，转到ActivityResult
-                    } catch (e: Exception) {
-                        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                    }
-                }
-                else
-                    Toast.makeText(this,"Cannot connect Camera!!", Toast.LENGTH_LONG).show()
-
+                spi?.sendLED(1, 1)
+                var intent = Intent(this, CaptureActivity::class.java)
+                startActivityForResult(intent, REQUEST_CODE)
             }
 
             "Scrap" -> {
@@ -189,38 +141,26 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        try {
-
-            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)    //获取扫码结果
-            val intent = Intent()
-            intent.setClass(this, SubOperationActivity::class.java)
-            if (statue == "Into") {
-                spi?.sendLED(1,0)
-                intent.putExtra("subOperation", "Into")     //跳转到入柜fragment
-            }
-            if (statue == "Return"){
-                spi?.sendLED(1,0)
-                intent.putExtra("subOperation", "Return")//跳转到归还fragment
-            }
-            intent.putExtra("scan_value", result.contents)
-            startActivity(intent)
-
-            if (result != null) {
-                if (result.contents == null) {
-                    //Log.d("MainActivity", "Cancelled scan")
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
-
-                } else {
-                    //Log.d("MainActivity", "Scanned")
-                    Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+        spi?.sendLED(1,0)
+        val intent = Intent()
+        intent.setClass(this, SubOperationActivity::class.java)
+        intent.putExtra("subOperation", statue)
+        if (requestCode == REQUEST_CODE) {
+            if (null != data) {
+                val bundle = data.extras
+                if (bundle == null) {
+                    Toast.makeText(this, "EMPTY", Toast.LENGTH_LONG).show()
+                    return
                 }
-            } else {
-                // This is important, otherwise the result will not be passed to the fragment
-                super.onActivityResult(requestCode, resultCode, data)
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    val result = bundle.getString(CodeUtils.RESULT_STRING)
+                    intent.putExtra("scan_value", result)
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(this, "解析二维码失败", Toast.LENGTH_LONG).show()
+                }
             }
-        } catch (e: Exception) {
-            Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
         }
+        startActivity(intent)
     }
 
     fun changeMessage(text: String) {        //根据点击的位置，改变下方的功能栏

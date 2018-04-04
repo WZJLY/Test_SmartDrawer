@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.fragment_information2.*
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.ReagentTemplate
 import android.widget.ArrayAdapter
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -75,9 +74,9 @@ class InformationFragment2 : Fragment() {
        if(arguments.getString("scan_value")!==null)
        {
            val value = arguments.getString("scan_value")
-           eT_code.setText(value)
+           eT_code2.setText(value)
        }
-        btn_code.setOnClickListener{
+        btn_code2.setOnClickListener{
             scanbuttononClicked("scan")
         }
 

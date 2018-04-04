@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="@+id/eT_residue" />
 
     <TextView
-        android:id="@+id/tV_weight2"
+        android:id="@+id/tV_weight1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tV_type" />
 
     <EditText
-        android:id="@+id/eT_code"
+        android:id="@+id/eT_code2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -65,7 +65,7 @@
         android:textColor="@android:color/background_light"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tV_weight2" />
+        app:layout_constraintTop_toBottomOf="@+id/tV_weight1" />
 
     <EditText
         android:id="@+id/eT_weight2"
@@ -77,9 +77,9 @@
         android:ems="10"
         android:inputType="number"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tV_weight2"
-        app:layout_constraintStart_toEndOf="@+id/tV_weight2"
-        app:layout_constraintTop_toTopOf="@+id/tV_weight2" />
+        app:layout_constraintBottom_toBottomOf="@+id/tV_weight1"
+        app:layout_constraintStart_toEndOf="@+id/tV_weight1"
+        app:layout_constraintTop_toTopOf="@+id/tV_weight1" />
 
     <TextView
         android:id="@+id/tV_code"
@@ -107,16 +107,16 @@
         app:layout_constraintTop_toTopOf="@+id/tV_residue" />
 
     <Button
-        android:id="@+id/btn_code"
+        android:id="@+id/btn_code2"
         android:layout_width="70dp"
         android:layout_height="45dp"
         android:background="@drawable/btn_style_denglu"
         android:text="扫码"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/eT_code"
-        app:layout_constraintStart_toEndOf="@+id/eT_code"
-        app:layout_constraintTop_toTopOf="@+id/eT_code" />
+        app:layout_constraintBottom_toBottomOf="@+id/eT_code2"
+        app:layout_constraintStart_toEndOf="@+id/eT_code2"
+        app:layout_constraintTop_toTopOf="@+id/eT_code2" />
 
     <TextView
         android:id="@+id/tV_g"

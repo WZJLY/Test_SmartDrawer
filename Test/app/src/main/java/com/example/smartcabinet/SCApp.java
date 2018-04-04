@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
+import com.example.lib_zxing.activity.ZXingLibrary;
 import com.example.smartcabinet.util.CabinetInfo;
 import com.example.smartcabinet.util.DBManager;
 import com.example.smartcabinet.util.SerialPortInterface;
@@ -34,7 +35,7 @@ public class SCApp extends Application {  //全局变量
         context = getApplicationContext();
         serialPortID = "/dev/ttyS4";
         //  init ZXing lib
-        // ZXingLibrary.initDisplayOpinion(this);
+         ZXingLibrary.initDisplayOpinion(this);
     }
     public static Context getContext(){
         return context;
