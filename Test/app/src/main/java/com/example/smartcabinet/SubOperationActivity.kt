@@ -42,6 +42,7 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
         return super.onTouchEvent(event)
     }
 
+    //屏蔽虚拟后退按钮
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode === KeyEvent.KEYCODE_BACK) {
             return true // return true 和 false 我都试过，都能屏蔽，原因还未知，希望知道的可以告诉我一下，谢谢

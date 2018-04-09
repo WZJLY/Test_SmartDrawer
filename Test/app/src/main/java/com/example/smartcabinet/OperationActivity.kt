@@ -37,8 +37,8 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
             val SPID = resources.getStringArray(R.array.serialPort)
             val serialPortID = SPID[serialPortNum]
             Log.d("串口操作",serialPortID)
-//            spi = SerialPortInterface(this.applicationContext, serialPortID)
-//            scApp?.setSpi(spi)
+            spi = SerialPortInterface(this.applicationContext, serialPortID)
+            scApp?.setSpi(spi)
         }
         else
             Toast.makeText(this,"请进行系统硬件设置",Toast.LENGTH_SHORT).show()

@@ -5,8 +5,9 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.smartcabinet.R;
 
@@ -18,7 +19,7 @@ import com.example.smartcabinet.R;
  */
 public class CaptureActivity extends AppCompatActivity {
 
-    Button backButton;
+    ImageButton backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -38,7 +39,7 @@ public class CaptureActivity extends AppCompatActivity {
             }
         });
 
-        backButton = (Button)findViewById(R.id.capture_back);
+        backButton = (ImageButton)findViewById(R.id.capture_back);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +48,13 @@ public class CaptureActivity extends AppCompatActivity {
             }
         });
     }
-
+    //屏蔽虚拟后退按钮
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+            return true;
+        return super.onKeyDown(keyCode, event);
+    }
     /**
      * 二维码解析回调函数
      */
