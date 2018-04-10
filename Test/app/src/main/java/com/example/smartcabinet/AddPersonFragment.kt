@@ -42,7 +42,7 @@ class AddPersonFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         dbManager = DBManager(context.applicationContext)
         updateUser()
-        iBt_addpetson.setOnClickListener{
+        btn_addpetson.setOnClickListener{
 
             addbuttonClicked("addperson")
 

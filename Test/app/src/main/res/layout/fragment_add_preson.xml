@@ -15,11 +15,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/iBt_addpetson"
-        android:layout_width="0dp"
-        android:layout_height="110sp"
-        android:background="@drawable/add_icon"
+    <Button
+        android:id="@+id/btn_addpetson"
+        android:layout_width="300sp"
+        android:layout_height="80sp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/btn_style_denglu"
+        android:text="添加"
+        android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
