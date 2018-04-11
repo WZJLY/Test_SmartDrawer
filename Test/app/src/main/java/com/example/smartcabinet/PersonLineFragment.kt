@@ -79,6 +79,7 @@ class PersonLineFragment : Fragment() {
             builder.create()
             builder.show()
         })
+
     }
     private fun deletbuttonClicked(text: String) {
         activityCallback?.deletButtonClick(text)
