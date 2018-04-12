@@ -25,9 +25,9 @@ class DrawerFragment1 : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        if(getArguments()!=null)
+        if(arguments!=null)
         {
-            drawerID = getArguments().getInt("drawerID")
+            drawerID = arguments.getInt("drawerID")
         }
         return inflater!!.inflate(R.layout.fragment_drawer1, container, false)
     }
@@ -35,15 +35,27 @@ class DrawerFragment1 : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         dbManager = DBManager(context.applicationContext)
         tV_drawer1.text =("抽屉"+drawerID)
+        val arrListReagent = dbManager?.reagents
+        val sum = arrListReagent!!.size
+        if(sum>0) {
+            for (m in 1..sum) {
+                reagent = arrListReagent[m - 1]         //试剂
+                if(reagent!!.drawerId.toInt()==drawerID)
+                {
+                    drawer_btn_modify.isEnabled = false
+                    break
+                }
+            }
+        }
         iBt_drawer1.setOnClickListener {
             deletDrawerbuttonClicked("find_out",drawerID)
         }
-        iBt_delete.setOnClickListener{
-
-            deletDrawer()
-
+        drawer_btn_enable.setOnClickListener {
+            //禁用抽屉
         }
-
+        drawer_btn_modify.setOnClickListener {
+            deletDrawerbuttonClicked("drawer_modify",drawerID)
+        }
     }
     interface deletDrawerFragmentListener {
         fun deletDrawerButtonClick(text: String,drawerID: Int)
@@ -61,29 +73,4 @@ class DrawerFragment1 : Fragment() {
     private fun deletDrawerbuttonClicked(text: String,drawerID: Int) {
         activityCallback?.deletDrawerButtonClick(text,drawerID)
     }
-
-    private fun deletDrawer()
-    {
-        val arrListReagent = dbManager?.reagents
-        val sum = arrListReagent!!.size
-        if(sum>0) {
-            for (m in 1..sum) {
-                reagent = arrListReagent[m - 1]         //修改
-                if(reagent!!.drawerId.toInt()!=drawerID&&dbManager!!.drawers.size==drawerID)
-                {
-                    dbManager?.deleteDrawer(drawerID,1)
-                    deletDrawerbuttonClicked("delet",0)
-            }
-
-            }
-        }
-        else
-        {
-            if(dbManager!!.drawers.size==drawerID)
-                dbManager?.deleteDrawer(drawerID,1)
-            deletDrawerbuttonClicked("delet",0) //如果没有不存在试剂，则也只能从最后一个开始删除抽屉
-
-        }
-    }       //通过判断该抽屉里是否有试剂，是否是最后一个抽屉，否则无法删除
-
 }// Required empty public constructor

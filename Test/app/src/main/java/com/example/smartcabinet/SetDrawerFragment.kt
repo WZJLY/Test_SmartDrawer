@@ -19,9 +19,7 @@ import kotlinx.android.synthetic.main.fragment_set_drawer.*
  */
 class SetDrawerFragment : Fragment() {
     var activityCallback: SetDrawerFragment.SetDrawerFragmentListener?= null
-    var isSpinnerFirst = true
     private var dbManager: DBManager? = null
-    private var drawer: Drawer? = null
     private  var boxnum = 0
     private  var sum = 0
     private  var drawerID = 0
@@ -39,59 +37,63 @@ class SetDrawerFragment : Fragment() {
         val Madapter = ArrayAdapter.createFromResource(context, R.array.drawer, R.layout.spinner_style)
         Madapter?.setDropDownViewResource(R.layout.dropdown_style)
         spinner_drawer.adapter = Madapter
-       if(arguments.getString("setDrawer")!=null&&getArguments().getString("setDrawer")!="set")
-       {
-
-           drawerID = getArguments().getString("setDrawer").toInt()
-           val tableFragment = TableFragment()
-           val arg = Bundle()
-           arg.putInt("tablenum",drawerID)
-           arg.putString("statue","drawer")
-           tableFragment.arguments = arg
-           val fragmentTrasaction = fragmentManager.beginTransaction()
-           fragmentTrasaction.replace(R.id.fL_table,tableFragment)
-           fragmentTrasaction.commit()
-
-           spinner_drawer.setSelection( (dbManager!!.getDrawerByDrawerId(drawerID).getDrawerSize())-2)
-           spinner_drawer.isEnabled = false
-           btn_save.setVisibility(View.GONE)
-       }
-
-        if(arguments.getString("setDrawer")=="set") {
-            spinner_drawer.setSelection(0)
-            spinner_drawer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                            pos: Int, id: Long) {
-                    val boxNum = resources.getStringArray(R.array.drawer)
-
-                    boxnum = boxNum[pos].toInt()
-
-                    val tableFragment = TableFragment()
-                    val arg = Bundle()
-                    arg.putInt("boxnum",boxnum)
-                    arg.putString("statue","add")
-                    tableFragment.setArguments(arg)
-                    tableFragment.arguments = arg
-                    val fragmentTrasaction = fragmentManager.beginTransaction()
-                    fragmentTrasaction.replace(R.id.fL_table,tableFragment)
-                    fragmentTrasaction.commit()
-
+        spinner_drawer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View,
+                                        pos: Int, id: Long) {
+                val boxNum = resources.getStringArray(R.array.drawer)
+                boxnum = boxNum[pos].toInt()
+                val tableFragment = TableFragment()
+                val arg = Bundle()
+                arg.putInt("boxnum", boxnum)
+                arg.putString("statue", "add")
+                tableFragment.arguments = arg
+                tableFragment.arguments = arg
+                val fragmentTrasaction = fragmentManager.beginTransaction()
+                fragmentTrasaction.replace(R.id.fL_table, tableFragment)
+                fragmentTrasaction.commit()
+            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        }
+        when(arguments.getString("data")){
+            "find_out" ->{
+                drawerID = arguments.getString("setDrawer").toInt()
+                spinner_drawer.setSelection((dbManager!!.getDrawerByDrawerId(drawerID).drawerSize)-2)
+                spinner_drawer.isEnabled = false
+                setDrawer_btn_del.visibility = View.GONE
+                btn_save.visibility = View.GONE
+            }
+            "drawer_modify" -> {
+                drawerID = arguments.getString("setDrawer").toInt()
+                spinner_drawer.setSelection((dbManager!!.getDrawerByDrawerId(drawerID).drawerSize)-2)
+                if(dbManager!!.drawers.size!=drawerID){
+                    setDrawer_btn_del.visibility = View.GONE
                 }
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                setDrawer_btn_del.setOnClickListener {
+                    dbManager?.deleteDrawer(drawerID,1)
+                    saveDrawerbuttonClicked("saveDrawer")
+                }
+                btn_save.setOnClickListener {
+                    dbManager?.deleteDrawer(drawerID,1)
+                    dbManager?.addDrawer(drawerID,1,boxnum)
+                    saveDrawerbuttonClicked("saveDrawer")
                 }
             }
-            btn_save.setOnClickListener {
-                val arrayList = dbManager?.drawers
-                if (arrayList == null) {
-                    sum = 0
-                    dbManager?.addDrawer(sum + 1, 1, boxnum)
-                } else {
-                    sum = arrayList!!.size
-                    dbManager?.addDrawer(sum + 1, 1, boxnum)
+            "setDrawer" -> {
+                spinner_drawer.setSelection(0)
+                btn_save.setOnClickListener {
+                    val arrayList = dbManager?.drawers
+                    if (arrayList == null) {
+                        sum = 0
+                        dbManager?.addDrawer(sum + 1, 1, boxnum)
+                    } else {
+                        sum = arrayList!!.size
+                        dbManager?.addDrawer(sum + 1, 1, boxnum)
+                    }
+                    saveDrawerbuttonClicked("saveDrawer")
                 }
-                saveDrawerbuttonClicked("saveDrawer")
-
+                setDrawer_btn_del.visibility = View.GONE
             }
         }
     }

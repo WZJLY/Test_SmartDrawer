@@ -66,25 +66,22 @@ class SetCabinetFragment : Fragment() {
     fun updateDrawer()
     {
         val arrListDrawers = dbManager?.getDrawers()
-        val sum = arrListDrawers!!.size.toInt()
-        if(sum == 0)
+        val sum = arrListDrawers!!.size
+        if(sum > 0)
+        {
+            for (i in 1..sum){
+                val fragment = childFragmentManager.beginTransaction()
+                val drawerFragment1 = DrawerFragment1()
+                val args = Bundle()
+                args.putInt("drawerID", i)
+                drawerFragment1.arguments = args
+                fragment.add(R.id.Layout_drawer, drawerFragment1, "抽屉")
+                fragment.commit()
+            }
+        }
+        else
         {
             Toast.makeText(context.applicationContext, "请添加抽屉", Toast.LENGTH_SHORT).show()
-        }
-     else
-     {
-         if(sum>0) {
-             for (i in 1..sum) {
-                 drawer = arrListDrawers?.get(i - 1)
-                 val fragment = childFragmentManager.beginTransaction()
-                 val drawerFragment1 = DrawerFragment1()
-                 val args = Bundle()
-                 args.putInt("drawerID", drawer!!.getId().toInt())
-                 drawerFragment1.setArguments(args)
-                 fragment.add(R.id.Layout_drawer, drawerFragment1, "抽屉")
-                 fragment.commit()
-             }
-         }
         }
     }
 }// Required empty public constructor
