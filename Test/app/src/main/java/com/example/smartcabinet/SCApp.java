@@ -28,6 +28,7 @@ public class SCApp extends Application {  //全局变量
     private static Context context;
     private String TemplateID;
     private int statue;
+    private String editPerson;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -49,8 +50,8 @@ public class SCApp extends Application {  //全局变量
         userInfo = u;
     }
 
-    public void setUserInfo(String id, String account, String password, int power ,String name,String phoneNum){
-        userInfo = new UserAccount(id, account, password, power,name,phoneNum);
+    public void setUserInfo(String id, String account, String password, int power ,String name,String phoneNum,String statue){
+        userInfo = new UserAccount(id, account, password, power,name,phoneNum,statue);
     }
 
     public UserAccount getUserInfo(){
@@ -117,5 +118,11 @@ public class SCApp extends Application {  //全局变量
     public void setUpdateTeamplate(int update){  statue = update; }
     public int getUpdateTeamplate(){
         return statue;
+    }
+    public void setEditPerson(String userName){
+        editPerson=userName;
+    }
+    public  String getEditPerson(){
+        return editPerson;
     }
 }

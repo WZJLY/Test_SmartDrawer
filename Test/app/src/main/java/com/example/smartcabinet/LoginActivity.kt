@@ -70,9 +70,9 @@ class LoginActivity :BaseActivity() {
                 val strAccount = "admin"
                 val strPassword = "admin"
                 val iPower = SC_Const.ADMIN
-                val account = UserAccount(strUserId, strAccount, strPassword, iPower,"","")
+                val account = UserAccount(strUserId, strAccount, strPassword, iPower,"","","0")
                 dbManager?.addAccount(account)
-                scApp?.setUserInfo(strUserId, strAccount, strPassword, iPower,"","")
+                scApp?.setUserInfo(strUserId, strAccount, strPassword, iPower,"","","0")
                 saveUserName(strAccount)
                 intent.setClass(this, AdminActivity::class.java)
                 startActivity(intent)
@@ -90,12 +90,14 @@ class LoginActivity :BaseActivity() {
             //upload user login record to server
 
 
-
+            if(userInfo?.statue!="1") {
                 intent.setClass(this, AdminActivity::class.java)
-                intent.putExtra("SC_Const",1)
-
-            saveUserName(userName)
-            startActivity(intent)
+                intent.putExtra("SC_Const", 1)
+                saveUserName(userName)
+                startActivity(intent)
+            }
+            else
+            Toast.makeText(this,"该用户已被禁用",Toast.LENGTH_SHORT).show()
 //            finish()
         }
     }

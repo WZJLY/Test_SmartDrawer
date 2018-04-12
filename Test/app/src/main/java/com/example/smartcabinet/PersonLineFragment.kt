@@ -53,17 +53,21 @@ class PersonLineFragment : Fragment() {
       val daccout=dbManager?.getUserAccountByUserName(userName)
         tV_userName.text=daccout?.getUserName()
         val account= scApp?.userInfo
-        if(account?.userName == userName)
-        {
-            iBt_deletPerson.setVisibility(View.GONE)
-        }
         if(userName=="admin")
-            {
+        {
 
             iBt_deletPerson.setVisibility(View.GONE)   //对可删除的用户就行了判断
-                                                    // 管理级别为最高，接下去普通管理员，然后是普通用户
-                                                    //同级之间无法删除，只能上级删除下级
+            // 管理级别为最高，接下去普通管理员，然后是普通用户
+            //同级之间无法删除，只能上级删除下级
         }
+        else{
+            if(account?.userPower==0&&account.userName!="admin")
+            {
+                iBt_deletPerson.setVisibility(View.GONE)
+            }
+        }
+
+
 
         iBt_deletPerson.setOnClickListener({            //用户的删除
             val builder = AlertDialog.Builder(context)
@@ -80,6 +84,24 @@ class PersonLineFragment : Fragment() {
             builder.show()
         })
 
+        iBt_person.setOnClickListener{
+            if(account?.userName=="admin")
+            {
+
+                scApp?.editPerson=userName
+                deletbuttonClicked("edit")
+            }
+            else{
+                if(account?.userPower==0)
+                {
+                    if(userName!="admin"&&daccout?.userPower!=0) {
+                        scApp?.editPerson = userName
+                        deletbuttonClicked("edit")
+                    }
+                }
+            }
+
+        }
     }
     private fun deletbuttonClicked(text: String) {
         activityCallback?.deletButtonClick(text)

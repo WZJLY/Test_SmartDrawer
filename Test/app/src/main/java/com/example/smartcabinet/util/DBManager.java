@@ -33,14 +33,16 @@ public class DBManager {
     public void DeleteDBUser(String tableName){
 
     }
+
     public void deleteAccountByUserName(String userName){
         db.delete("user", "userName == ?", new String[]{ userName });
     }
     public void addAccount(UserAccount user) {
         if(!isAccountExist(user.userName)){
-            db.execSQL("INSERT INTO user VALUES(null, ?, ?, ?, ?, ?, ?)", new Object[]{user.userId, user.userName, user.userPassword, user.userPower, user.userAccount, user.phoneNumber});
+            db.execSQL("INSERT INTO user VALUES(null, ?, ?, ?, ?, ?, ?,?)", new Object[]{user.userId, user.userName, user.userPassword, user.userPower, user.userAccount, user.phoneNumber,user.statue});
             Log.i(DBOPERATION, "Insert Success");
-        }else{
+        }
+        else{
             Log.i(DBOPERATION, "already exist!");
         }
     }
@@ -54,6 +56,14 @@ public class DBManager {
     }
 
     public void updateAccount(UserAccount user) {
+
+    }
+    public void updateStatueByUserName(String strUserName,String userStatue){
+
+        ContentValues cv = new ContentValues();
+        cv.put("userName", strUserName);
+        cv.put("statue",userStatue);
+        db.update("user", cv, "userName=?", new String[] { strUserName });
 
     }
     public boolean isAccountExist(String strUserName) {
@@ -74,7 +84,7 @@ public class DBManager {
     }
 
     public UserAccount getUserAccountByUserName(String strUserName){
-        Cursor cursor = db.query("user", new String[] {"userId", "userName", "userPassword", "userPower","userAccount","phoneNumber"}, "userName=?", new String[] { strUserName }, null, null, null);
+        Cursor cursor = db.query("user", new String[] {"userId", "userName", "userPassword", "userPower","userAccount","phoneNumber","statue"}, "userName=?", new String[] { strUserName }, null, null, null);
         cursor.moveToNext();
         UserAccount userInfo = new UserAccount(
                 cursor.getString(cursor.getColumnIndex("userId")),
@@ -82,7 +92,8 @@ public class DBManager {
                 cursor.getString(cursor.getColumnIndex("userPassword")),
                 parseInt(cursor.getString(cursor.getColumnIndex("userPower"))),
                 cursor.getString(cursor.getColumnIndex("userAccount")),
-                cursor.getString(cursor.getColumnIndex("phoneNumber"))
+                cursor.getString(cursor.getColumnIndex("phoneNumber")),
+                cursor.getString(cursor.getColumnIndex("statue"))
         );
         return userInfo;
     }
@@ -102,7 +113,7 @@ public class DBManager {
         if(!isAccountExist(strUserName, strUserPWD)){
             Log.e(DBOPERATION, "user is not exist! error from getUserPower");
         }
-        Cursor cursor = db.query("user", new String[] {"userId", "userName", "userPassword", "userPower","userAccount","phoneNumber"}, "userName=? AND userPassword=?", new String[] { strUserName, strUserPWD }, null, null, null);
+        Cursor cursor = db.query("user", new String[] {"userId", "userName", "userPassword", "userPower","userAccount","phoneNumber","statue"}, "userName=? AND userPassword=?", new String[] { strUserName, strUserPWD }, null, null, null);
         cursor.moveToNext();
         UserAccount userInfo = new UserAccount(
                 cursor.getString(cursor.getColumnIndex("userId")),
@@ -110,7 +121,8 @@ public class DBManager {
                 cursor.getString(cursor.getColumnIndex("userPassword")),
                 parseInt(cursor.getString(cursor.getColumnIndex("userPower"))),
                 cursor.getString(cursor.getColumnIndex("userAccount")),
-                cursor.getString(cursor.getColumnIndex("phoneNumber"))
+                cursor.getString(cursor.getColumnIndex("phoneNumber")),
+                cursor.getString(cursor.getColumnIndex("statue"))
         );
         return userInfo;
     }
@@ -135,7 +147,8 @@ public class DBManager {
                         cursor.getString(cursor.getColumnIndex("userPassword")),
                         parseInt(cursor.getString(cursor.getColumnIndex("userPower"))),
                         cursor.getString(cursor.getColumnIndex("userAccount")),
-                        cursor.getString(cursor.getColumnIndex("phoneNumber"))
+                        cursor.getString(cursor.getColumnIndex("phoneNumber")),
+                        cursor.getString(cursor.getColumnIndex("statue"))
                 );
                 arrListUsers.add(userAccount);
                 cursor.moveToNext();

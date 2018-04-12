@@ -58,6 +58,7 @@ class AddPersonFragment : Fragment() {
         val sum = arrayList!!.size
         for(i in 1..sum)
         {
+
             userAccount = arrayList?.get(i-1)
             val fragment = childFragmentManager.beginTransaction()
             val personFragment =PersonLineFragment()

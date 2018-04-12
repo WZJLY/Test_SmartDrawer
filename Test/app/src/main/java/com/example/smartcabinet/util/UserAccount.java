@@ -12,6 +12,7 @@ public class UserAccount {
     public int userPower;   //用户权限，对应SC_Const.java中的常量
     public String phoneNumber;
     public String userAccount;
+    public String statue;      //“0”启用， “1”禁用
 public UserAccount(){
 
 }
@@ -35,12 +36,16 @@ public UserAccount(){
 
     public String getPhoneNumber(){return  this.phoneNumber;}
 
-    public UserAccount(String ID, String name, String password, int power,String account,String number) {
+    public String getStatue(){  return  this.statue; }
+
+
+    public UserAccount(String ID, String name, String password, int power,String account,String number,String userStatue) {
         this.userId = ID;
         this.userName = name;
         this.userPassword = password;
         this.userPower = power;
         this.userAccount=account;
         this.phoneNumber=number;
+        this.statue=userStatue;
     }
 }

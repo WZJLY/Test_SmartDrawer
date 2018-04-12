@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -15,7 +14,6 @@ import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.SC_Const
 import com.example.smartcabinet.util.UserAccount
 import kotlinx.android.synthetic.main.fragment_edit_person.*
-import android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS
 
 
 
@@ -32,6 +30,7 @@ class EditPersonFragment : Fragment() {
     private var userID = String()
     private var userAccount= String()
     private var phoneNum= String()
+    private var statue=String()
     private var userpower= 0
     private var user:UserAccount?=null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,20 +44,33 @@ class EditPersonFragment : Fragment() {
         spinner_level.adapter = Madapter
         dbManager = DBManager(context.applicationContext)
         scApp = context.applicationContext as SCApp
-        username=scApp!!.userInfo.getUserName()
-        Log.d("username",username)
-        user=dbManager?.getUserAccountByUserName(username)
-        userAccount=user?.getUserAccount().toString()
-        userID=user!!.userId
-        userpasswd=user!!.getUserPassword()
-        phoneNum=user?.getPhoneNumber().toString()
-        userpower=user!!.getUserPower()
-
-        if(getArguments().getString("editfile") =="editperson")
+        if(arguments.getString("editfile") =="editperson")
         {
+
+
+            username=scApp!!.userInfo.getUserName()
+            Log.d("username",username)
+            user=dbManager?.getUserAccountByUserName(username)
+            userAccount=user?.getUserAccount().toString()
+            userID=user!!.userId
+            userpasswd=user!!.getUserPassword()
+            phoneNum=user?.getPhoneNumber().toString()
+            userpower=user!!.getUserPower()
             UserMessage()
         }
 
+        if(arguments.getString("edit") =="editOther")
+        {
+            username=scApp!!.editPerson
+            user=dbManager?.getUserAccountByUserName(username)
+            userAccount=user?.getUserAccount().toString()
+            userID=user!!.userId
+            userpasswd=user!!.getUserPassword()
+            phoneNum=user?.getPhoneNumber().toString()
+            userpower=user!!.getUserPower()
+            statue=user?.getStatue().toString()
+            UserMessage()
+        }
         var userAccount=UserAccount()
         spinner_level.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View,
@@ -81,12 +93,7 @@ class EditPersonFragment : Fragment() {
             }
         }
         button_save.setOnClickListener {
-//            if(arguments.getString("editfile") =="editperson")
-//            {
-//                updateUserAccountByName(username)
-//                Toast.makeText(context,"个人信息修改成功",Toast.LENGTH_SHORT).show()
-//            }
-//            else {
+
 
                 if (editText_Num.length() == 0) {
                     Toast.makeText(context, "编码信息未填写", Toast.LENGTH_SHORT).show()
@@ -127,7 +134,14 @@ class EditPersonFragment : Fragment() {
                     }
                 } else
                     Toast.makeText(context, "两次密码输入不一样", Toast.LENGTH_SHORT).show()
-//            }
+        }
+        btn_enable.setOnClickListener{
+            //判断该用户状态，如果为”0“则禁用，如果为”1“则启用
+            if(statue=="0"||statue=="null")
+            dbManager?.updateStatueByUserName(username,"1")
+            if(statue=="1")
+                dbManager?.updateStatueByUserName(username,"0")
+            savebuttonClicked("save")
         }
     }
     interface savepersonbuttonlisten {
@@ -160,6 +174,10 @@ class EditPersonFragment : Fragment() {
      *个人信息设置界面，无法修改账号
      */
   private fun UserMessage(){
+        if(statue=="1")
+        {
+            btn_enable.text="启用"
+        }
         textView_title.text ="个人信息修改"
         editText_account.isEnabled = false
         editText_account.isFocusable = false

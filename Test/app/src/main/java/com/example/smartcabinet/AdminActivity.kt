@@ -23,10 +23,6 @@ import java.net.MalformedURLException
 import java.net.URL
 
 import android.view.inputmethod.InputMethodManager
-import kotlinx.android.synthetic.main.fragment_hardware_setup.*
-import android.R.attr.versionName
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import com.example.smartcabinet.util.UpdateAppManager
 
 
@@ -47,7 +43,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                     val data = msg.obj as String
                     Toast.makeText(this@AdminActivity,data,Toast.LENGTH_SHORT).show()
                     val editTemplateFragment = EditTemplateFragment()
-                    replaceFragment(editTemplateFragment, R.id.framelayout)
+                    replaceFragment(editTemplateFragment, R.id.fl_admin)
                 }
                 2 -> {
                     val data = msg.obj as String
@@ -73,28 +69,28 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         when(userAccount?.getUserPower()){
             SC_Const.ADMIN -> {
                 val adminfrag = AdminFragment()
-                replaceFragment(adminfrag, R.id.framelayout)
+                replaceFragment(adminfrag, R.id.fl_admin)
             }
             SC_Const.NORMAL -> {
                 val orinaryFragment = OrinaryFragment()
-                replaceFragment(orinaryFragment, R.id.framelayout)
+                replaceFragment(orinaryFragment, R.id.fl_admin)
             }
         }
         back_button.setOnClickListener({
             when(returnview){
                 "admin" -> {
                     val adminfragment = AdminFragment()
-                    replaceFragment(adminfragment, R.id.framelayout)
+                    replaceFragment(adminfragment, R.id.fl_admin)
                     returnview ="login"
                 }
                 "orinary" -> {
                     val orinaryFragment = OrinaryFragment()
-                    replaceFragment(orinaryFragment, R.id.framelayout)
+                    replaceFragment(orinaryFragment, R.id.fl_admin)
                     returnview ="login"
                 }
                 "editperson"-> {
                     val editperson = AddPersonFragment()
-                    replaceFragment(editperson, R.id.framelayout)
+                    replaceFragment(editperson, R.id.fl_admin)
                     returnview ="admin"
                 }
                 "login" -> {
@@ -104,17 +100,17 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 }
                 "find_out"->{
                     val setCabinetFragment = SetCabinetFragment()
-                    replaceFragment(setCabinetFragment,R.id.framelayout)
+                    replaceFragment(setCabinetFragment,R.id.fl_admin)
                     returnview = "admin"
                 }
                 "setup" -> {
                     val setupFragment = SetupFragment()
-                    replaceFragment(setupFragment,R.id.framelayout)
+                    replaceFragment(setupFragment,R.id.fl_admin)
                     returnview = "admin"
                 }
                 "setCabinet" -> {
                     val setCabinetFragment = SetCabinetFragment()
-                    replaceFragment(setCabinetFragment,R.id.framelayout)
+                    replaceFragment(setCabinetFragment,R.id.fl_admin)
                     returnview = "setup"
                 }
             }
@@ -132,7 +128,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         when(text) {
             "saveHardware" -> {
                 val setupFragment = SetupFragment()
-                replaceFragment(setupFragment,R.id.framelayout)
+                replaceFragment(setupFragment,R.id.fl_admin)
                 returnview = "admin"
             }
         }
@@ -143,7 +139,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         if(text == "delet")
         {
             val setCabinet = SetCabinetFragment()
-            replaceFragment(setCabinet, R.id.framelayout)
+            replaceFragment(setCabinet, R.id.fl_admin)
         }
         if(text == "find_out")
         {
@@ -152,7 +148,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
             val args = Bundle()
             args.putString("setDrawer",""+drawerID)
             setDrawer.arguments=args
-            replaceFragment(setDrawer, R.id.framelayout)
+            replaceFragment(setDrawer, R.id.fl_admin)
 
 
         }
@@ -160,13 +156,13 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
     override fun saveDrawerButtonClick(text: String) {
         if(text == "saveDrawer") {
             val setCabinet = SetCabinetFragment()
-            replaceFragment(setCabinet, R.id.framelayout)
+            replaceFragment(setCabinet, R.id.fl_admin)
         }
     }
     override fun savepersonButtonClick(text: String) {
         if(text == "save") {
             val editperson = AddPersonFragment()
-            replaceFragment(editperson, R.id.framelayout)
+            replaceFragment(editperson, R.id.fl_admin)
         }
     }
     override fun addpersonButtonClick(text: String) {
@@ -177,16 +173,28 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
             val editMessageFragment = EditPersonFragment()
             val args = Bundle()
             args.putString("editfile","addperson")
-            editMessageFragment.setArguments(args)
-            replaceFragment(editMessageFragment, R.id.framelayout)
+            editMessageFragment.arguments=args
+            replaceFragment(editMessageFragment, R.id.fl_admin)
 
         }
     }
     override fun deletButtonClick(text: String) {
         returnview = "admin"
         if(text == "delet") {
+
            val editperson = AddPersonFragment()
-           replaceFragment(editperson, R.id.framelayout)
+           replaceFragment(editperson, R.id.fl_admin)
+
+        }
+        if(text=="edit"){
+            val editPersonFragment =  EditPersonFragment()
+            val args = Bundle()
+            args.putString("edit","editOther")
+            editPersonFragment.arguments=args
+            replaceFragment(editPersonFragment,R.id.fl_admin)
+//            val editperson = AddPersonFragment()
+//            replaceFragment(editperson, R.id.framelayout)
+
         }
     }
     override fun orinaryButtonClick(text: String)
@@ -195,7 +203,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         when(text){
             "regentsearch" -> {
                 val serachfrag = SerachFragment()
-                replaceFragment(serachfrag, R.id.framelayout)
+                replaceFragment(serachfrag, R.id.fl_admin)
             }
             "edit_flie" ->
             {
@@ -204,7 +212,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 val args = Bundle()
                 args.putString("editfile","editperson")
                 editMessageFragment.arguments=args
-                replaceFragment(editMessageFragment, R.id.framelayout)
+                replaceFragment(editMessageFragment, R.id.fl_admin)
             }
             "reagent_operation" ->{
                 if(dbManager!!.sysSeting.size > 0){
@@ -218,12 +226,12 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
             "record_query" ->{
 
                 val recordFragment = RecordFragment()
-                replaceFragment(recordFragment, R.id.framelayout)
+                replaceFragment(recordFragment, R.id.fl_admin)
             }
 
             "orinary_template" ->{
                 val editTemplateFragment = EditTemplateFragment()
-                replaceFragment(editTemplateFragment, R.id.framelayout)
+                replaceFragment(editTemplateFragment, R.id.fl_admin)
             }
         }
     }
@@ -232,7 +240,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         when(text) {
             "btn_single" -> {
                 val singleTemplateFragment = SingleTemplateFragment()
-                replaceFragment(singleTemplateFragment, R.id.framelayout)
+                replaceFragment(singleTemplateFragment, R.id.fl_admin)
 
             }
             "btn_clean" ->{
@@ -243,7 +251,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                         .setPositiveButton("确定", DialogInterface.OnClickListener{ dialogInterface, i ->
                             dbManager?.deleteAllReagentTemplate()
                             val editTemplateFragment = EditTemplateFragment()
-                            replaceFragment(editTemplateFragment, R.id.framelayout)
+                            replaceFragment(editTemplateFragment, R.id.fl_admin)
                             Toast.makeText(this,"试剂清空完成",Toast.LENGTH_SHORT).show()
                         })
                         .setNeutralButton("取消",null)
@@ -272,7 +280,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         when(text){
             "btn_save" ->{      //下拉框未添加，内容未进行判断
                     val editTemplateFragment = EditTemplateFragment()
-                    replaceFragment(editTemplateFragment, R.id.framelayout)
+                    replaceFragment(editTemplateFragment, R.id.fl_admin)
             }
         }
 
@@ -283,19 +291,20 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         when(text) {
             "reagent_search"-> {
                 val serachfrag = SerachFragment()
-                replaceFragment(serachfrag, R.id.framelayout)
+                replaceFragment(serachfrag, R.id.fl_admin)
             }
             "personal_management"-> {
                 val editperson = AddPersonFragment()
-                replaceFragment(editperson, R.id.framelayout)
+                replaceFragment(editperson, R.id.fl_admin)
             }
             " editflie" ->
             {
+
                 val editMessageFragment = EditPersonFragment()
                 val args = Bundle()
                 args.putString("editfile","editperson")
-                editMessageFragment.setArguments(args)
-                replaceFragment(editMessageFragment, R.id.framelayout)
+                editMessageFragment.arguments=args
+                replaceFragment(editMessageFragment, R.id.fl_admin)
 
             }
             "reagent_op"-> {
@@ -309,16 +318,16 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
             }
             "recordquery" -> {
                 val recordFragment = RecordFragment()
-                replaceFragment(recordFragment, R.id.framelayout)
+                replaceFragment(recordFragment, R.id.fl_admin)
             }
             "reagent_template" -> {
                 val editTemplateFragment = EditTemplateFragment()
-                replaceFragment(editTemplateFragment, R.id.framelayout)
+                replaceFragment(editTemplateFragment, R.id.fl_admin)
             }
 
             "btn_setup" -> {
                 val setupFragment = SetupFragment()
-                replaceFragment(setupFragment, R.id.framelayout)
+                replaceFragment(setupFragment, R.id.fl_admin)
             }
         }
     }
@@ -328,17 +337,17 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         when (text){
             "binding" -> {
                 val bingdingFragment = BingdingFragment()
-                replaceFragment(bingdingFragment,R.id.framelayout)
+                replaceFragment(bingdingFragment,R.id.fl_admin)
             }
 
             "setbox" -> {
                 val setCabinet = SetCabinetFragment()
-                replaceFragment(setCabinet, R.id.framelayout)
+                replaceFragment(setCabinet, R.id.fl_admin)
             }
 
             "hardware" -> {
                 val hardwareSetupFragment = HardwareSetupFragment()
-                replaceFragment(hardwareSetupFragment, R.id.framelayout)
+                replaceFragment(hardwareSetupFragment, R.id.fl_admin)
             }
             "update"->{
                 //进度条下载完成后自动安装
@@ -370,7 +379,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 val args = Bundle()
                 args.putString("setDrawer","set")
                 setDrawer.setArguments(args)
-                replaceFragment(setDrawer, R.id.framelayout)
+                replaceFragment(setDrawer, R.id.fl_admin)
                 Log.d("data",fragment)
             }
         }
