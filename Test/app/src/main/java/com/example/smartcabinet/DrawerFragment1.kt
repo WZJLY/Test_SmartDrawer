@@ -73,4 +73,31 @@ class DrawerFragment1 : Fragment() {
     private fun deletDrawerbuttonClicked(text: String,drawerID: Int) {
         activityCallback?.deletDrawerButtonClick(text,drawerID)
     }
+
+
+    private fun deletDrawer()
+    {
+        val arrListReagent = dbManager?.reagents
+        val sum = arrListReagent!!.size
+        if(sum>0) {
+            for (m in 1..sum) {
+                reagent = arrListReagent[m - 1]         //修改
+                if(reagent!!.drawerId.toInt()!=drawerID&&dbManager!!.drawers.size==drawerID)
+                {
+                    dbManager?.deleteDrawer(drawerID,1)
+                    deletDrawerbuttonClicked("delet",0)
+                }
+
+            }
+        }
+        else
+        {
+            if(dbManager!!.drawers.size==drawerID)
+                dbManager?.deleteDrawer(drawerID,1)
+            deletDrawerbuttonClicked("delet",0) //如果没有不存在试剂，则也只能从最后一个开始删除抽屉
+
+        }
+    }       //通过判断该抽屉里是否有试剂，是否是最后一个抽屉，否则无法删除
+
+
 }// Required empty public constructor

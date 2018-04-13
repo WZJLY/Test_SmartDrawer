@@ -54,28 +54,42 @@ class AddPersonFragment : Fragment() {
 
     fun updateUser()
     {
-        val arrayList = dbManager?.getUsers()
+        val arrayList = dbManager?.users
         val sum = arrayList!!.size
         for(i in 1..sum)
         {
 
             userAccount = arrayList?.get(i-1)
-            val fragment = childFragmentManager.beginTransaction()
-            val personFragment =PersonLineFragment()
-            val args = Bundle()
-            args.putString("userName",userAccount!!.getUserName().toString())
-            personFragment.arguments=args
-            fragment.add(R.id.LL_person, personFragment,userAccount?.getUserName())
-            fragment.commit()
-
+            if(userAccount?.userPower==0) {
+                val fragment = childFragmentManager.beginTransaction()
+                val personFragment = PersonLineFragment()
+                val args = Bundle()
+                args.putString("userName", userAccount!!.getUserName().toString())
+                personFragment.arguments = args
+                fragment.add(R.id.LL_person, personFragment, userAccount?.getUserName())
+                fragment.commit()
+            }
+        }//通过遍历用户的数据表对片断进行添加
+        for(i in 1..sum)
+        {
+            userAccount = arrayList?.get(i-1)
+            if(userAccount?.userPower==1) {
+                val fragment = childFragmentManager.beginTransaction()
+                val personFragment = PersonLineFragment()
+                val args = Bundle()
+                args.putString("userName", userAccount!!.getUserName().toString())
+                personFragment.arguments = args
+                fragment.add(R.id.LL_person, personFragment, userAccount?.getUserName())
+                fragment.commit()
+            }
         }//通过遍历用户的数据表对片断进行添加
     }
     fun removeUser()
     {
         var removeUsername = String()
-        if(getArguments()!=null)
+        if(arguments!=null)
         {
-            removeUsername = getArguments().getString("rmUsername")
+            removeUsername = arguments.getString("rmUsername")
 
         }
         val removepfrg = childFragmentManager.findFragmentByTag(removeUsername)
