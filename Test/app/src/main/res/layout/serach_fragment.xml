@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/serach_area"
-        android:layout_width="800dp"
-        android:layout_height="87dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/serach_icon" />
+    <!--<ImageView-->
+        <!--android:id="@+id/serach_area"-->
+        <!--android:layout_width="800dp"-->
+        <!--android:layout_height="87dp"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--app:srcCompat="@drawable/serach_icon" />-->
 
     <ImageView
         android:id="@+id/drawer_area"
@@ -30,21 +30,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/serachText"
-        android:layout_width="432dp"
-        android:layout_height="66dp"
-        android:layout_alignLeft="@+id/drawer_area"
-        android:layout_alignStart="@+id/drawer_area"
-        android:layout_alignTop="@+id/serach_area"
-        android:background="@null"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColorLink="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/serach_area"
-        app:layout_constraintEnd_toEndOf="@+id/serach_area"
-        app:layout_constraintStart_toStartOf="@+id/serach_area"
-        app:layout_constraintTop_toTopOf="@+id/serach_area" />
+    <!--<EditText-->
+        <!--android:id="@+id/serachText"-->
+        <!--android:layout_width="432dp"-->
+        <!--android:layout_height="66dp"-->
+        <!--android:layout_alignLeft="@+id/drawer_area"-->
+        <!--android:layout_alignStart="@+id/drawer_area"-->
+        <!--android:layout_alignTop="@+id/serach_area"-->
+        <!--android:background="@null"-->
+        <!--android:ems="10"-->
+        <!--android:inputType="textPersonName"-->
+        <!--android:textColorLink="@android:color/black"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/serach_area"-->
+        <!--app:layout_constraintEnd_toEndOf="@+id/serach_area"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/serach_area"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/serach_area" />-->
 
     <LinearLayout
         android:id="@+id/add_drawer"

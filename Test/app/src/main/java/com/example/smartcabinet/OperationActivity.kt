@@ -18,7 +18,6 @@ import com.example.smartcabinet.util.*
 class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,AdminReagentFragment.adminReagentListen {
     private var scApp: SCApp? = null
     private var dbManager: DBManager? = null
-    private var drawer: Drawer? = null
     private var statue: String? = null
     var spi: SerialPortInterface? = null
     private var REQUEST_CODE = 1
@@ -121,20 +120,17 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
 
     fun updateDrawer()          //通过遍历数据库更新抽屉界面
     {
-        val arrListDrawers = dbManager?.getDrawers()
-        val sum = arrListDrawers!!.size.toInt()
+        val sum = dbManager?.drawers!!.size
         if (sum == 0) {
             Toast.makeText(this, "请添加抽屉", Toast.LENGTH_SHORT).show()
         } else {
             if (sum > 0) {
                 for (i in 1..sum) {
-                    drawer = arrListDrawers?.get(i - 1)
                     val drawerFragment2 = DrawerFragment2()
                     val args = Bundle()
-                    args.putInt("drawerID", drawer!!.getId())
-                    drawerFragment2.setArguments(args)
+                    args.putInt("drawerID", i)
+                    drawerFragment2.arguments = args
                     addFragment(R.id.Layout_drawer, drawerFragment2)
-
                 }
             }
         }

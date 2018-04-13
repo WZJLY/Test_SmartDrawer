@@ -37,7 +37,7 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if(null != this.currentFocus) {
             val mInputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0)
+            return mInputMethodManager.hideSoftInputFromWindow(this.currentFocus.windowToken, 0)
         }
         return super.onTouchEvent(event)
     }
@@ -73,7 +73,7 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                 val informationFragment = InformationFragment2()
                 val args = Bundle()
                 args.putString("scan_value", scan_value)
-                informationFragment.setArguments(args)
+                informationFragment.arguments = args
                 replaceFragment(R.id.frameLayout_information,informationFragment)
 
             }
