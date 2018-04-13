@@ -46,8 +46,6 @@ class EditPersonFragment : Fragment() {
         scApp = context.applicationContext as SCApp
         if(arguments.getString("editfile") =="editperson")
         {
-
-
             username=scApp!!.userInfo.getUserName()
             Log.d("username",username)
             user=dbManager?.getUserAccountByUserName(username)
@@ -57,8 +55,8 @@ class EditPersonFragment : Fragment() {
             phoneNum=user?.getPhoneNumber().toString()
             userpower=user!!.getUserPower()
             UserMessage()
+            btn_enable.visibility = View.GONE
         }
-
         if(arguments.getString("edit") =="editOther")
         {
             username=scApp!!.editPerson

@@ -24,6 +24,7 @@ import java.net.URL
 
 import android.view.inputmethod.InputMethodManager
 import com.example.smartcabinet.util.UpdateAppManager
+import java.util.*
 
 
 class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten, AddPersonFragment.addpersonbuttonlisten,
@@ -32,6 +33,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
     private var scApp: SCApp? = null
     private var returnview = "login"
     private var dbManager: DBManager? = null
+    private var mBackKeyPressed = false
     var handler =Handler()
     var download_handler=Handler()
     var mHandler: Handler = object : Handler() {
@@ -68,16 +70,34 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         val userAccount =  scApp?.getUserInfo()
         when(userAccount?.getUserPower()){
             SC_Const.ADMIN -> {
+                returnview ="login"
                 val adminfrag = AdminFragment()
                 replaceFragment(adminfrag, R.id.fl_admin)
             }
             SC_Const.NORMAL -> {
+                returnview ="login"
                 val orinaryFragment = OrinaryFragment()
                 replaceFragment(orinaryFragment, R.id.fl_admin)
             }
         }
         back_button.setOnClickListener({
             when(returnview){
+                "login" -> {
+                    if (!mBackKeyPressed) {
+                        Toast.makeText(this, "再按一次退出登陆", Toast.LENGTH_SHORT).show()
+                        mBackKeyPressed = true
+                        Timer().schedule( object:TimerTask(){
+                            override fun run() {
+                                mBackKeyPressed = false
+                            }
+                        },2000)
+                    }
+                    else{
+                        val intent =Intent()
+                        intent.setClass(this,LoginActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
                 "admin" -> {
                     val adminfragment = AdminFragment()
                     replaceFragment(adminfragment, R.id.fl_admin)
@@ -93,12 +113,6 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                     replaceFragment(editperson, R.id.fl_admin)
                     returnview ="admin"
                 }
-                "login" -> {
-                    val intent =Intent()
-                    intent.setClass(this,LoginActivity::class.java)
-                    startActivity(intent)
-                }
-
                 "setup" -> {
                     val setupFragment = SetupFragment()
                     replaceFragment(setupFragment,R.id.fl_admin)
@@ -108,6 +122,11 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                     val setCabinetFragment = SetCabinetFragment()
                     replaceFragment(setCabinetFragment,R.id.fl_admin)
                     returnview = "setup"
+                }
+                "editTemplate" ->{
+                    val editTemplateFragment = EditTemplateFragment()
+                    replaceFragment(editTemplateFragment,R.id.fl_admin)
+                    returnview = "admin"
                 }
             }
         })
@@ -133,10 +152,11 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
     override  fun deletDrawerButtonClick(text: String,drawerID:Int) {
         when(text) {
-            "delet" -> {
-                val setCabinet = SetCabinetFragment()
-                replaceFragment(setCabinet, R.id.fl_admin)
-            }
+//            "delet" -> {
+//                returnview = "setup"
+//                val setCabinet = SetCabinetFragment()
+//                replaceFragment(setCabinet, R.id.fl_admin)
+//            }
             "find_out" -> {
                 returnview = "setCabinet"
                 val setDrawer = SetDrawerFragment()
@@ -159,46 +179,44 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
     }
     override fun saveDrawerButtonClick(text: String) {
         if(text == "saveDrawer") {
+            returnview = "setup"
             val setCabinet = SetCabinetFragment()
             replaceFragment(setCabinet, R.id.fl_admin)
         }
     }
     override fun savepersonButtonClick(text: String) {
         if(text == "save") {
+            //returnview未定义
             val editperson = AddPersonFragment()
             replaceFragment(editperson, R.id.fl_admin)
         }
     }
     override fun addpersonButtonClick(text: String) {
         returnview = "editperson"
-        if (text == "addperson")
-        {
-
+        if (text == "addperson") {
             val editMessageFragment = EditPersonFragment()
             val args = Bundle()
             args.putString("editfile","addperson")
             editMessageFragment.arguments=args
             replaceFragment(editMessageFragment, R.id.fl_admin)
-
         }
     }
     override fun deletButtonClick(text: String) {
         returnview = "admin"
-        if(text == "delet") {
-
-           val editperson = AddPersonFragment()
-           replaceFragment(editperson, R.id.fl_admin)
-
-        }
-        if(text=="edit"){
-            val editPersonFragment =  EditPersonFragment()
-            val args = Bundle()
-            args.putString("edit","editOther")
-            editPersonFragment.arguments=args
-            replaceFragment(editPersonFragment,R.id.fl_admin)
+        when(text) {
+            "delet" -> {
+                val editperson = AddPersonFragment()
+                replaceFragment(editperson, R.id.fl_admin)
+            }
+            "edit" -> {
+                val editPersonFragment =  EditPersonFragment()
+                val args = Bundle()
+                args.putString("edit","editOther")
+                editPersonFragment.arguments=args
+                replaceFragment(editPersonFragment,R.id.fl_admin)
 //            val editperson = AddPersonFragment()
 //            replaceFragment(editperson, R.id.framelayout)
-
+            }
         }
     }
     override fun orinaryButtonClick(text: String)
@@ -211,7 +229,6 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
             }
             "edit_flie" ->
             {
-
                 val editMessageFragment = EditPersonFragment()
                 val args = Bundle()
                 args.putString("editfile","editperson")
@@ -220,6 +237,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
             }
             "reagent_operation" ->{
                 if(dbManager!!.sysSeting.size > 0){
+                    returnview ="login"
                     val intent = Intent()
                     intent.setClass(this,OperationActivity::class.java)
                     startActivity(intent)
@@ -228,7 +246,6 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                     Toast.makeText(this,"请进行系统硬件设置",Toast.LENGTH_SHORT).show()
             }
             "record_query" ->{
-
                 val recordFragment = RecordFragment()
                 replaceFragment(recordFragment, R.id.fl_admin)
             }
@@ -243,12 +260,11 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
     override fun editTemplateButtonClick(text: String) {
         when(text) {
             "btn_single" -> {
+                returnview = "editTemplate"
                 val singleTemplateFragment = SingleTemplateFragment()
                 replaceFragment(singleTemplateFragment, R.id.fl_admin)
-
             }
             "btn_clean" ->{
-
                 val dialog = AlertDialog.Builder(this)
                         .setTitle("提示")
                         .setMessage("是否要清空模板")
@@ -283,8 +299,9 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
     override fun singleTemplateButtonClick(text: String,state: Int){
         when(text){
             "btn_save" ->{      //下拉框未添加，内容未进行判断
-                    val editTemplateFragment = EditTemplateFragment()
-                    replaceFragment(editTemplateFragment, R.id.fl_admin)
+                returnview = "admin"
+                val editTemplateFragment = EditTemplateFragment()
+                replaceFragment(editTemplateFragment, R.id.fl_admin)
             }
         }
 
@@ -303,7 +320,6 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
             }
             " editflie" ->
             {
-
                 val editMessageFragment = EditPersonFragment()
                 val args = Bundle()
                 args.putString("editfile","editperson")
@@ -313,6 +329,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
             }
             "reagent_op"-> {
                 if(dbManager!!.sysSeting.size > 0){
+                    returnview ="login"
                     val intent = Intent()
                     intent.setClass(this,OperationActivity::class.java)
                     startActivity(intent)
