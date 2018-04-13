@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.admin_fragment.*
 class AdminFragment : Fragment() {
     var activityCallback: AdminFragmentListener?= null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        activity.title = "安储智能试剂柜"
         return inflater!!.inflate(R.layout.admin_fragment, container, false)
 
     }

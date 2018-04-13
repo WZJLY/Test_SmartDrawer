@@ -19,6 +19,7 @@ class SetupFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        activity.title = "系统设置"
         return inflater!!.inflate(R.layout.fragment_setup, container, false)
     }
 

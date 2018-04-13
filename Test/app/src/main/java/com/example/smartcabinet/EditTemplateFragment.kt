@@ -38,6 +38,7 @@ class EditTemplateFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        activity.title = "试剂模板"
         return inflater!!.inflate(R.layout.fragment_edit_template, container, false)
     }
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

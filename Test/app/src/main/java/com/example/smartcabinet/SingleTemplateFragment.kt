@@ -29,6 +29,7 @@ class SingleTemplateFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        activity.title = "单个模板导入"
         return inflater!!.inflate(R.layout.fragment_single_template, container, false)
     }
 

@@ -27,7 +27,6 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
         dbManager = DBManager(applicationContext)
         val cabinetFragment = CabinetFragment()
         addFragment(R.id.Layout_cabinet, cabinetFragment)
-
         scApp = application as SCApp
         changeMessage("noFocusable")
         updateDrawer()

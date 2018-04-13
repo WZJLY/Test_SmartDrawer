@@ -44,8 +44,11 @@ class EditPersonFragment : Fragment() {
         spinner_level.adapter = Madapter
         dbManager = DBManager(context.applicationContext)
         scApp = context.applicationContext as SCApp
+        activity.title = "新增人员"
+        btn_enable.visibility = View.GONE
         if(arguments.getString("editfile") =="editperson")
         {
+            activity.title = "个人信息修改"
             username=scApp!!.userInfo.getUserName()
             Log.d("username",username)
             user=dbManager?.getUserAccountByUserName(username)
@@ -55,10 +58,10 @@ class EditPersonFragment : Fragment() {
             phoneNum=user?.getPhoneNumber().toString()
             userpower=user!!.getUserPower()
             UserMessage()
-            btn_enable.visibility = View.GONE
         }
         if(arguments.getString("edit") =="editOther")
         {
+            activity.title = "个人信息修改"
             username=scApp!!.editPerson
             user=dbManager?.getUserAccountByUserName(username)
             userAccount=user?.getUserAccount().toString()
@@ -68,6 +71,7 @@ class EditPersonFragment : Fragment() {
             userpower=user!!.getUserPower()
             statue=user?.getStatue().toString()
             UserMessage()
+            btn_enable.visibility = View.VISIBLE
         }
         var userAccount=UserAccount()
         spinner_level.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

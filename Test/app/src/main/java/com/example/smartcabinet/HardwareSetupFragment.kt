@@ -24,6 +24,7 @@ class HardwareSetupFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        activity.title = "硬件设置"
         return inflater!!.inflate(R.layout.fragment_hardware_setup, container, false)
     }
 

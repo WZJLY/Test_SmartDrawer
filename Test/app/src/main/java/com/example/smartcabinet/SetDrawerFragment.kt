@@ -21,7 +21,6 @@ class SetDrawerFragment : Fragment() {
     var activityCallback: SetDrawerFragment.SetDrawerFragmentListener?= null
     private var dbManager: DBManager? = null
     private  var boxnum = 0
-    private  var sum = 0
     private  var drawerID = 0
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -59,6 +58,7 @@ class SetDrawerFragment : Fragment() {
         when(arguments.getString("data")){
             "find_out" ->{
                 drawerID = arguments.getString("setDrawer").toInt()
+                tv_drawerNum.text = "抽屉"+drawerID.toString()
                 spinner_drawer.setSelection((dbManager!!.getDrawerByDrawerId(drawerID).drawerSize)-2)
                 spinner_drawer.isEnabled = false
                 setDrawer_btn_del.visibility = View.GONE
@@ -66,6 +66,7 @@ class SetDrawerFragment : Fragment() {
             }
             "drawer_modify" -> {
                 drawerID = arguments.getString("setDrawer").toInt()
+                tv_drawerNum.text = "抽屉"+drawerID.toString()
                 spinner_drawer.setSelection((dbManager!!.getDrawerByDrawerId(drawerID).drawerSize)-2)
                 if(dbManager!!.drawers.size!=drawerID){
                     setDrawer_btn_del.visibility = View.GONE
@@ -82,15 +83,15 @@ class SetDrawerFragment : Fragment() {
             }
             "setDrawer" -> {
                 spinner_drawer.setSelection(0)
+                val arrayList = dbManager?.drawers
+                if (arrayList == null) {
+                    drawerID = 1
+                } else {
+                    drawerID = arrayList!!.size+1
+                }
+                tv_drawerNum.text = "抽屉"+drawerID.toString()
                 btn_save.setOnClickListener {
-                    val arrayList = dbManager?.drawers
-                    if (arrayList == null) {
-                        sum = 0
-                        dbManager?.addDrawer(sum + 1, 1, boxnum)
-                    } else {
-                        sum = arrayList!!.size
-                        dbManager?.addDrawer(sum + 1, 1, boxnum)
-                    }
+                    dbManager?.addDrawer(drawerID, 1, boxnum)
                     saveDrawerbuttonClicked("saveDrawer")
                 }
                 setDrawer_btn_del.visibility = View.GONE

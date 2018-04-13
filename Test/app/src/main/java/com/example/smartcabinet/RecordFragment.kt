@@ -20,6 +20,7 @@ class RecordFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        activity.title = "记录查询"
         return inflater!!.inflate(R.layout.fragment_record, container, false)
     }
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) { //搜索功能，功能待开发与完善

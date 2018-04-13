@@ -18,6 +18,7 @@ class OrinaryFragment : Fragment() {
 
     var activityCallback: OrinaryFragment.orinarybuttonlisten? = null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        activity.title = "安储智能试剂柜"
         return inflater!!.inflate(R.layout.orinary_fragment, container, false)
     }
     interface orinarybuttonlisten {

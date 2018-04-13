@@ -24,7 +24,7 @@ class SerachFragment : Fragment() {
     private var dbManager: DBManager? = null
     private var reagent:Reagent?=null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+        activity.title = "试剂查找"
         return inflater!!.inflate(R.layout.serach_fragment, container, false)
     }
 

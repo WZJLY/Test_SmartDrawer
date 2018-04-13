@@ -37,15 +37,17 @@
             android:name=".AdminActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".OperationActivity" />
+        <activity android:name=".OperationActivity"
+            android:label="试剂操作"/>
         <activity android:name=".SubOperationActivity" />
-        <activity android:name=".AdvertisementActivity"/>
+        <activity android:name=".AdvertisementActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:configChanges="orientation|keyboardHidden"
             android:name="com.example.lib_zxing.activity.CaptureActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-            <!--android:theme="@style/Theme.AppCompat.NoActionBar" />-->
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>

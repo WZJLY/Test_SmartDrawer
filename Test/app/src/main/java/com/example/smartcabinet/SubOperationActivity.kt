@@ -69,10 +69,10 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                 arg.putString("touch","false")
                 tableFragment.arguments=arg
                 replaceFragment(R.id.FL_table,tableFragment)
-
                 val informationFragment = InformationFragment2()
                 val args = Bundle()
                 args.putString("scan_value", scan_value)
+                title = "入柜"
                 informationFragment.arguments = args
                 replaceFragment(R.id.frameLayout_information,informationFragment)
 
@@ -83,21 +83,22 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                 val tableFragment = TableFragment()
                 val arg = Bundle()
                 arg.putString("statue","op")
-                arg.putInt("tablenum_op", scApp!!.getTouchdrawer())
+                arg.putInt("tablenum_op", scApp!!.touchdrawer)
                 arg.putString("touch","false")
                 tableFragment.arguments=arg
                 replaceFragment(R.id.FL_table,tableFragment)
-
+                title = "取用"
                 val informationFragment = InformationFragment3()
                 replaceFragment(R.id.frameLayout_information,informationFragment)
 
             }
 
             "Return" -> {
+                title = "归还"
                 val informationFragment = InformationFragment1()
                 val args = Bundle()
                 args.putString("scan_value", scan_value)
-                informationFragment.setArguments(args)
+                informationFragment.arguments = args
                 replaceFragment(R.id.frameLayout_information,informationFragment)
             }
 
@@ -106,11 +107,11 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                 val tableFragment = TableFragment()
                 val arg = Bundle()
                 arg.putString("statue","op")
-                arg.putInt("tablenum_op", scApp!!.getTouchdrawer())
+                arg.putInt("tablenum_op", scApp!!.touchdrawer)
                 arg.putString("touch","false")
                 tableFragment.arguments=arg
                 replaceFragment(R.id.FL_table,tableFragment)
-
+                title = "移除"
                 val informationFragment = InformationFragment3()
                 replaceFragment(R.id.frameLayout_information,informationFragment)
             }

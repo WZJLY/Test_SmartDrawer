@@ -67,7 +67,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         setContentView(R.layout.activity_admin)
         dbManager = DBManager(applicationContext)
         scApp = application as SCApp
-        val userAccount =  scApp?.getUserInfo()
+        val userAccount =  scApp?.userInfo
         when(userAccount?.getUserPower()){
             SC_Const.ADMIN -> {
                 returnview ="login"
@@ -109,6 +109,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                     returnview ="login"
                 }
                 "editperson"-> {
+
                     val editperson = AddPersonFragment()
                     replaceFragment(editperson, R.id.fl_admin)
                     returnview ="admin"
@@ -118,15 +119,15 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                     replaceFragment(setupFragment,R.id.fl_admin)
                     returnview = "admin"
                 }
-                "setCabinet" -> {
-                    val setCabinetFragment = SetCabinetFragment()
-                    replaceFragment(setCabinetFragment,R.id.fl_admin)
-                    returnview = "setup"
-                }
                 "editTemplate" ->{
                     val editTemplateFragment = EditTemplateFragment()
                     replaceFragment(editTemplateFragment,R.id.fl_admin)
                     returnview = "admin"
+                }
+                "setCabinet" -> {
+                    val setCabinetFragment = SetCabinetFragment()
+                    replaceFragment(setCabinetFragment,R.id.fl_admin)
+                    returnview = "setup"
                 }
             }
         })
