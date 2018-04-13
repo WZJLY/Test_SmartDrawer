@@ -51,7 +51,7 @@ class DrawerFragment1 : Fragment() {
             deletDrawerbuttonClicked("find_out",drawerID)
         }
         drawer_btn_enable.setOnClickListener {
-            //禁用抽屉
+                        //禁用抽屉
         }
         drawer_btn_modify.setOnClickListener {
             deletDrawerbuttonClicked("drawer_modify",drawerID)

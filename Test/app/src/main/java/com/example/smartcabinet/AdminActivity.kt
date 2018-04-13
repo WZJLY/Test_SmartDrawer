@@ -362,6 +362,9 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
             }
         }
     }
+
+
+
     inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
         val fragmentTransaction = beginTransaction()
         fragmentTransaction.func()
@@ -388,6 +391,8 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
             }
         }
     }
+
+
 
     fun templateToDB(filePath: String?): String {
         var ret = ""

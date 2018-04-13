@@ -29,6 +29,7 @@ public class SCApp extends Application {  //全局变量
     private String TemplateID;
     private int statue;
     private String editPerson;
+    private int touchDrawer;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -125,4 +126,7 @@ public class SCApp extends Application {  //全局变量
     public  String getEditPerson(){
         return editPerson;
     }
+
+    public void setTouchDrawer(int drawerID){    touchDrawer = drawerID;  }
+    public int getTouchDrawer(){return touchDrawer;}
 }

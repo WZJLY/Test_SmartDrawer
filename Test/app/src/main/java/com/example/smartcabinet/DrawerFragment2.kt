@@ -1,6 +1,8 @@
 package com.example.smartcabinet
 
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -22,6 +24,7 @@ private var dbManager:DBManager?=null
 
     private var drawerID  = 0
 
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -40,7 +43,7 @@ private var dbManager:DBManager?=null
         if(scApp?.reagentID!=null)
         {
             if(dbManager!!.getReagentById(scApp?.reagentID).drawerId==drawerID.toString())
-            {
+                {
                 val tableFragment = TableFragment()
                 val args = Bundle()
                 args.putString("statue","drawer1")
@@ -51,8 +54,11 @@ private var dbManager:DBManager?=null
                 fragmentTransaction.commit()
             }
         }
-        iBt_drawer2.setOnClickListener {
-            if(childFragmentManager.findFragmentByTag("table")==null) {
+        if(scApp?.touchDrawer==drawerID)
+        {
+            val operationActivity = activity as OperationActivity
+            operationActivity.changeMessage("noFocusable")
+            scApp?.touchDrawer=0
                 val tableFragment = TableFragment()
                 val args = Bundle()
                 args.putString("statue","drawer1")
@@ -61,6 +67,14 @@ private var dbManager:DBManager?=null
                 val fragmentTransaction = childFragmentManager.beginTransaction()
                 fragmentTransaction.add(R.id.linearLayout_drawer, tableFragment, "table")
                 fragmentTransaction.commit()
+        }
+        iBt_drawer2.setOnClickListener{
+            if(childFragmentManager.findFragmentByTag("table")==null)
+            {
+                scApp?.touchDrawer = drawerID
+                val intent =  Intent()
+                intent.setClass(context,OperationActivity::class.java)
+                startActivity(intent)
             }
             else
             {
@@ -69,14 +83,36 @@ private var dbManager:DBManager?=null
                 fragmentTransaction.remove(tableFragment)
                 fragmentTransaction.commit()
             }
-            val operationActivity = activity as OperationActivity
-            operationActivity.changeMessage("noFocusable")
+
+//            if(childFragmentManager.findFragmentByTag("table")==null) {
+//                val tableFragment = TableFragment()
+//                val args = Bundle()
+//                args.putString("statue","drawer1")
+//                args.putInt("tablenum", drawerID)
+//                tableFragment.arguments=args
+//                val fragmentTransaction = childFragmentManager.beginTransaction()
+//                fragmentTransaction.add(R.id.linearLayout_drawer, tableFragment, "table")
+//                fragmentTransaction.commit()
+//            }
+//            else
+//            {
+//                val tableFragment = childFragmentManager.findFragmentByTag("table")
+//                val fragmentTransaction = childFragmentManager.beginTransaction()
+//                fragmentTransaction.remove(tableFragment)
+//                fragmentTransaction.commit()
+//            }
+
+//            val operationActivity = activity as OperationActivity
+//            operationActivity.changeMessage("noFocusable")
         }
         iBt_lock.setOnClickListener{
+
             spi?.sendOpenLock(1,drawerID)
+
             //发送开锁指令
         }
 
     }
+
 
 }// Required empty public constructor

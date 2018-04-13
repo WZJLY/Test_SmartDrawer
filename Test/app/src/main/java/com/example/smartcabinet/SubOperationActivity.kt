@@ -251,6 +251,8 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
         }
     }
 
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         spi?.sendLED(1,0)
         if (requestCode == REQUEST_CODE) {
