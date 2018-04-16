@@ -34,6 +34,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 db.execSQL("ALTER TABLE cabinet_no drop column serial_number VARCHAR");
                 db.execSQL("CREATE TABLE IF NOT EXISTS sysSeting"+
                     "(_id INTEGER PRIMARY KEY, serialNum VARCHAR, cameraVersion VARCHAR)");
+
+                db.execSQL("ALTER TABLE user add column statue VARCHAR");
+                db.execSQL("ALTER TABLE drawer add column statue VARCHAR");
             case 2:
                 db.execSQL("ALTER TABLE user add column statue VARCHAR");
                 db.execSQL("ALTER TABLE drawer add column statue VARCHAR");

@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,7 +55,7 @@ public class UpdateAppManager {
 
     //新版本号和描述语言
 
-
+private int ret;
     public UpdateAppManager(Context context) {
         this.context = context;
     }
@@ -87,32 +88,41 @@ public class UpdateAppManager {
         class mAsyncTask extends AsyncTask<String, Integer, String> {
             @Override
             protected String doInBackground(String... params) {
-
-                HttpURLConnection connection = null;
+                Runtime runtime = Runtime.getRuntime();
                 try {
-                    URL url_version = new URL(params[0]);
-                    connection = (HttpURLConnection) url_version.openConnection();
-                    connection.setConnectTimeout(8000);
-                    connection.setReadTimeout(8000);
-
-                    InputStream in = connection.getInputStream();
-
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "GBK"));
-
-                    Log.e(TAG, "bufferReader读到的数据--" + reader);
-
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
-                    }
-
-                    return response.toString();
+                    Process p = runtime.exec("ping -c 3 www.baidu.com");
+                    ret = p.waitFor();
+                    Log.i("Avalible", "Process:"+ret);
                 } catch (Exception e) {
                     e.printStackTrace();
-                } finally {
-                    if (connection != null) {
-                        connection.disconnect();
+                }
+                if(ret==0) {
+                    HttpURLConnection connection = null;
+                    try {
+                        URL url_version = new URL(params[0]);
+                        connection = (HttpURLConnection) url_version.openConnection();
+                        connection.setConnectTimeout(8000);
+                        connection.setReadTimeout(8000);
+
+                        InputStream in = connection.getInputStream();
+
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "GBK"));
+
+                        Log.e(TAG, "bufferReader读到的数据--" + reader);
+
+                        StringBuilder response = new StringBuilder();
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            response.append(line);
+                        }
+
+                        return response.toString();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (connection != null) {
+                            connection.disconnect();
+                        }
                     }
                 }
                 return null;
@@ -122,17 +132,19 @@ public class UpdateAppManager {
             protected void onPostExecute(String s) {             //回到主线程，更新UI
 
                 Log.e(TAG, "异步消息处理反馈--" + s);
-                try {
-                    JSONObject object = new JSONObject(s);
+                if (s != null)
+                {
+                    try {
+                        JSONObject object = new JSONObject(s);
 
-                    update_versionCode = object.getInt("version");
-                    update_describe = object.getString("describe");
-                    apk_name=object.getString("appname");
-                    Log.e(TAG, "新版本号--" + update_versionCode);
-                    Log.e(TAG, "新版本描述--\n" + update_describe);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                        update_versionCode = object.getInt("version");
+                        update_describe = object.getString("describe");
+                        apk_name = object.getString("appname");
+                        Log.e(TAG, "新版本号--" + update_versionCode);
+                        Log.e(TAG, "新版本描述--\n" + update_describe);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
                 if (update_versionCode > getCurrentVersion()) {
 
@@ -141,6 +153,9 @@ public class UpdateAppManager {
                 } else {
                     Log.e(TAG, "已是最新版本！");
                 }
+            }
+            else
+                    Toast.makeText(context,"网络未连接",Toast.LENGTH_SHORT).show();
             }
         }
 
