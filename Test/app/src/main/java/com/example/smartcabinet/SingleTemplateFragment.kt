@@ -49,16 +49,19 @@ class SingleTemplateFragment : Fragment() {
             }
         }
         template_btn_save.setOnClickListener{
+            var template_density = "1"
             if (template_et_name.length()>0) {
                 if (template_et_volume.length()>0) {
+                    if(template_et_density.length()>0)
+                        template_density = template_et_density.text.toString()
                     if (state == 1) {
                         dbManager?.addReagentTemplate("", template_et_name.text.toString(), template_et_anotherName.text.toString(), "", "",
                                 1, template_et_purity.text.toString(), template_et_volume.text.toString(), template_et_manufactor.text.toString(),
-                                template_et_code.text.toString(), "g", template_et_density.text.toString())
+                                template_et_code.text.toString(), "g", template_density)
                     } else if (state == 2) {
                         dbManager?.addReagentTemplate("", template_et_name.text.toString(), template_et_anotherName.text.toString(), "", "",
                                 2, template_et_purity.text.toString(), template_et_volume.text.toString(), template_et_manufactor.text.toString(),
-                                template_et_code.text.toString(), "ml", template_et_density.text.toString())
+                                template_et_code.text.toString(), "ml", template_density)
                     }
                     singleTemplateClicked("btn_save", state)
                 }
