@@ -36,6 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     "(_id INTEGER PRIMARY KEY, serialNum VARCHAR, cameraVersion VARCHAR)");
             case 2:
                 db.execSQL("ALTER TABLE user add column statue VARCHAR");
+                db.execSQL("ALTER TABLE drawer add column statue VARCHAR");
             default:
 
         }
@@ -48,7 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(_id INTEGER PRIMARY KEY)");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS drawer" +
-                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, drawerId INTEGER KEY, boxId INTEGER KEY, drawerSize INTEGER)");
+                "(_id INTEGER PRIMARY KEY AUTOINCREMENT, drawerId INTEGER KEY, boxId INTEGER KEY, drawerSize INTEGER,statue VARCHAR)");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS reagent" +
                 "(_id INTEGER PRIMARY KEY, reagentId VARCHAR, reagentName VARCHAR, reagentAlias VARCHAR, " +

@@ -193,14 +193,14 @@ public class DBManager {
         ArrayList<Drawer> arrListDrawers = new ArrayList<>();
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                arrListDrawers.add(new Drawer(cursor.getInt(cursor.getColumnIndex("drawerId")), cursor.getInt(cursor.getColumnIndex("boxId")),  cursor.getInt(cursor.getColumnIndex("drawerSize"))));
+                arrListDrawers.add(new Drawer(cursor.getInt(cursor.getColumnIndex("drawerId")), cursor.getInt(cursor.getColumnIndex("boxId")),  cursor.getInt(cursor.getColumnIndex("drawerSize")),cursor.getString(cursor.getColumnIndex("statue"))));
                 cursor.moveToNext();
             }
         }
         return arrListDrawers;
     }
-    public void addDrawer(int drawerId, int boxId, int drawerSize){
-        db.execSQL("INSERT INTO drawer VALUES(null, ?, ?, ?)", new Object[]{drawerId, boxId, drawerSize});
+    public void addDrawer(int drawerId, int boxId, int drawerSize,String statue){
+        db.execSQL("INSERT INTO drawer VALUES(null, ?, ?, ?, ?)", new Object[]{drawerId, boxId, drawerSize,statue});
     }
     public void deleteDrawer(int drawerId, int boxId){
         db.delete("drawer", "drawerId=? AND boxId=?", new String[]{drawerId + "", boxId + ""});
@@ -209,16 +209,24 @@ public class DBManager {
         db.delete("drawer", "boxId=?", new String[]{boxId + ""});
     }
     public Drawer getDrawerByDrawerId(int strDrawerId){
-        Cursor cursor = db.query("drawer", new String[] {"drawerId", "boxId", "drawerSize"}, "drawerId=?", new String[] {strDrawerId+""}, null, null, null);
+        Cursor cursor = db.query("drawer", new String[] {"drawerId", "boxId", "drawerSize","statue"}, "drawerId=?", new String[] {strDrawerId+""}, null, null, null);
         cursor.moveToNext();
         Drawer drawerInfo = new Drawer(
                 parseInt(cursor.getString(cursor.getColumnIndex("drawerId"))),
                parseInt(cursor.getString(cursor.getColumnIndex("boxId"))),
-               parseInt(cursor.getString(cursor.getColumnIndex("drawerSize")))
+               parseInt(cursor.getString(cursor.getColumnIndex("drawerSize"))),
+                cursor.getString(cursor.getColumnIndex("statue"))
         );
         return drawerInfo;
     }
 
+    public void udpateDrawerStatue(int drawerId, int boxId,String statue){
+        ContentValues data=new ContentValues();
+        data.put("drawerId",drawerId);
+        data.put("boxId",boxId);
+        data.put("statue", statue);
+        db.update("drawer", data, "drawerId=? and boxId=?", new String[]{drawerId + "", boxId + ""});
+    }
 
     public void udpateDrawerSize(int drawerId, int boxId, int drawerSize){
         ContentValues data=new ContentValues();
