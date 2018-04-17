@@ -90,6 +90,7 @@ class EditPersonFragment : Fragment() {
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
+                userpower=1
                 // Another interface callback
             }
         }
@@ -124,6 +125,13 @@ class EditPersonFragment : Fragment() {
                         userAccount.userAccount = editText_userName.text.toString()
                         userAccount.statue = "0"
                         if (dbManager?.isAccountExist(editText_account.text.toString()) == true) {
+                            if(arguments.getString("edit") =="editOther")
+                            {
+                                updateUserAccountByName(username)
+                                Toast.makeText(context, "信息修改成功", Toast.LENGTH_SHORT).show()
+                                savebuttonClicked("save")
+                            }
+                            else
                             Toast.makeText(context, "该用户已经存在", Toast.LENGTH_SHORT).show()
                         }
                         else {
@@ -181,8 +189,10 @@ class EditPersonFragment : Fragment() {
         editText_account.isEnabled = false
         editText_account.isFocusable = false
         editText_account.isFocusableInTouchMode = false
-        if(userpower==0) spinner_level.setSelection(1)
-        else spinner_level.setSelection(1)
+        if(userpower==0)
+            spinner_level.setSelection(1)
+        else
+            spinner_level.setSelection(0)
         if(userAccount == "null")
             userAccount = ""
         editText_userName.setText(userAccount)
