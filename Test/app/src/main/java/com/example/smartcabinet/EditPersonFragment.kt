@@ -123,7 +123,7 @@ class EditPersonFragment : Fragment() {
                         userAccount.phoneNumber = editText_phoneNum.text.toString()
                         userAccount.userAccount = editText_userName.text.toString()
                         userAccount.statue = "0"
-                        if (dbManager?.isAccountExist(editText_userName.text.toString()) == true) {
+                        if (dbManager?.isAccountExist(editText_account.text.toString()) == true) {
                             Toast.makeText(context, "该用户已经存在", Toast.LENGTH_SHORT).show()
                         }
                         else {
