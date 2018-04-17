@@ -29,6 +29,9 @@ class TemplateLineFragment : Fragment() {
         {
             addTemplateLine()
         }
+        templateLine_del.setOnClickListener {
+            //单条删除试剂
+        }
     }
 
     fun addTemplateLine(){
