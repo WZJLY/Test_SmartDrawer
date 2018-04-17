@@ -5,9 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.example.smartcabinet.SCApp;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,7 +14,6 @@ import android_serialport_api.SerialPort;
 
 //new serial port
 public class SerialPortInterface extends AppCompatActivity {
-    EditText mReceive;
     FileOutputStream mOutputStream = null;
     FileInputStream mInputStream = null;
     SerialPort sp;

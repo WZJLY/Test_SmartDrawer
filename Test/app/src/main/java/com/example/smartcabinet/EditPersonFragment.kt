@@ -3,7 +3,9 @@ package com.example.smartcabinet
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -150,6 +152,28 @@ class EditPersonFragment : Fragment() {
             if(statue=="1")
                 dbManager?.updateStatueByUserName(username,"0")
             savebuttonClicked("save")
+        }
+        editPerson_iV_passward.setOnTouchListener { view, motionEvent ->
+            if (motionEvent.action == KeyEvent.ACTION_UP){
+                editText_Password.transformationMethod = PasswordTransformationMethod.getInstance()
+                editText_Password.setSelection(editText_Password.length())
+            }
+            else {
+                editText_Password.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                editText_Password.setSelection(editText_Password.length())
+            }
+            true
+        }
+        editPerson_iV_passward2.setOnTouchListener { view, motionEvent ->
+            if (motionEvent.action == KeyEvent.ACTION_UP){
+                editText_Password2.transformationMethod = PasswordTransformationMethod.getInstance()
+                editText_Password2.setSelection(editText_Password2.length())
+            }
+            else {
+                editText_Password2.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                editText_Password2.setSelection(editText_Password2.length())
+            }
+            true
         }
     }
     interface savepersonbuttonlisten {

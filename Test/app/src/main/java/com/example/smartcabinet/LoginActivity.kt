@@ -2,10 +2,11 @@ package com.example.smartcabinet
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
+import android.view.KeyEvent
 import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.webkit.JavascriptInterface
 import android.widget.Toast
@@ -32,7 +33,17 @@ class LoginActivity :BaseActivity() {
         button_login.setOnClickListener({
             login(et_userName.text.toString(),et_userPassword.text.toString())
         })
-
+        login_iV_passward.setOnTouchListener { view, motionEvent ->
+            if (motionEvent.action == KeyEvent.ACTION_UP){
+                et_userPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                et_userPassword.setSelection(et_userPassword.length())
+            }
+            else {
+                et_userPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                et_userPassword.setSelection(et_userPassword.length())
+            }
+            true
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {

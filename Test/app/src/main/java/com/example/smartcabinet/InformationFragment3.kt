@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_information3.*
 class InformationFragment3 : Fragment() {
     private var dbManager: DBManager? = null
     private var reagent: Reagent?=null
-private var scApp: SCApp? = null
+    private var scApp: SCApp? = null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -28,11 +28,11 @@ private var scApp: SCApp? = null
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         dbManager = DBManager(context.applicationContext)
         scApp = context.applicationContext as SCApp
-             reagent = dbManager?.getReagentByPos(""+scApp!!.touchdrawer,""+scApp?.getTouchtable())
-            tV_name.text=reagent?.reagentName
-            tV_purity.text=reagent?.reagentPurity+"%"
-            tV_data.text=reagent?.reagentInvalidDate
-            tV_manufactor.text=reagent?.reagentCreater
+        reagent = dbManager?.getReagentByPos(""+scApp!!.touchdrawer,""+scApp?.getTouchtable())
+        tV_name.text=reagent?.reagentName
+        tV_purity.text=reagent?.reagentPurity+"%"
+        tV_data.text=reagent?.reagentInvalidDate
+        tV_manufactor.text=reagent?.reagentCreater
         if(reagent?.reagentUnit==1)tV_residue.text=reagent?.reagentSize+"g"
         else tV_residue.text=reagent?.reagentSize+"ml"
             tV_num.text = reagent?.reagentId

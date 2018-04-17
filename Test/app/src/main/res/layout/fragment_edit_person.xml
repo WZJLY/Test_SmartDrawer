@@ -5,6 +5,54 @@
     android:layout_height="match_parent">
 
 
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="(必填）"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/spinner_level"
+        app:layout_constraintStart_toEndOf="@+id/spinner_level"
+        app:layout_constraintTop_toTopOf="@+id/spinner_level" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="(必填）"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_account"
+        app:layout_constraintStart_toEndOf="@+id/editText_account"
+        app:layout_constraintTop_toTopOf="@+id/editText_account" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="(必填）"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_userName"
+        app:layout_constraintStart_toEndOf="@+id/editText_userName"
+        app:layout_constraintTop_toTopOf="@+id/editText_userName" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="(必填）"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_Password"
+        app:layout_constraintStart_toEndOf="@+id/editText_Password"
+        app:layout_constraintTop_toTopOf="@+id/editText_Password" />
+
     <EditText
         android:id="@+id/editText_account"
         android:layout_width="410sp"
@@ -267,5 +315,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_enable"
         app:layout_constraintTop_toBottomOf="@+id/editText_phoneNum" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="(必填）"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_Password2"
+        app:layout_constraintStart_toEndOf="@+id/editText_Password2"
+        app:layout_constraintTop_toTopOf="@+id/editText_Password2" />
+
+    <ImageView
+        android:id="@+id/editPerson_iV_passward2"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_Password2"
+        app:layout_constraintEnd_toEndOf="@+id/editText_Password2"
+        app:layout_constraintTop_toTopOf="@+id/editText_Password2"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@android:drawable/ic_menu_view" />
+
+    <ImageView
+        android:id="@+id/editPerson_iV_passward"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_Password"
+        app:layout_constraintEnd_toEndOf="@+id/editText_Password"
+        app:layout_constraintTop_toTopOf="@+id/et_userPassword"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@android:drawable/ic_menu_view" />
 
 </android.support.constraint.ConstraintLayout>

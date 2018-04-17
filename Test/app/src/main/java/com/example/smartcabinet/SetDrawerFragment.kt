@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.smartcabinet.util.DBManager
-import com.example.smartcabinet.util.Drawer
 import kotlinx.android.synthetic.main.fragment_set_drawer.*
 
 

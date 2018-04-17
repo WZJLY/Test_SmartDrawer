@@ -10,14 +10,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.Drawer
-import com.example.smartcabinet.util.UserAccount
 import kotlinx.android.synthetic.main.fragment_set_cabinet.*
 
 
 class SetCabinetFragment : Fragment() {
     var activityCallback: SetCabinetFragment.SetCabinetListener ?= null
     private var dbManager: DBManager? = null
-    private var drawer: Drawer? = null
 
     interface SetCabinetListener {
         fun setCabinetClick(fragment: String)
