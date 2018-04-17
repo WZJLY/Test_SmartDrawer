@@ -34,6 +34,7 @@ class DrawerFragment1 : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         dbManager = DBManager(context.applicationContext)
+        drawer_tv_enable.visibility = View.GONE
         tV_drawer1.text =("抽屉"+drawerID)
         val arrListReagent = dbManager?.reagents
         val sum = arrListReagent!!.size
@@ -47,11 +48,25 @@ class DrawerFragment1 : Fragment() {
                 }
             }
         }
+        if (dbManager!!.getDrawerByDrawerId(drawerID).statue == "1") {
+            drawer_tv_enable.visibility = View.VISIBLE
+            drawer_btn_enable.text = "启用"
+        }
         iBt_drawer1.setOnClickListener {
             deletDrawerbuttonClicked("find_out",drawerID)
         }
         drawer_btn_enable.setOnClickListener {
-                        //禁用抽屉
+            if (dbManager!!.getDrawerByDrawerId(drawerID).statue == "1"){
+                dbManager!!.udpateDrawerStatue(drawerID,1,"0")
+                drawer_tv_enable.visibility = View.GONE
+                drawer_btn_enable.text = "禁用"//禁用抽屉
+            }
+            else {
+                dbManager!!.udpateDrawerStatue(drawerID,1,"1")
+                drawer_tv_enable.visibility = View.VISIBLE
+                drawer_btn_enable.text = "启用"//禁用抽屉
+            }
+
         }
         drawer_btn_modify.setOnClickListener {
             deletDrawerbuttonClicked("drawer_modify",drawerID)

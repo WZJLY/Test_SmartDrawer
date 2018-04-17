@@ -76,8 +76,7 @@ class SetDrawerFragment : Fragment() {
                     saveDrawerbuttonClicked("saveDrawer")
                 }
                 btn_save.setOnClickListener {
-                    dbManager?.deleteDrawer(drawerID,1)
-                    dbManager?.addDrawer(drawerID,1,boxnum,"0")
+                    dbManager?.udpateDrawerSize(drawerID,1,boxnum)
                     saveDrawerbuttonClicked("saveDrawer")
                 }
             }
@@ -92,7 +91,6 @@ class SetDrawerFragment : Fragment() {
                 tv_drawerNum.text = "抽屉"+drawerID.toString()
                 btn_save.setOnClickListener {
                     dbManager?.addDrawer(drawerID, 1, boxnum,"0")
-
                     saveDrawerbuttonClicked("saveDrawer")
                 }
                 setDrawer_btn_del.visibility = View.GONE

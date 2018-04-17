@@ -40,10 +40,11 @@ private var dbManager:DBManager?=null
         tV_drawer2.text =("抽屉"+drawerID)
         scApp = context.applicationContext as SCApp
         var spi =  scApp?.getSpi()
+        if (dbManager!!.getDrawerByDrawerId(drawerID).statue != "1")
+            drawer_tv_enable2.visibility = View.GONE
         if(scApp?.reagentID!=null)
         {
-            if(dbManager!!.getReagentById(scApp?.reagentID).drawerId==drawerID.toString())
-                {
+            if(dbManager!!.getReagentById(scApp?.reagentID).drawerId==drawerID.toString()) {
                 val tableFragment = TableFragment()
                 val args = Bundle()
                 args.putString("statue","drawer1")
@@ -68,50 +69,28 @@ private var dbManager:DBManager?=null
                 fragmentTransaction.add(R.id.linearLayout_drawer, tableFragment, "table")
                 fragmentTransaction.commit()
         }
-        iBt_drawer2.setOnClickListener{
-            if(childFragmentManager.findFragmentByTag("table")==null)
-            {
-                scApp?.touchDrawer = drawerID
-                val intent =  Intent()
-                intent.setClass(context,OperationActivity::class.java)
-                startActivity(intent)
+        if (dbManager!!.getDrawerByDrawerId(drawerID).statue != "1") {
+            iBt_drawer2.setOnClickListener{
+
+                    if (childFragmentManager.findFragmentByTag("table") == null) {
+                        scApp?.touchDrawer = drawerID
+                        val intent = Intent()
+                        intent.setClass(context, OperationActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        val tableFragment = childFragmentManager.findFragmentByTag("table")
+                        val fragmentTransaction = childFragmentManager.beginTransaction()
+                        fragmentTransaction.remove(tableFragment)
+                        fragmentTransaction.commit()
+                    }
             }
-            else
-            {
-                val tableFragment = childFragmentManager.findFragmentByTag("table")
-                val fragmentTransaction = childFragmentManager.beginTransaction()
-                fragmentTransaction.remove(tableFragment)
-                fragmentTransaction.commit()
+            iBt_lock.setOnClickListener{
+
+                spi?.sendOpenLock(1,drawerID)
+
+                //发送开锁指令
             }
-
-//            if(childFragmentManager.findFragmentByTag("table")==null) {
-//                val tableFragment = TableFragment()
-//                val args = Bundle()
-//                args.putString("statue","drawer1")
-//                args.putInt("tablenum", drawerID)
-//                tableFragment.arguments=args
-//                val fragmentTransaction = childFragmentManager.beginTransaction()
-//                fragmentTransaction.add(R.id.linearLayout_drawer, tableFragment, "table")
-//                fragmentTransaction.commit()
-//            }
-//            else
-//            {
-//                val tableFragment = childFragmentManager.findFragmentByTag("table")
-//                val fragmentTransaction = childFragmentManager.beginTransaction()
-//                fragmentTransaction.remove(tableFragment)
-//                fragmentTransaction.commit()
-//            }
-
-//            val operationActivity = activity as OperationActivity
-//            operationActivity.changeMessage("noFocusable")
         }
-        iBt_lock.setOnClickListener{
-
-            spi?.sendOpenLock(1,drawerID)
-
-            //发送开锁指令
-        }
-
     }
 
 

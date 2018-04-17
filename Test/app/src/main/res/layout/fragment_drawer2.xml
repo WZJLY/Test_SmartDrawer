@@ -65,4 +65,20 @@
         app:layout_constraintStart_toStartOf="@+id/linearLayout_drawer"
         app:layout_constraintTop_toTopOf="@+id/linearLayout_drawer" />
 
+    <TextView
+        android:id="@+id/drawer_tv_enable2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:text="禁用中"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
