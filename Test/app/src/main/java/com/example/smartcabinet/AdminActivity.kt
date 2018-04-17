@@ -405,7 +405,6 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 args.putString("data","setDrawer")
                 setDrawer.arguments = args
                 replaceFragment(setDrawer, R.id.fl_admin)
-                Log.d("data",fragment)
             }
         }
     }

@@ -33,96 +33,89 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12"
         app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <HorizontalScrollView
-                android:layout_width="750dp"
-                android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/Linear_editTemplate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/Linear_editTemplate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/tv_table_header"
+                        android:text="试剂名称"
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp" />
 
-                        <TextView
-                            android:layout_width="120dp"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/tv_table_header"
-                            android:text="试剂名称"
-                            android:textColor="@android:color/black"
-                            android:textSize="22sp" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/tv_table_header"
+                        android:text="试剂别称"
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp" />
 
-                        <TextView
-                            android:layout_width="120dp"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/tv_table_header"
-                            android:text="试剂别称"
-                            android:textColor="@android:color/black"
-                            android:textSize="22sp" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/tv_table_header"
+                        android:text="试剂瓶容量(g或ml)"
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp" />
 
-                        <TextView
-                            android:layout_width="120dp"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/tv_table_header"
-                            android:text="试剂瓶容量(g或ml)"
-                            android:textColor="@android:color/black"
-                            android:textSize="22sp" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/tv_table_header"
+                        android:text="试剂形态"
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp" />
 
-                        <TextView
-                            android:layout_width="120dp"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/tv_table_header"
-                            android:text="试剂形态"
-                            android:textColor="@android:color/black"
-                            android:textSize="22sp" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/tv_table_header"
+                        android:text="液体试剂密度(g/ml)"
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp" />
 
-                        <TextView
-                            android:layout_width="120dp"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/tv_table_header"
-                            android:text="液体试剂密度(g/ml)"
-                            android:textColor="@android:color/black"
-                            android:textSize="22sp" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/tv_table_header"
+                        android:text="试剂纯度(%)"
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp" />
 
-                        <TextView
-                            android:layout_width="120dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/tv_table_header"
-                            android:text="试剂纯度(%)"
-                            android:textColor="@android:color/black"
-                            android:textSize="22sp" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/tv_table_header"
+                        android:text="生产厂商"
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp" />
 
-                        <TextView
-                            android:layout_width="120dp"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/tv_table_header"
-                            android:text="生产厂商"
-                            android:textColor="@android:color/black"
-                            android:textSize="22sp" />
-
-                        <TextView
-                            android:layout_width="120dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/tv_table_header"
-                            android:text="商品码"
-                            android:textColor="@android:color/black"
-                            android:textSize="22sp" />
-
-                    </LinearLayout>
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/tv_table_header"
+                        android:text="商品码"
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp" />
 
                 </LinearLayout>
-            </HorizontalScrollView>
 
-        </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
 
 
     </ScrollView>

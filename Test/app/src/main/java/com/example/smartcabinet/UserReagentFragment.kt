@@ -42,12 +42,10 @@ class UserReagentFragment : Fragment() {
         val buttonStyle = arguments?.getString("buttonStyle")
         if(buttonStyle != null) {
             changeUserButton(buttonStyle)
-            Log.d("AdminReagentFragment",buttonStyle)
         }
         btn_user_take.setOnClickListener {
             buttonClicked("userTake")
         }
-
         btn_user_return.setOnClickListener {
             buttonClicked("userReturn")
         }

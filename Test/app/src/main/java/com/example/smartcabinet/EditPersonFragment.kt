@@ -50,7 +50,6 @@ class EditPersonFragment : Fragment() {
         {
             activity.title = "个人信息修改"
             username=scApp!!.userInfo.getUserName()
-            Log.d("username",username)
             user=dbManager?.getUserAccountByUserName(username)
             userAccount=user?.getUserAccount().toString()
             userID=user!!.userId
@@ -118,11 +117,12 @@ class EditPersonFragment : Fragment() {
                         Toast.makeText(context,"个人信息修改成功",Toast.LENGTH_SHORT).show()
                     }
                     else {
-                        userAccount?.userPassword = editText_Password.text.toString()
-                        userAccount?.userId = editText_Num.text.toString()
-                        userAccount?.userName = editText_account.text.toString()
-                        userAccount?.phoneNumber = editText_phoneNum.text.toString()
-                        userAccount?.userAccount = editText_userName.text.toString()
+                        userAccount.userPassword = editText_Password.text.toString()
+                        userAccount.userId = editText_Num.text.toString()
+                        userAccount.userName = editText_account.text.toString()
+                        userAccount.phoneNumber = editText_phoneNum.text.toString()
+                        userAccount.userAccount = editText_userName.text.toString()
+                        userAccount.statue = "0"
                         if (dbManager?.isAccountExist(editText_userName.text.toString()) == true) {
                             Toast.makeText(context, "该用户已经存在", Toast.LENGTH_SHORT).show()
                         }
@@ -138,7 +138,7 @@ class EditPersonFragment : Fragment() {
         btn_enable.setOnClickListener{
             //判断该用户状态，如果为”0“则禁用，如果为”1“则启用
             if(statue=="0"||statue=="null")
-            dbManager?.updateStatueByUserName(username,"1")
+                dbManager?.updateStatueByUserName(username,"1")
             if(statue=="1")
                 dbManager?.updateStatueByUserName(username,"0")
             savebuttonClicked("save")

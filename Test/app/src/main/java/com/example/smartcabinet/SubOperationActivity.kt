@@ -367,9 +367,6 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                         if(weight>reagent.reagentTotalSize.toInt())
                         {
                             weight -=reagent.reagentTotalSize.toInt()
-                            Log.d("subOperation",reagent.reagentSize)
-                            Log.d("subOperation1",reagent.reagentDensity.toString())
-                            Log.d("subOperation",reagent.reagentSize.toDouble().toString())
                             var size =  reagent.reagentSize.toDouble() -(weight/ reagent.reagentDensity.toDouble())
                             dbManager?.updateReagentSize(eT_code.text.toString(),size.toString(),eT_weight.text.toString())
                             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
@@ -382,9 +379,6 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                         else
                         {
                             weight =reagent.reagentTotalSize.toInt()-weight
-                            Log.d("subOperation",reagent.reagentSize)
-                            Log.d("subOperation1",reagent.reagentDensity.toString())
-                            Log.d("subOperation",reagent.reagentSize.toDouble().toString())
                             var size1 =  reagent.reagentSize.toDouble() -(weight/ reagent.reagentDensity.toDouble())
                             dbManager?.updateReagentSize(eT_code.text.toString(),size1.toString(),eT_weight.text.toString())
                             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)

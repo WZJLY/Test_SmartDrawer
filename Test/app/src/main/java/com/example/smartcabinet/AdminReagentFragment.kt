@@ -44,7 +44,6 @@ class AdminReagentFragment : Fragment() {
         val buttonStyle = arguments?.getString("buttonStyle")
         if(buttonStyle != null) {
             changeAdminButton(buttonStyle)
-            Log.d("AdminReagentFragment",buttonStyle)
         }
 
         btn_into.setOnClickListener {
@@ -75,7 +74,6 @@ class AdminReagentFragment : Fragment() {
     fun changeAdminButton(text: String){
         when(text){
             "noFocusable" -> {
-                Log.d("data",text)
                 btn_into?.isEnabled = false
                 btn_admin_take.isEnabled = false
                 btn_admin_return.isEnabled = true
@@ -83,7 +81,6 @@ class AdminReagentFragment : Fragment() {
             }
 
             "style_denglu" -> {
-                Log.d("AdminReagentFragment","denglu")
                 btn_into.isEnabled = true
                 btn_admin_take.isEnabled = false
                 btn_admin_return.isEnabled = true

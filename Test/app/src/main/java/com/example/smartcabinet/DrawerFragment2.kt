@@ -18,12 +18,9 @@ import kotlinx.android.synthetic.main.fragment_drawer2.*
  * A simple [Fragment] subclass.
  */
 class DrawerFragment2 : Fragment() {
-private var dbManager:DBManager?=null
-
+    private var dbManager:DBManager?=null
     private var scApp: SCApp? = null
-
     private var drawerID  = 0
-
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -85,9 +82,7 @@ private var dbManager:DBManager?=null
                     }
             }
             iBt_lock.setOnClickListener{
-
                 spi?.sendOpenLock(1,drawerID)
-
                 //发送开锁指令
             }
         }

@@ -34,7 +34,6 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
             val serialPortNum = dbManager!!.sysSeting[0].serialNum.toInt()
             val SPID = resources.getStringArray(R.array.serialPort)
             val serialPortID = SPID[serialPortNum]
-            Log.d("串口操作",serialPortID)
             spi = SerialPortInterface(this.applicationContext, serialPortID)
             scApp?.setSpi(spi)
         }
@@ -160,7 +159,6 @@ class OperationActivity : BaseActivity(),UserReagentFragment.userReagentListen,A
 
     fun changeMessage(text: String) {        //根据点击的位置，改变下方的功能栏
         val buttonStyle = Bundle()
-        Log.d("Operation", text)
         buttonStyle.putString("buttonStyle", text)
         val adminReagentFragment = AdminReagentFragment()
         adminReagentFragment.arguments = buttonStyle

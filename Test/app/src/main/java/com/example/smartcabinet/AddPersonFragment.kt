@@ -4,6 +4,7 @@ package com.example.smartcabinet
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,6 +66,7 @@ class AddPersonFragment : Fragment() {
                 val personFragment = PersonLineFragment()
                 val args = Bundle()
                 args.putString("userName", userAccount!!.getUserName().toString())
+                Log.d("AddPerson",userAccount!!.getStatue().toString())
                 args.putString("statue",userAccount!!.getStatue().toString())
                 personFragment.arguments = args
                 fragment.add(R.id.LL_person, personFragment, userAccount?.getUserName())
@@ -79,6 +81,7 @@ class AddPersonFragment : Fragment() {
                 val personFragment = PersonLineFragment()
                 val args = Bundle()
                 args.putString("userName", userAccount!!.getUserName().toString())
+                Log.d("AddPerson",userAccount!!.getStatue().toString())
                 args.putString("statue",userAccount!!.getStatue().toString())
                 personFragment.arguments = args
                 fragment.add(R.id.LL_person, personFragment, userAccount?.getUserName())
