@@ -94,23 +94,23 @@ class EditPersonFragment : Fragment() {
             }
         }
         button_save.setOnClickListener {
-                if (editText_Num.length() == 0) {
-                    Toast.makeText(context, "编码信息未填写", Toast.LENGTH_SHORT).show()
-                }
+//                if (editText_Num.length() == 0) {
+//                    Toast.makeText(context, "编码信息未填写", Toast.LENGTH_SHORT).show()
+//                }
                 if (editText_userName.length() == 0) {
                     Toast.makeText(context, "姓名未填写", Toast.LENGTH_SHORT).show()
                 }
                 if (editText_Password.length() == 0) {
                     Toast.makeText(context, "密码为空", Toast.LENGTH_SHORT).show()
                 }
-                if(editText_phoneNum.length()==0){
-                    Toast.makeText(context,"手机号未填写",Toast.LENGTH_SHORT).show()
-                }
+//                if(editText_phoneNum.length()==0){
+//                    Toast.makeText(context,"手机号未填写",Toast.LENGTH_SHORT).show()
+//                }
                 if(editText_account.length()==0)
                 {
                     Toast.makeText(context, "账号未填写", Toast.LENGTH_SHORT).show()
                 }
-                if (editText_Password.text.toString() == editText_Password2.text.toString() && editText_Num.length() != 0 && editText_userName.length() != 0 && editText_Password.length() != 0) {
+                if (editText_Password.text.toString() == editText_Password2.text.toString() && editText_userName.length() != 0 && editText_Password.length() != 0&&editText_account.length()!=0) {
                     if(arguments.getString("editfile") =="editperson")
                     {
                         updateUserAccountByName(username)
@@ -188,6 +188,8 @@ class EditPersonFragment : Fragment() {
         editText_userName.setText(userAccount)
         editText_Password.setText(userpasswd)
         editText_Password2.setText(userpasswd)
+        if(userID=="null")
+            userID=""
         editText_Num.setText(userID)
         if(phoneNum == "null")
             phoneNum = ""
