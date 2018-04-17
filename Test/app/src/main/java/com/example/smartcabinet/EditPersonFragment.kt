@@ -95,8 +95,6 @@ class EditPersonFragment : Fragment() {
             }
         }
         button_save.setOnClickListener {
-
-
                 if (editText_Num.length() == 0) {
                     Toast.makeText(context, "编码信息未填写", Toast.LENGTH_SHORT).show()
                 }
@@ -176,8 +174,7 @@ class EditPersonFragment : Fragment() {
      *个人信息设置界面，无法修改账号
      */
   private fun UserMessage(){
-        if(statue=="1")
-        {
+        if(statue=="1"){
             btn_enable.text="启用"
         }
         textView_title.text ="个人信息修改"

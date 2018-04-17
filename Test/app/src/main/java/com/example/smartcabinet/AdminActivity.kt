@@ -108,10 +108,9 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                     replaceFragment(orinaryFragment, R.id.fl_admin)
                     returnview ="login"
                 }
-                "editperson"-> {
-
-                    val editperson = AddPersonFragment()
-                    replaceFragment(editperson, R.id.fl_admin)
+                "addPerson"-> {
+                    val addPersonFragment = AddPersonFragment()
+                    replaceFragment(addPersonFragment, R.id.fl_admin)
                     returnview ="admin"
                 }
                 "setup" -> {
@@ -188,12 +187,12 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
     override fun savepersonButtonClick(text: String) {
         if(text == "save") {
             //returnview未定义
-            val editperson = AddPersonFragment()
-            replaceFragment(editperson, R.id.fl_admin)
+            val addPersonFragment = AddPersonFragment()
+            replaceFragment(addPersonFragment, R.id.fl_admin)
         }
     }
     override fun addpersonButtonClick(text: String) {
-        returnview = "editperson"
+        returnview = "addPerson"
         if (text == "addperson") {
             val editMessageFragment = EditPersonFragment()
             val args = Bundle()
@@ -203,13 +202,14 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         }
     }
     override fun deletButtonClick(text: String) {
-        returnview = "admin"
         when(text) {
             "delet" -> {
-                val editperson = AddPersonFragment()
-                replaceFragment(editperson, R.id.fl_admin)
+                returnview = "admin"
+                val addPersonFragment = AddPersonFragment()
+                replaceFragment(addPersonFragment, R.id.fl_admin)
             }
             "edit" -> {
+                returnview = "addPerson"
                 val editPersonFragment =  EditPersonFragment()
                 val args = Bundle()
                 args.putString("edit","editOther")
@@ -316,8 +316,8 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 replaceFragment(serachfrag, R.id.fl_admin)
             }
             "personal_management"-> {
-                val editperson = AddPersonFragment()
-                replaceFragment(editperson, R.id.fl_admin)
+                val addPersonFragment = AddPersonFragment()
+                replaceFragment(addPersonFragment, R.id.fl_admin)
             }
             " editflie" ->
             {

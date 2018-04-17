@@ -24,6 +24,7 @@ class PersonLineFragment : Fragment() {
     private var dbManager: DBManager? = null
     private var scApp: SCApp? = null
     var userName = String()
+    var statue = String()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -31,6 +32,7 @@ class PersonLineFragment : Fragment() {
         if(arguments!=null)
         {
             userName = arguments.getString("userName")
+            statue = arguments.getString("statue")
         }
         return inflater!!.inflate(R.layout.fragment_line_person, container, false)
     }
@@ -50,24 +52,21 @@ class PersonLineFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         scApp = context.applicationContext as SCApp
         dbManager = DBManager(context.applicationContext)
-      val daccout=dbManager?.getUserAccountByUserName(userName)
+        val daccout=dbManager?.getUserAccountByUserName(userName)
         tV_userName.text=daccout?.getUserName()
         val account= scApp?.userInfo
-        if(userName=="admin")
-        {
-
-            iBt_deletPerson.setVisibility(View.GONE)   //对可删除的用户就行了判断
+        if (statue == "1")
+            iBt_person.setBackgroundResource(R.drawable.un_line_person)
+        if(userName=="admin") {
+            iBt_deletPerson.visibility = View.GONE   //对可删除的用户就行了判断
             // 管理级别为最高，接下去普通管理员，然后是普通用户
             //同级之间无法删除，只能上级删除下级
         }
         else{
-            if(account?.userPower==0&&account.userName!="admin")
-            {
-                iBt_deletPerson.setVisibility(View.GONE)
+            if(account?.userPower==0&&account.userName!="admin") {
+                iBt_deletPerson.visibility = View.GONE
             }
         }
-
-
 
         iBt_deletPerson.setOnClickListener({            //用户的删除
             val builder = AlertDialog.Builder(context)
@@ -85,22 +84,18 @@ class PersonLineFragment : Fragment() {
         })
 
         iBt_person.setOnClickListener{
-            if(account?.userName=="admin")
-            {
-
+            if(account?.userName=="admin") {
                 scApp?.editPerson=userName
                 deletbuttonClicked("edit")
             }
             else{
-                if(account?.userPower==0)
-                {
+                if(account?.userPower==0){
                     if(userName!="admin"&&daccout?.userPower!=0) {
                         scApp?.editPerson = userName
                         deletbuttonClicked("edit")
                     }
                 }
             }
-
         }
     }
     private fun deletbuttonClicked(text: String) {

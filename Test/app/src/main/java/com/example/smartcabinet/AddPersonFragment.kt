@@ -59,13 +59,13 @@ class AddPersonFragment : Fragment() {
         val sum = arrayList!!.size
         for(i in 1..sum)
         {
-
             userAccount = arrayList?.get(i-1)
             if(userAccount?.userPower==0) {
                 val fragment = childFragmentManager.beginTransaction()
                 val personFragment = PersonLineFragment()
                 val args = Bundle()
                 args.putString("userName", userAccount!!.getUserName().toString())
+                args.putString("statue",userAccount!!.getStatue().toString())
                 personFragment.arguments = args
                 fragment.add(R.id.LL_person, personFragment, userAccount?.getUserName())
                 fragment.commit()
@@ -79,6 +79,7 @@ class AddPersonFragment : Fragment() {
                 val personFragment = PersonLineFragment()
                 val args = Bundle()
                 args.putString("userName", userAccount!!.getUserName().toString())
+                args.putString("statue",userAccount!!.getStatue().toString())
                 personFragment.arguments = args
                 fragment.add(R.id.LL_person, personFragment, userAccount?.getUserName())
                 fragment.commit()
