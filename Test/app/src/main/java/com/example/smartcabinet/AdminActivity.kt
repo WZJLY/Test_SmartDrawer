@@ -332,19 +332,23 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
             }
             "reagent_op"-> {
+
                 if(dbManager!!.sysSeting.size > 0){
                     returnview ="login"
                     val intent = Intent()
                     intent.setClass(this,OperationActivity::class.java)
                     startActivity(intent)
                 }
+
                 else
                     Toast.makeText(this,"请进行系统硬件设置",Toast.LENGTH_SHORT).show()
             }
+
             "recordquery" -> {
                 val recordFragment = RecordFragment()
                 replaceFragment(recordFragment, R.id.fl_admin)
             }
+
             "reagent_template" -> {
                 val editTemplateFragment = EditTemplateFragment()
                 replaceFragment(editTemplateFragment, R.id.fl_admin)

@@ -57,6 +57,8 @@ class PersonLineFragment : Fragment() {
         val account= scApp?.userInfo
         if (statue == "1")
             iBt_person.setBackgroundResource(R.drawable.un_line_person)
+        if(daccout?.userPower==0)
+            imageView2.setBackgroundResource(R.drawable.admin)
         if(userName=="admin") {
             iBt_deletPerson.visibility = View.GONE   //对可删除的用户就行了判断
             // 管理级别为最高，接下去普通管理员，然后是普通用户
