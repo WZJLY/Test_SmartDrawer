@@ -29,7 +29,7 @@ import java.util.*
 
 class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,OrinaryFragment.orinarybuttonlisten,PersonLineFragment.deletbuttonlisten, AddPersonFragment.addpersonbuttonlisten,
         EditPersonFragment.savepersonbuttonlisten ,SetCabinetFragment.SetCabinetListener,SetDrawerFragment.SetDrawerFragmentListener,DrawerFragment1.deletDrawerFragmentListener,
-        HardwareSetupFragment.hardwareSetupListener,EditTemplateFragment.editTemplateListen,SingleTemplateFragment.singleTemplateListen,SetupFragment.setuplisten{
+        HardwareSetupFragment.hardwareSetupListener,EditTemplateFragment.editTemplateListen,SingleTemplateFragment.singleTemplateListen,SetupFragment.setuplisten,TemplateLineFragment.templateLineListen{
     private var scApp: SCApp? = null
     private var returnview = "login"
     private var dbManager: DBManager? = null
@@ -152,11 +152,6 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
     override  fun deletDrawerButtonClick(text: String,drawerID:Int) {
         when(text) {
-//            "delet" -> {
-//                returnview = "setup"
-//                val setCabinet = SetCabinetFragment()
-//                replaceFragment(setCabinet, R.id.fl_admin)
-//            }
             "find_out" -> {
                 returnview = "setCabinet"
                 val setDrawer = SetDrawerFragment()
@@ -215,8 +210,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 args.putString("edit","editOther")
                 editPersonFragment.arguments=args
                 replaceFragment(editPersonFragment,R.id.fl_admin)
-//            val editperson = AddPersonFragment()
-//            replaceFragment(editperson, R.id.framelayout)
+
             }
         }
     }
@@ -308,6 +302,15 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
     }
 
+    override fun templateLineButtonClick(text: String) {
+        if(text=="delet"){
+
+            returnview = "admin"
+            val editTemplateFragment = EditTemplateFragment()
+            replaceFragment(editTemplateFragment, R.id.fl_admin)
+        }
+    }
+
     override fun adminOnButtonClick(text: String) {
         returnview = "admin"
         when(text) {
@@ -372,9 +375,6 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 replaceFragment(hardwareSetupFragment, R.id.fl_admin)
             }
             "update"->{
-                //进度条下载完成后自动安装
-//                downLoadApk()
-//                Toast.makeText(this, "apk下载成功", Toast.LENGTH_SHORT).show()
                 var manager= UpdateAppManager(this)
                 manager.getUpdateMsg()
             }
@@ -551,57 +551,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         }
         }.start()  //开启一个线程
     }
-fun downLoadApk(){
-    object : Thread() {
-        override fun run()
-        {
-            val path = "SmartCabinet"
-            val fileName ="1.0.3 "+ ".apk"
-            val urlStr = SC_Const.APKADDRESS + fileName
-            val SDCard = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + ""
-            val pathName = "$SDCard/$path/$fileName"//文件存储路径
-            if (File(pathName).exists()) {
-                Log.d("TestFile","文件存在")
-//                installApk(scApp!!.applicationContext,pathName)
-            }
-            else {
-                val msg = Message()
 
-                val output = File(pathName)
-                val requestUrl = URL(urlStr)
-                output.writeBytes(requestUrl.readBytes())
-                Log.d("TestFile","下载完成")
-                msg.what = 2
-                msg.obj = "安装完成"
-                mHandler.sendMessage(msg)
-            }
-
-        }
-    }.start()
-}
-
-    fun getVersion(): String {
-
-        try {
-
-            val manager = this.packageManager
-
-            val info = manager.getPackageInfo(this.packageName, 0)
-
-            val version = info.versionName
-
-            return "版本：" + version
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return "找不到版本号"
-        }
-
-    }
-
-    fun installApk(context: Context, apkFile: String) {
-        installApk(context, File(apkFile).toString())
-    }
 }
 
 

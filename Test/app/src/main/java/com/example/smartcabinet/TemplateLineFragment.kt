@@ -1,6 +1,7 @@
 package com.example.smartcabinet
 
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -17,6 +18,12 @@ import kotlinx.android.synthetic.main.fragment_template_line.*
 class TemplateLineFragment : Fragment() {
     private var reagentTemplate: ReagentTemplate?=null
     private var dbManager: DBManager? = null
+
+    var activityCallback: TemplateLineFragment.templateLineListen? = null
+    interface  templateLineListen {
+        fun templateLineButtonClick(text: String)
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -31,6 +38,20 @@ class TemplateLineFragment : Fragment() {
         }
         templateLine_del.setOnClickListener {
             //单条删除试剂
+            var unit:String? = null
+            var purity:String? = null
+            var type=2
+            if(templateLine_state.text.toString()=="固体") {
+                unit = "g"
+                type = 1
+            }
+            else
+                unit="ml"
+            purity = templateLine_purity.text.toString().substring(0,templateLine_purity.text.toString().length-1)
+           dbManager?.deletReagentTemplateByInfo("",templateLine_name.text.toString(),templateLine_anotherName.text.toString(),"",
+           "",type, purity,templateLine_volume.text.toString(),templateLine__manufator.text.toString() ,
+                   templateLine__code.text.toString(),unit,templateLine_density.text.toString())
+            templateLineClicked("delet")
         }
     }
 
@@ -49,5 +70,19 @@ class TemplateLineFragment : Fragment() {
             templateLine_state.text="固体"
         else
             templateLine_state.text="液体"
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        try {
+            activityCallback = context as TemplateLineFragment.templateLineListen
+        } catch (e: ClassCastException) {
+            throw ClassCastException(context?.toString()
+                    + " must implement AdminFragmentListener")
+        }
+    }
+
+    private fun templateLineClicked(text: String) {
+        activityCallback?.templateLineButtonClick(text)
     }
 }// Required empty public constructor
