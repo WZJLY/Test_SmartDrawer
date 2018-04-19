@@ -35,7 +35,6 @@ public class SCApp extends Application {  //全局变量
         super.onCreate();
         dbManager = new DBManager(this);
         context = getApplicationContext();
-        serialPortID = "/dev/ttyS4";
         //  init ZXing lib
          ZXingLibrary.initDisplayOpinion(this);
     }

@@ -66,8 +66,10 @@ class AddPersonFragment : Fragment() {
                 val personFragment = PersonLineFragment()
                 val args = Bundle()
                 args.putString("userName", userAccount!!.getUserName().toString())
-                Log.d("AddPerson",userAccount!!.getStatue().toString())
-                args.putString("statue",userAccount!!.getStatue().toString())
+                var statue = userAccount!!.getStatue()
+                if(statue == null)
+                    statue = "0"
+                args.putString("statue",statue)
                 personFragment.arguments = args
                 fragment.add(R.id.LL_person, personFragment, userAccount?.getUserName())
                 fragment.commit()
@@ -81,8 +83,10 @@ class AddPersonFragment : Fragment() {
                 val personFragment = PersonLineFragment()
                 val args = Bundle()
                 args.putString("userName", userAccount!!.getUserName().toString())
-                Log.d("AddPerson",userAccount!!.getStatue().toString())
-                args.putString("statue",userAccount!!.getStatue().toString())
+                var statue = userAccount!!.getStatue()
+                if(statue == null)
+                    statue = "0"
+                args.putString("statue",statue)
                 personFragment.arguments = args
                 fragment.add(R.id.LL_person, personFragment, userAccount?.getUserName())
                 fragment.commit()

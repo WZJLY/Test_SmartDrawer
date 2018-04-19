@@ -31,12 +31,11 @@ public class DBHelper extends SQLiteOpenHelper {
             case 1:
                 db.execSQL("ALTER TABLE user add column userAccount VARCHAR");
                 db.execSQL("ALTER TABLE user add column phoneNumber VARCHAR");
-                db.execSQL("ALTER TABLE cabinet_no drop column serial_number VARCHAR");
+                db.execSQL("drop TABLE cabinet_no");
+                db.execSQL("CREATE TABLE IF NOT EXISTS cabinet_no" +
+                        "(_id INTEGER PRIMARY KEY,cabinet_no VARCHAR,cabinet_serviceCode VARCHAR)");
                 db.execSQL("CREATE TABLE IF NOT EXISTS sysSeting"+
                     "(_id INTEGER PRIMARY KEY, serialNum VARCHAR, cameraVersion VARCHAR)");//理工
-
-                db.execSQL("ALTER TABLE user add column statue VARCHAR");
-                db.execSQL("ALTER TABLE drawer add column statue VARCHAR");
             case 2:
                 db.execSQL("ALTER TABLE user add column statue VARCHAR");
                 db.execSQL("ALTER TABLE drawer add column statue VARCHAR");//人员和chou抽屉状态
