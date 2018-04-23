@@ -166,14 +166,4 @@
         app:layout_constraintStart_toEndOf="@+id/tV_data"
         app:layout_constraintTop_toTopOf="@+id/tV_data" />
 
-    <Button
-        android:id="@+id/btn_add_single"
-        android:layout_width="70dp"
-        android:layout_height="45dp"
-        android:background="@drawable/btn_style_denglu"
-        android:text="添加模板"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner_type"
-        app:layout_constraintStart_toEndOf="@+id/spinner_type"
-        app:layout_constraintTop_toTopOf="@+id/spinner_type" />
-
 </android.support.constraint.ConstraintLayout>
