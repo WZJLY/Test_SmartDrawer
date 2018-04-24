@@ -357,36 +357,42 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                 })
             }
             "Return"->{
-                val reagent = dbManager!!.getReagentById(eT_code.text.toString())
+                var reagent = dbManager!!.getReagentById(eT_code.text.toString())
                 dialog.setTitle("归还")
                 dialog.setMessage("请归还试剂后点击确定")
                 dialog.setYesOnclickListener("确定",object :OperationDialog.onYesOnclickListener{
                     override fun onYesClick() {
                         dbManager?.updateReagentStatus(eT_code.text.toString(), 1, scApp!!.userInfo.getUserName())
                         var weight:Int = Integer.valueOf(eT_weight.text.toString())
+                        var density = "1"
+                        Log.d("suboperationReturn",density)
+                        if (reagent.reagentDensity.length > 0 ) {
+                            density = reagent.reagentDensity
+                        }
+                        Log.d("suboperationReturn2",density)
                         if(weight>reagent.reagentTotalSize.toInt())
                         {
                             weight -=reagent.reagentTotalSize.toInt()
-                            var size =  reagent.reagentSize.toDouble() -(weight/ reagent.reagentDensity.toDouble())
+                            var size =  reagent.reagentSize.toDouble() -(weight/ density.toDouble())
                             dbManager?.updateReagentSize(eT_code.text.toString(),size.toString(),eT_weight.text.toString())
                             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
                             val now = sdf.format(Date())
                             var unit = "g"
                             if(reagent?.reagentUnit==2)
                                 unit="ml"
-                            dbManager?.addReagentUserRecord(eT_code.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g",size.toString()+unit,(weight*dbManager!!.getReagentById(eT_code.text.toString()).reagentDensity.toDouble()).toString())
+                            dbManager?.addReagentUserRecord(eT_code.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g",size.toString()+unit,(weight/density.toDouble()).toString())
                         }
                         else
                         {
                             weight =reagent.reagentTotalSize.toInt()-weight
-                            var size1 =  reagent.reagentSize.toDouble() -(weight/ reagent.reagentDensity.toDouble())
+                            var size1 =  reagent.reagentSize.toDouble() -(weight/density.toDouble())
                             dbManager?.updateReagentSize(eT_code.text.toString(),size1.toString(),eT_weight.text.toString())
                             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
                             val now = sdf.format(Date())
                             var unit = "g"
                             if(reagent?.reagentUnit==2)
                                 unit="ml"
-                            dbManager?.addReagentUserRecord(eT_code.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g ",size1.toString()+unit,(weight*dbManager!!.getReagentById(eT_code.text.toString()).reagentDensity.toDouble()).toString())
+                            dbManager?.addReagentUserRecord(eT_code.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g ",size1.toString()+unit,(weight/density.toDouble()).toString())
                         }
                         val intent = Intent()
                         intent.setClass(applicationContext, OperationActivity::class.java)
