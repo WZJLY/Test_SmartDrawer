@@ -23,6 +23,7 @@ class OperationDialog(context: Context) : Dialog(context){
     private var positInt: Int = 0
     private var titleStr: String? = null//从外界设置的title文本
     private var messageStr: String? = null//从外界设置的消息文本
+    private var drawerNum: String? = null//从外界设置的抽屉号
 
     private var noOnclickListener: onNoOnclickListener? = null//取消按钮被点击了的监听器
     private var yesOnclickListener: onYesOnclickListener? = null//确定按钮被点击了的监听器
@@ -81,6 +82,9 @@ class OperationDialog(context: Context) : Dialog(context){
         if (noStr != null) {
             dialog_btn_no.text = noStr
         }
+        if (drawerNum != null) {
+            dialog_tv_drawerNum.text = drawerNum
+        }
     }
 
     /**
@@ -101,6 +105,9 @@ class OperationDialog(context: Context) : Dialog(context){
         messageStr = message
     }
 
+    fun setDrawerNum(Num: String){
+        drawerNum = Num
+    }
     /**
      * 设置格子数和高亮格子
      */

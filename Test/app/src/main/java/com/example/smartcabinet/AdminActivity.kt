@@ -70,14 +70,10 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         val userAccount =  scApp?.userInfo
         when(userAccount?.getUserPower()){
             SC_Const.ADMIN -> {
-                returnview ="login"
-                val adminfrag = AdminFragment()
-                replaceFragment(adminfrag, R.id.fl_admin)
+                replaceAdminFragment()
             }
             SC_Const.NORMAL -> {
-                returnview ="login"
-                val orinaryFragment = OrinaryFragment()
-                replaceFragment(orinaryFragment, R.id.fl_admin)
+                replaceOrinaryFragment()
             }
         }
         back_button.setOnClickListener({
@@ -99,14 +95,10 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                     }
                 }
                 "admin" -> {
-                    val adminfragment = AdminFragment()
-                    replaceFragment(adminfragment, R.id.fl_admin)
-                    returnview ="login"
+                    replaceAdminFragment()
                 }
                 "orinary" -> {
-                    val orinaryFragment = OrinaryFragment()
-                    replaceFragment(orinaryFragment, R.id.fl_admin)
-                    returnview ="login"
+                    replaceOrinaryFragment()
                 }
                 "addPerson"-> {
                     val addPersonFragment = AddPersonFragment()
@@ -182,6 +174,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
     override fun savepersonButtonClick(text: String) {
         if(text == "save") {
             //returnview未定义
+            returnview = "admin"
             val addPersonFragment = AddPersonFragment()
             replaceFragment(addPersonFragment, R.id.fl_admin)
         }
@@ -217,6 +210,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
     override fun orinaryButtonClick(text: String)
     {
         returnview = "orinary"
+        back_button.text = "返回"
         when(text){
             "regentsearch" -> {
                 val serachfrag = SerachFragment()
@@ -231,6 +225,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 replaceFragment(editMessageFragment, R.id.fl_admin)
             }
             "reagent_operation" ->{
+                back_button.text = "退出"
                 if(dbManager!!.sysSeting.size > 0){
                     returnview ="login"
                     val intent = Intent()
@@ -238,7 +233,10 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                     startActivity(intent)
                 }
                 else
+                {
                     Toast.makeText(this,"请进行系统硬件设置",Toast.LENGTH_SHORT).show()
+                }
+
             }
             "record_query" ->{
                 val recordFragment = RecordFragment()
@@ -304,7 +302,6 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
     override fun templateLineButtonClick(text: String) {
         if(text=="delet"){
-
             returnview = "admin"
             val editTemplateFragment = EditTemplateFragment()
             replaceFragment(editTemplateFragment, R.id.fl_admin)
@@ -313,6 +310,7 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
     override fun adminOnButtonClick(text: String) {
         returnview = "admin"
+        back_button.text = "返回"
         when(text) {
             "reagent_search"-> {
                 val serachfrag = SerachFragment()
@@ -332,16 +330,16 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
             }
             "reagent_op"-> {
-
+                back_button.text = "退出"
                 if(dbManager!!.sysSeting.size > 0){
                     returnview ="login"
                     val intent = Intent()
                     intent.setClass(this,OperationActivity::class.java)
                     startActivity(intent)
                 }
-
-                else
+                else{
                     Toast.makeText(this,"请进行系统硬件设置",Toast.LENGTH_SHORT).show()
+                }
             }
 
             "recordquery" -> {
@@ -373,7 +371,6 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                 val setCabinet = SetCabinetFragment()
                 replaceFragment(setCabinet, R.id.fl_admin)
             }
-
             "hardware" -> {
                 val hardwareSetupFragment = HardwareSetupFragment()
                 replaceFragment(hardwareSetupFragment, R.id.fl_admin)
@@ -460,8 +457,6 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
 
         return ret
     }
-
-
 
     fun downLoad() {                    //下载线程
         object : Thread() {
@@ -556,6 +551,19 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
         }.start()  //开启一个线程
     }
 
+    fun replaceAdminFragment(){
+        returnview ="login"
+        val adminFragment = AdminFragment()
+        replaceFragment(adminFragment, R.id.fl_admin)
+        back_button.text = "退出"
+    }
+
+    fun replaceOrinaryFragment() {
+        returnview ="login"
+        val orinaryFragment = OrinaryFragment()
+        replaceFragment(orinaryFragment, R.id.fl_admin)
+        back_button.text = "退出"
+    }
 }
 
 

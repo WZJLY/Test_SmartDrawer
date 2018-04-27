@@ -75,6 +75,9 @@ class InformationFragment2 : Fragment() {
        {
            val value = arguments.getString("scan_value")
            eT_code2.setText(value)
+           eT_weight2.isFocusable = true
+           eT_weight2.isFocusableInTouchMode = true
+           eT_weight2.requestFocus()
        }
         btn_code2.setOnClickListener{
             scanbuttononClicked("scan")

@@ -267,9 +267,15 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                     when(statue) {
                         "Into" -> {
                             eT_code2.setText(result)
+                            eT_weight2.isFocusable = true
+                            eT_weight2.isFocusableInTouchMode = true
+                            eT_weight2.requestFocus()
                         }
                         "Return" -> {
                             eT_code.setText(result)
+                            eT_weight.isFocusable = true
+                            eT_weight.isFocusableInTouchMode = true
+                            eT_weight.requestFocus()
                         }
                     }
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
@@ -308,6 +314,7 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
         val dialog = OperationDialog(this)
         val num =dbManager!!.getDrawerByDrawerId(drawerID).drawerSize
         dialog.setNum(num,table)
+        dialog.setDrawerNum("抽屉"+drawerID.toString())
         when(subOperation){
             "Into" -> {
                 dialog.setTitle("入柜")
