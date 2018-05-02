@@ -29,7 +29,7 @@ class RecordFragment : Fragment() {
         if (arrayListReagentUserRecord != null) {
             val sum = arrayListReagentUserRecord.size
             if (sum > 0) {
-                for (i in 1..sum) {
+                for (i in sum..1) {
                     reagentUserRecord = arrayListReagentUserRecord?.get(i - 1)
                     val fragment = childFragmentManager.beginTransaction()
                     val recordLineFragment = RecordLineFragment()

@@ -35,6 +35,74 @@ public class SerialPortInterface extends AppCompatActivity {
         }
     }
 
+    /**
+     * 计算产生校验码
+     * @param data 需要校验的数据
+     * @return 校验码
+     */
+    public static String Make_CRC(byte[] data, int start,int num) {
+        byte[] buf = new byte[num];// 存储需要产生校验码的数据
+        for (int i = 0; i < num; i++) {
+            buf[i] = data[start+i];
+        }
+        int len = num;
+        int crc = 0xFFFF;//16位
+        for (int pos = 0; pos < len; pos++) {
+            if (buf[pos] < 0) {
+                crc ^= (int) buf[pos] + 256; // XOR byte into least sig. byte of
+                // crc
+            } else {
+                crc ^= (int) buf[pos]; // XOR byte into least sig. byte of crc
+            }
+            for (int i = 8; i != 0; i--) { // Loop over each bit
+                if ((crc & 0x0001) != 0) { // If the LSB is set
+                    crc >>= 1; // Shift right and XOR 0xA001
+                    crc ^= 0xA001;
+                } else
+                    // Else LSB is not set
+                    crc >>= 1; // Just shift right
+            }
+        }
+        String c = Integer.toHexString(crc);
+        if (c.length() == 4) {
+            c = c.substring(2, 4) + c.substring(0, 2);
+        } else if (c.length() == 3) {
+            c = "0" + c;
+            c = c.substring(2, 4) + c.substring(0, 2);
+        } else if (c.length() == 2) {
+            c = "0" + c.substring(1, 2) + "0" + c.substring(0, 1);
+        }
+        return c;
+    }
+    /**
+     * Convert hex string to byte[]
+     * @param hexString the hex string
+     * @return byte[]
+     */
+    public static byte[] hexStringToBytes(String hexString) {
+        if (hexString == null || hexString.equals("")) {
+            return null;
+        }
+        hexString = hexString.toUpperCase();
+        int length = hexString.length() / 2;
+        char[] hexChars = hexString.toCharArray();
+        byte[] d = new byte[length];
+        for (int i = 0; i < length; i++) {
+            int pos = i * 2;
+            d[i] = (byte)(charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+        }
+        return d;
+    }
+
+    /**
+     * Convert char to byte
+     * @param c char
+     * @return byte
+     */
+    private static byte charToByte(char c) {
+        return (byte) "0123456789ABCDEF".indexOf(c);
+    }
+
     /*
     * 输入字符串w 返回lrc校验部分
     * @param  w=需要传输的信息  ID是地址
@@ -146,6 +214,77 @@ public class SerialPortInterface extends AppCompatActivity {
         Log.d("data", sendData);
         UART_Send(sendData);
         return 1;
+    }
+
+    /**
+     * 发送读取重量指令
+     * @return
+     */
+    public int GetLoad(){
+        byte[] data = new byte[8];
+        data[0] = 0x00;
+        data[1] = 0x03;
+        data[2] = 0x00;
+        data[3] = 0x00;
+        data[4] = 0x00;
+        data[5] = 0x02;
+        String buf = Make_CRC(data,0,6);
+        byte[] result = hexStringToBytes(buf);
+        data[6] = result[0];
+        data[7] = result[1];
+        try {
+            mOutputStream.write(data);
+        } catch (IOException e) {
+            Log.i("test", "发送失败");
+            e.printStackTrace();
+            return -1;
+        }
+        int load = readLoad();
+        return load;
+    }
+
+    public int readLoad(){
+        int Error = -1;
+        for (int i = 0; i < 10; i++) {
+            try {
+                Thread.sleep(50);
+                if (mInputStream.available() > 0) {
+                    if (mInputStream != null) {
+                        byte[] buffer = new byte[2048];
+                        int size = mInputStream.read(buffer);
+                        if (size > 8){
+                            int head = 0;
+                            while (head < size-2){
+                                if (buffer[head] != 0||buffer[head+1] != 3||buffer[head+2] != 4)
+                                {
+                                    head++;
+                                    continue;
+                                }
+                                if (size-head > 8){
+                                    String crc = Make_CRC(buffer,head,7);
+                                    byte[] result = hexStringToBytes(crc);
+                                    if (buffer[head+7] == result[0]&&buffer[head+8] == result[1]) {
+                                        int load = (buffer[head+4]&0xff)+((buffer[head+3]&0xff)<<8)+((buffer[head+6]&0xff)<<16)+((buffer[head+5]&0xff)<<32);
+                                        Log.d("Load","Load");
+                                        return load;
+                                    }
+                                    else{
+                                        Log.d("SerialPort","校验码错误");
+                                        return Error;
+                                    }
+                                }
+                                else{
+                                    return Error;
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                continue;
+            }
+        }
+        return Error;
     }
 
     /**
