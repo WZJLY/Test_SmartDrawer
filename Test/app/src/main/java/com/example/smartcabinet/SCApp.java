@@ -30,6 +30,7 @@ public class SCApp extends Application {  //全局变量
     private int statue;
     private String editPerson;
     private int touchDrawer;
+    private int initialWeight = 0;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -126,6 +127,17 @@ public class SCApp extends Application {  //全局变量
         return editPerson;
     }
 
-    public void setTouchDrawer(int drawerID){    touchDrawer = drawerID;  }
-    public int getTouchDrawer(){return touchDrawer;}
+    public void setTouchDrawer(int drawerID){
+        touchDrawer = drawerID;
+    }
+    public int getTouchDrawer(){
+        return touchDrawer;
+    }
+
+    public void setInitialWeight(int weight){
+        initialWeight = weight;
+    }
+    public int getInitialWeight() {
+        return initialWeight;
+    }
 }

@@ -37,6 +37,8 @@ class InformationFragment2 : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         scApp = context.applicationContext as SCApp
         dbManager = DBManager(context.applicationContext)
+        val value = arguments.getString("scan_value")
+        val weight = arguments.getString("weight")
         val data_list = ArrayAdapter<String>(context, R.layout.information_spinner_style)
         val arrListReagentTemplate = dbManager?.reagentTemplate
         val sum = arrListReagentTemplate!!.size
@@ -70,15 +72,26 @@ class InformationFragment2 : Fragment() {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         }
+        if(value!==null) {
+            eT_code2.setText(value)
+            if(weight !== null){
 
-       if(arguments.getString("scan_value")!==null)
-       {
-           val value = arguments.getString("scan_value")
-           eT_code2.setText(value)
-           eT_weight2.isFocusable = true
-           eT_weight2.isFocusableInTouchMode = true
-           eT_weight2.requestFocus()
-       }
+                eT_weight2.setText(weight)
+                eT_residue.isFocusable = true
+                eT_residue.isFocusableInTouchMode = true
+                eT_residue.requestFocus()
+            }
+            else{
+                eT_weight2.isFocusable = true
+                eT_weight2.isFocusableInTouchMode = true
+                eT_weight2.requestFocus()
+            }
+        }
+        else{
+            if(weight !== null) {
+                eT_weight2.setText(weight)
+            }
+        }
         btn_code2.setOnClickListener{
             scanbuttononClicked("scan")
         }

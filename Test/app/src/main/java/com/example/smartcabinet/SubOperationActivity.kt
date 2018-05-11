@@ -54,7 +54,8 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
         scApp = application as SCApp
         dbManager = DBManager(applicationContext)
         val subOperation: String = intent.getStringExtra("subOperation")
-        val scan_value = intent.getStringExtra("scan_value")
+        val scanValue = intent.getStringExtra("scan_value")
+        val weight = intent.getStringExtra("weight")
         spi =  scApp?.getSpi()
 
         when(subOperation) {
@@ -69,7 +70,8 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                 replaceFragment(R.id.FL_table,tableFragment)
                 val informationFragment = InformationFragment2()
                 val args = Bundle()
-                args.putString("scan_value", scan_value)
+                args.putString("scan_value", scanValue)
+                args.putString("weight",weight)
                 title = "入柜"
                 informationFragment.arguments = args
                 replaceFragment(R.id.frameLayout_information,informationFragment)
@@ -95,7 +97,8 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                 title = "归还"
                 val informationFragment = InformationFragment1()
                 val args = Bundle()
-                args.putString("scan_value", scan_value)
+                args.putString("scan_value", scanValue)
+                args.putString("weight",weight)
                 informationFragment.arguments = args
                 replaceFragment(R.id.frameLayout_information,informationFragment)
             }

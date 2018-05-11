@@ -30,6 +30,9 @@ class InformationFragment1 : Fragment() {
             eT_weight.isFocusableInTouchMode = true
             eT_weight.requestFocus()
         }
+        if(arguments.getString("weight")!==null){
+            eT_weight.setText(arguments.getString("weight"))
+        }
         btn_code.setOnClickListener{
             return_scanbuttononClicked("scan")
         }

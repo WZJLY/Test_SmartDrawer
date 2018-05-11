@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tV_weight1"
+        android:id="@+id/tV_weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -51,9 +51,9 @@
         android:ems="10"
         android:inputType="number"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tV_weight1"
-        app:layout_constraintStart_toEndOf="@+id/tV_weight1"
-        app:layout_constraintTop_toTopOf="@+id/tV_weight1" />
+        app:layout_constraintBottom_toBottomOf="@+id/tV_weight"
+        app:layout_constraintStart_toEndOf="@+id/tV_weight"
+        app:layout_constraintTop_toTopOf="@+id/tV_weight2" />
 
     <Button
         android:id="@+id/btn_code"
