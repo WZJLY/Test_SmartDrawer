@@ -9,9 +9,12 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.webkit.JavascriptInterface
+import android.widget.EditText
 import android.widget.Toast
 import com.example.smartcabinet.util.*
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.dialog_binding.*
+import kotlinx.android.synthetic.main.fragment_capture.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,6 +30,27 @@ class LoginActivity :BaseActivity() {
         dbManager = DBManager(this)
         dbManager?.tableUpgrade()
         scApp = application as SCApp
+        if(dbManager!!.cabinetNo.size==0)
+        {
+            val dialog = BindingDialog(this)
+            dialog.setYesOnclickListener(object :BindingDialog.onYesOnclickListener{
+                override fun onYesClick() {
+                    val  editText1 = dialog.findViewById(R.id.et_Dbinding_number) as EditText
+                    val  editText2 =dialog.findViewById(R.id.et_Dbinding_serviceCode) as EditText
+                    if(editText1.text.toString()!="") {
+                        dbManager?.addCabinetNo(editText1.text.toString(), editText2.text.toString())
+                        dialog.dismiss()
+                    }
+                    else
+                        Toast.makeText(this@LoginActivity,"智能柜编码不能为空",Toast.LENGTH_SHORT).show()
+
+                }
+
+
+
+            })
+            dialog.show()
+        }
 
         val lastname = getLastLoginName()
         et_userName.setText(lastname)
@@ -90,7 +114,7 @@ class LoginActivity :BaseActivity() {
                 val curDate = Date(System.currentTimeMillis())
                 val str = formatter.format(curDate)
                 val upload :UploadRecordManager= UploadRecordManager(this)
-                upload.getCode("anchu001","登陆",scApp!!.userInfo.userName,str,"")
+                upload.getCode(dbManager!!.cabinetNo.get(0).cabinetNo,"登陆",scApp!!.userInfo.userName,str,"")
 
                 intent.setClass(this, AdminActivity::class.java)
                 startActivity(intent)
@@ -114,7 +138,7 @@ class LoginActivity :BaseActivity() {
                 val curDate = Date(System.currentTimeMillis())
                 val str = formatter.format(curDate)
                 val upload :UploadRecordManager= UploadRecordManager(this)
-                upload.getCode("anchu001","登陆",scApp!!.userInfo.userName,str,"")
+                upload.getCode(dbManager!!.cabinetNo.get(0).cabinetNo,"登陆",scApp!!.userInfo.userName,str,"")
                 intent.setClass(this, AdminActivity::class.java)
                 intent.putExtra("SC_Const", 1)
                 saveUserName(userName)
