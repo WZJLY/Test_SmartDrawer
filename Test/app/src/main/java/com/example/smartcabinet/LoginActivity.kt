@@ -10,10 +10,10 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.webkit.JavascriptInterface
 import android.widget.Toast
-import com.example.smartcabinet.util.DBManager
-import com.example.smartcabinet.util.SC_Const
-import com.example.smartcabinet.util.UserAccount
+import com.example.smartcabinet.util.*
 import kotlinx.android.synthetic.main.activity_login.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class LoginActivity :BaseActivity() {
     private var dbManager: DBManager? = null
@@ -31,6 +31,7 @@ class LoginActivity :BaseActivity() {
         val lastname = getLastLoginName()
         et_userName.setText(lastname)
         button_login.setOnClickListener({
+
             login(et_userName.text.toString(),et_userPassword.text.toString())
         })
         login_iV_passward.setOnTouchListener { view, motionEvent ->
@@ -85,8 +86,15 @@ class LoginActivity :BaseActivity() {
                 dbManager?.addAccount(account)
                 scApp?.setUserInfo(strUserId, strAccount, strPassword, iPower,"","","0")
                 saveUserName(strAccount)
+                val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                val curDate = Date(System.currentTimeMillis())
+                val str = formatter.format(curDate)
+                val upload :UploadRecordManager= UploadRecordManager(this)
+                upload.getCode("anchu001","登陆",scApp!!.userInfo.userName,str,"")
+
                 intent.setClass(this, AdminActivity::class.java)
                 startActivity(intent)
+
             } else {
                 Toast.makeText(this.applicationContext,"登陆失败", Toast.LENGTH_SHORT).show()
                 return
@@ -102,6 +110,11 @@ class LoginActivity :BaseActivity() {
 
 
             if(userInfo?.statue!="1") {
+                val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                val curDate = Date(System.currentTimeMillis())
+                val str = formatter.format(curDate)
+                val upload :UploadRecordManager= UploadRecordManager(this)
+                upload.getCode("anchu001","登陆",scApp!!.userInfo.userName,str,"")
                 intent.setClass(this, AdminActivity::class.java)
                 intent.putExtra("SC_Const", 1)
                 saveUserName(userName)

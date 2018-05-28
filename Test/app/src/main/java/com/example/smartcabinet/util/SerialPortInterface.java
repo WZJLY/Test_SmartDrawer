@@ -94,6 +94,7 @@ public class SerialPortInterface extends AppCompatActivity {
         return d;
     }
 
+
     /**
      * Convert char to byte
      * @param c char
@@ -348,4 +349,6 @@ public class SerialPortInterface extends AppCompatActivity {
         }
         return null;
     }
+
+
 }

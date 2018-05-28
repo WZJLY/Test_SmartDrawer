@@ -24,8 +24,10 @@ public final class SC_Const {
 
 
     public static String SERVERADDRESS = "https://www.anchu365.com/admin/";
+    public static String SERVERADDRESS1 = "https://www.anchu365.com/admin/api/operation-record/insertOneRecord";
     public static String REAGENTTEMPLATEADDRESS = SERVERADDRESS+"Temp/";
     public static String APKADDRESS = "https://www.anchu365.com/APK/";
 
+    public static String UPLOADADDRESS = "http://localhost:8080/scbe/api/operation-record";
 
 }

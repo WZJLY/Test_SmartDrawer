@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.smartcabinet.R.id.*
 import kotlinx.android.synthetic.main.fragment_admin_reagent.*
 
 

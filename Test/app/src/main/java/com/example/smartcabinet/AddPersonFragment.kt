@@ -99,7 +99,6 @@ class AddPersonFragment : Fragment() {
         if(arguments!=null)
         {
             removeUsername = arguments.getString("rmUsername")
-
         }
         val removepfrg = childFragmentManager.findFragmentByTag(removeUsername)
         val fragment = childFragmentManager.beginTransaction()

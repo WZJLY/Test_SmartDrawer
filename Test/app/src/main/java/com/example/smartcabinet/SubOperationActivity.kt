@@ -18,6 +18,7 @@ import com.example.lib_zxing.activity.CodeUtils
 import com.example.smartcabinet.util.DBManager
 import com.example.smartcabinet.util.ReagentTemplate
 import com.example.smartcabinet.util.SerialPortInterface
+import com.example.smartcabinet.util.UploadRecordManager
 import kotlinx.android.synthetic.main.activity_sub_operation.*
 import kotlinx.android.synthetic.main.fragment_information1.*
 import kotlinx.android.synthetic.main.fragment_information2.*
@@ -335,6 +336,10 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                                 , "1", drawerID.toString(), scApp?.touchtable.toString(), 1, scApp!!.userInfo.getUserName())
                         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
                         val now = sdf.format(Date())
+                        val curDate = Date(System.currentTimeMillis())
+                        val str = sdf.format(curDate)
+                        val upload : UploadRecordManager = UploadRecordManager(this@SubOperationActivity)
+                        upload.getCode("anchu001","添加试剂",scApp!!.userInfo.userName,str,reagentTemplate?.reagentName)
                         dbManager?.addReagentUserRecord(eT_code2.text.toString(),1,now,scApp!!.userInfo.getUserName(),eT_weight2.text.toString()+"g",eT_residue.text.toString()+reagentTemplate?.reagentUnit,"")
                         val intent = Intent()
                         scApp?.touchtable = 0
@@ -355,10 +360,15 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                         val now = sdf.format(Date())
                         val reagentId =  dbManager!!.getReagentByPos("" + drawerID,"" + scApp?.touchtable).reagentId
                         val reagent = dbManager?.getReagentById(reagentId)
+
                         var unit = "g"
                         if(reagent?.reagentUnit==2)
                             unit = "ml"
                         dbManager?.addReagentUserRecord(reagentId,2,now,scApp!!.userInfo.getUserName(),reagent?.reagentTotalSize+"g",reagent?.reagentSize+unit,"")
+                        val curDate = Date(System.currentTimeMillis())
+                        val str = sdf.format(curDate)
+                        val upload : UploadRecordManager = UploadRecordManager(this@SubOperationActivity)
+                        upload.getCode("anchu001","取用试剂",scApp!!.userInfo.userName,str,reagent?.reagentName)
                         val intent = Intent()
                         intent.setClass(applicationContext, OperationActivity::class.java)
                         startActivity(intent)
@@ -375,6 +385,8 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                         dbManager?.updateReagentStatus(eT_code.text.toString(), 1, scApp!!.userInfo.getUserName())
                         var weight:Int = Integer.valueOf(eT_weight.text.toString())
                         var density = "1"
+                        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
+                        val now = sdf.format(Date())
                         Log.d("suboperationReturn",density)
                         if (reagent.reagentDensity.length > 0 ) {
                             density = reagent.reagentDensity
@@ -385,8 +397,7 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                             weight -=reagent.reagentTotalSize.toInt()
                             var size =  reagent.reagentSize.toDouble() -(weight/ density.toDouble())
                             dbManager?.updateReagentSize(eT_code.text.toString(),size.toString(),eT_weight.text.toString())
-                            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
-                            val now = sdf.format(Date())
+
                             var unit = "g"
                             if(reagent?.reagentUnit==2)
                                 unit="ml"
@@ -397,13 +408,15 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                             weight =reagent.reagentTotalSize.toInt()-weight
                             var size1 =  reagent.reagentSize.toDouble() -(weight/density.toDouble())
                             dbManager?.updateReagentSize(eT_code.text.toString(),size1.toString(),eT_weight.text.toString())
-                            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
-                            val now = sdf.format(Date())
                             var unit = "g"
                             if(reagent?.reagentUnit==2)
                                 unit="ml"
                             dbManager?.addReagentUserRecord(eT_code.text.toString(),3,now,scApp!!.userInfo.getUserName(),eT_weight.text.toString()+"g ",size1.toString()+unit,(weight/density.toDouble()).toString())
                         }
+                        val curDate = Date(System.currentTimeMillis())
+                        val str = sdf.format(curDate)
+                        val upload : UploadRecordManager = UploadRecordManager(this@SubOperationActivity)
+                        upload.getCode("anchu001","归还试剂",scApp!!.userInfo.userName,str,reagent?.reagentName)
                         val intent = Intent()
                         intent.setClass(applicationContext, OperationActivity::class.java)
                         startActivity(intent)
@@ -424,6 +437,10 @@ class SubOperationActivity : BaseActivity(),InformationFragment2.scanbuttonliste
                         dbManager?.addSrapReagent(reagent?.reagentId,reagent?.reagentName,"","","",reagent!!.reagentType.toInt(),reagent?.reagentPurity,reagent?.reagentSize,reagent?.reagentTotalSize,reagent?.reagentCreater,"",reagent?.reagentUnit,reagent?.reagentDensity,reagent?.reagentInvalidDate,reagent?.reagentCabinetId,drawerID.toString(),reagent?.reagentPosition,4,scApp!!.userInfo.getUserName())
                         dbManager?.deleteReagentById(reagentId)
                         dbManager?.addReagentUserRecord(reagentId,4,now,scApp!!.userInfo.getUserName(),eT_weight?.text.toString(),"","")
+                        val curDate = Date(System.currentTimeMillis())
+                        val str = sdf.format(curDate)
+                        val upload : UploadRecordManager = UploadRecordManager(this@SubOperationActivity)
+                        upload.getCode("anchu001","移除试剂",scApp!!.userInfo.userName,str,reagent?.reagentName)
                         val intent = Intent()
                         intent.setClass(applicationContext, OperationActivity::class.java)
                         startActivity(intent)

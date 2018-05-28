@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/serach_area"-->
-        <!--android:layout_width="800dp"-->
-        <!--android:layout_height="87dp"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginTop="50dp"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--app:srcCompat="@drawable/serach_icon" />-->
+    <ImageView
+        android:id="@+id/serach_area"
+        android:layout_width="800dp"
+        android:layout_height="87dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/serach_icon" />
 
     <ImageView
         android:id="@+id/drawer_area"
@@ -46,14 +46,40 @@
         <!--app:layout_constraintStart_toStartOf="@+id/serach_area"-->
         <!--app:layout_constraintTop_toTopOf="@+id/serach_area" />-->
 
-    <LinearLayout
-        android:id="@+id/add_drawer"
+    <EditText
+        android:id="@+id/serach_view"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="72dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="833dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/drawer_area"
-        app:layout_constraintEnd_toEndOf="@+id/drawer_area"
-        app:layout_constraintStart_toStartOf="@+id/drawer_area"
-        app:layout_constraintTop_toTopOf="@+id/drawer_area"></LinearLayout>
+        android:layout_height="850dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/add_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/drawer_area"
+            app:layout_constraintEnd_toEndOf="@+id/drawer_area"
+            app:layout_constraintStart_toStartOf="@+id/drawer_area"
+            app:layout_constraintTop_toTopOf="@+id/drawer_area">
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

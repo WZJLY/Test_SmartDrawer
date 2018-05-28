@@ -55,7 +55,7 @@ public class UpdateAppManager {
 
     //新版本号和描述语言
 
-private int ret;
+    private int ret;
     public UpdateAppManager(Context context) {
         this.context = context;
     }

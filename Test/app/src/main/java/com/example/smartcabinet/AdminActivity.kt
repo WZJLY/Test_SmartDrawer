@@ -24,6 +24,8 @@ import java.net.URL
 
 import android.view.inputmethod.InputMethodManager
 import com.example.smartcabinet.util.UpdateAppManager
+import com.example.smartcabinet.util.UploadRecordManager
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -92,6 +94,12 @@ class AdminActivity : BaseActivity(),AdminFragment.AdminFragmentListener,Orinary
                         val intent =Intent()
                         intent.setClass(this,LoginActivity::class.java)
                         startActivity(intent)
+                        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                        val curDate = Date(System.currentTimeMillis())
+                        val str = formatter.format(curDate)
+                        val upload : UploadRecordManager = UploadRecordManager(this)
+                        upload.getCode("anchu001","用户登出",scApp!!.userInfo.userName,str,"")
+
                     }
                 }
                 "admin" -> {

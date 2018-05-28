@@ -127,6 +127,7 @@ public class SCApp extends Application {  //全局变量
         return editPerson;
     }
 
+<<<<<<< Updated upstream
     public void setTouchDrawer(int drawerID){
         touchDrawer = drawerID;
     }
@@ -140,4 +141,9 @@ public class SCApp extends Application {  //全局变量
     public int getInitialWeight() {
         return initialWeight;
     }
+=======
+    public void setTouchDrawer(int drawerID){    touchDrawer = drawerID;  }
+    public int getTouchDrawer(){return touchDrawer;}
+
+>>>>>>> Stashed changes
 }
