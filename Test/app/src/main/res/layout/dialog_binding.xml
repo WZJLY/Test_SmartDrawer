@@ -36,8 +36,9 @@
         android:layout_height="104dp"
         android:src="@drawable/background_drawer_12"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/et_Dbinding_number"
@@ -115,5 +116,17 @@
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/et_Dbinding_serviceCode"
         app:layout_constraintTop_toBottomOf="@+id/et_Dbinding_serviceCode" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="智能柜绑定"
+        android:textColor="#fff"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+        app:layout_constraintEnd_toEndOf="@+id/imageView6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
 </android.support.constraint.ConstraintLayout>

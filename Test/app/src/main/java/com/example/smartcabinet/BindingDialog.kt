@@ -21,8 +21,8 @@ class BindingDialog(context: Context) : Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_binding)
-        tv_Dbinding_number.visibility = View.INVISIBLE
-        tv_Dbinding_serviceCode.visibility = View.INVISIBLE
+        tv_Dbinding_number.text = ""
+        tv_Dbinding_serviceCode.text = ""
         setCanceledOnTouchOutside(false)
 
         btn_Dbinding_yes.setOnClickListener {
