@@ -39,7 +39,7 @@ class DrawerFragment2 : Fragment() {
         var spi =  scApp?.getSpi()
         if (dbManager!!.getDrawerByDrawerId(drawerID).statue != "1")
             drawer_tv_enable2.visibility = View.GONE
-        if(scApp?.reagentID!=null)
+        if(scApp?.reagentID!=null)//归还
         {
             if(dbManager!!.getReagentById(scApp?.reagentID).drawerId==drawerID.toString()) {
                 val tableFragment = TableFragment()

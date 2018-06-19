@@ -49,7 +49,7 @@ class TableFragment : Fragment() {
 
             if (drawer != null)
                 num = drawer!!.drawerSize
-            addNum(num)
+                addNum(num)
         }
             if(arguments.getString("statue")=="add")
             {
@@ -139,7 +139,7 @@ class TableFragment : Fragment() {
                         scApp?.setTouchtable(button.id)
                     }
                 }
-                if(getArguments().getString("statue")=="add"||getArguments().getString("statue")=="drawer")
+                if(arguments.getString("statue")=="add"||arguments.getString("statue")=="drawer")
                 {
                     button.isClickable = false
                 }

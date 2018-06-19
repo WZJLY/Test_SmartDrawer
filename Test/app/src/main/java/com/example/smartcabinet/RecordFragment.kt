@@ -24,12 +24,13 @@ class RecordFragment : Fragment() {
         return inflater!!.inflate(R.layout.fragment_record, container, false)
     }
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) { //搜索功能，功能待开发与完善
-        dbManager = DBManager(context.applicationContext)
+        dbManager = DBManager(context)
         val arrayListReagentUserRecord = dbManager?.reagentUseRecord
         if (arrayListReagentUserRecord != null) {
             val sum = arrayListReagentUserRecord.size
             if (sum > 0) {
-                for (i in sum..1) {
+                Toast.makeText(context,""+sum,Toast.LENGTH_SHORT).show()
+                for (i in sum downTo 1) {
                     reagentUserRecord = arrayListReagentUserRecord?.get(i - 1)
                     val fragment = childFragmentManager.beginTransaction()
                     val recordLineFragment = RecordLineFragment()
@@ -38,11 +39,9 @@ class RecordFragment : Fragment() {
                     recordLineFragment.arguments = args
                     fragment.add(R.id.add_record, recordLineFragment)
                     fragment.commit()
-
                 }
             }
         }
-
     }
 
 }// Required empty public constructor
